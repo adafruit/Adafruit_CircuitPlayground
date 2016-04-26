@@ -30,7 +30,7 @@
 #ifndef __AVR_ATtiny85__
   #include <SPI.h>
 #endif
-#include <Adafruit_Sensor.h>
+#include "utility/Adafruit_CPlay_Sensor.h"
 
 /*=========================================================================
     I2C ADDRESS/BITS
