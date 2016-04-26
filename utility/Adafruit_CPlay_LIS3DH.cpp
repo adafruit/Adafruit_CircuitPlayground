@@ -156,7 +156,7 @@ void Adafruit_CPlay_LIS3DH::read(void) {
   #endif
   uint8_t range = getRange();
   uint16_t divider = 1;
-  if (range == LIS3DH_RANGE_16_G) divider = 2048;
+  if (range == LIS3DH_RANGE_16_G) divider = 1365;
   if (range == LIS3DH_RANGE_8_G) divider = 4096;
   if (range == LIS3DH_RANGE_4_G) divider = 8190;
   if (range == LIS3DH_RANGE_2_G) divider = 16380;
