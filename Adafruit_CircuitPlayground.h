@@ -55,7 +55,7 @@
 
 class Adafruit_CircuitPlayground {
  public:
-  boolean begin(void);
+  boolean begin(uint8_t brightness=20);
 
   Adafruit_CPlay_NeoPixel strip;
   Adafruit_CPlay_LIS3DH lis;
@@ -70,7 +70,7 @@ class Adafruit_CircuitPlayground {
   uint16_t soundSensor(void);
   float temperature(void);
 
-  uint16_t readCap(uint8_t p);
+  uint16_t readCap(uint8_t p, uint8_t samples=10);
 
   float motionX(void);
   float motionY(void);

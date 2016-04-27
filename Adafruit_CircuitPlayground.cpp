@@ -1,7 +1,7 @@
 #include <Adafruit_CircuitPlayground.h>
 
 
-boolean Adafruit_CircuitPlayground::begin(void) {
+boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   pinMode(CPLAY_REDLED, OUTPUT);
   pinMode(CPLAY_SLIDESWITCHPIN, INPUT);
   pinMode(CPLAY_LEFTBUTTON, INPUT);
@@ -14,7 +14,7 @@ boolean Adafruit_CircuitPlayground::begin(void) {
 
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
-  strip.setBrightness(20);
+  strip.setBrightness(brightness);
 
   cap[0] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 0);
   cap[1] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 1);
@@ -31,24 +31,24 @@ boolean Adafruit_CircuitPlayground::begin(void) {
   return true;
 }
 
-uint16_t Adafruit_CircuitPlayground::readCap(uint8_t p) {
+uint16_t Adafruit_CircuitPlayground::readCap(uint8_t p, uint8_t samples) {
   switch (p) {
   case 0:
-    return cap[0].capacitiveSensor(10);
+    return cap[0].capacitiveSensor(samples);
   case 1:
-    return cap[1].capacitiveSensor(10);
+    return cap[1].capacitiveSensor(samples);
   case 2:
-    return cap[2].capacitiveSensor(10);
+    return cap[2].capacitiveSensor(samples);
   case 3:
-    return cap[3].capacitiveSensor(10);
+    return cap[3].capacitiveSensor(samples);
   case 6:
-    return cap[4].capacitiveSensor(10);
+    return cap[4].capacitiveSensor(samples);
   case 9:
-    return cap[5].capacitiveSensor(10);
+    return cap[5].capacitiveSensor(samples);
   case 10:
-    return cap[6].capacitiveSensor(10);
+    return cap[6].capacitiveSensor(samples);
   case 12:
-    return cap[7].capacitiveSensor(10);
+    return cap[7].capacitiveSensor(samples);
   default:
     return 0;
   }
