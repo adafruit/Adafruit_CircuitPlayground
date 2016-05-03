@@ -15,7 +15,7 @@
   License along with DotStar.  If not, see <http://www.gnu.org/licenses/>.
   ------------------------------------------------------------------------*/
 
-#include "utility/Adafruit_CPlay_Neopixel.h"
+#include "utility/Adafruit_CPlay_NeoPixel.h"
 #include "utility/Adafruit_CPlay_LIS3DH.h"
 #include "utility/CPlay_CapacitiveSensor.h"
 
