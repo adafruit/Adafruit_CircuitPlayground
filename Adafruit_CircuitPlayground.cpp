@@ -130,6 +130,36 @@ float Adafruit_CircuitPlayground::temperature(void) {
 
   return steinhart;
 }
+  
+// Get the temperature in degrees Fahrenheit
+float Adafruit_CircuitPlayground::temperatureF(void) {
+  
+   // Thermistor test
+  float reading;
+
+  reading = analogRead(CPLAY_THERMISTORPIN);
+
+  //Serial.print("Thermistor reading: "); Serial.println(reading);
+
+  // convert the value to resistance
+  reading = ((1023.0 * SERIESRESISTOR) / reading);
+  reading -= SERIESRESISTOR;
+
+  //Serial.print("Thermistor resistance: "); Serial.println(reading);
+
+  float steinhart;
+  steinhart = reading / THERMISTORNOMINAL;     // (R/Ro)
+  steinhart = log(steinhart);                  // ln(R/Ro)
+  steinhart /= BCOEFFICIENT;                   // 1/B * ln(R/Ro)
+  steinhart += 1.0 / (TEMPERATURENOMINAL + 273.15); // + (1/To)
+  steinhart = 1.0 / steinhart;                 // Invert
+  steinhart -= 273.15;                         // convert to C
+  
+  steinhart = steinhart * 1.8 + 32;
+
+  return steinhart;
+  
+}
 
 
 // Input a value 0 to 255 to get a color value.
