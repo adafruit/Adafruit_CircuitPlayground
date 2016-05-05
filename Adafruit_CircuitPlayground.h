@@ -69,6 +69,7 @@ class Adafruit_CircuitPlayground {
   uint16_t lightSensor(void);
   uint16_t soundSensor(void);
   float temperature(void);
+  float temperatureF(void);
 
   uint16_t readCap(uint8_t p, uint8_t samples=10);
 
