@@ -130,6 +130,12 @@ float Adafruit_CircuitPlayground::temperature(void) {
 
   return steinhart;
 }
+  
+// Get the temperature in degrees Fahrenheit
+float Adafruit_CircuitPlayground::temperatureF(void) {
+  float tempF = CircuitPlayground.temperature() * 1.8 + 32;
+  return tempF;
+}
 
 
 // Input a value 0 to 255 to get a color value.
