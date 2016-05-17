@@ -58,7 +58,7 @@ void loop() {
   Serial.print("Light sensor: ");
   Serial.println(CircuitPlayground.lightSensor());
 
-  /************* TEST LIGHT SENSOR */
+  /************* TEST SOUND SENSOR */
   Serial.print("Sound sensor: ");
   Serial.println(CircuitPlayground.soundSensor());
 
