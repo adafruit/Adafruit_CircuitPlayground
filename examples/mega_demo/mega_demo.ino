@@ -4,7 +4,15 @@
 // This is a somewhat advanced sketch that's broken across multiple files (see
 // the tabs above for all the files).  When run on Circuit Playground you can
 // press the left button to cycle through each demo, and the right button to
-// cycle through each mode inside a demo.
+// cycle through each mode inside a demo.  When the slide switch is in the -/right
+// position the board will 'turn off' and go into deep sleep (pullin around 5mA
+// of current), and when moved into the +/left position it will turn on and run
+// the demos.  Make sure the switch is on the +/left side after you upload or else
+// the board won't do anything!
+//
+// NOTE: This example requires the Adafruit SleepyDog sleep & watchdog library
+// be installed.  Use the library manager to install, or grab it from its home:
+//   - https://github.com/adafruit/Adafruit_SleepyDog
 //
 // The following demos are available (in order):
 // - NeoPixel color rainbow cycle
@@ -34,6 +42,7 @@
 // Author: Tony DiCola
 // License: MIT License (https://opensource.org/licenses/MIT)
 #include "Adafruit_CircuitPlayground.h"
+#include "Adafruit_SleepyDog.h"
 
 // Include all the demos, note that each demo is defined in a separate class to keep the sketch
 // code below clean and simple.
@@ -69,6 +78,13 @@ void setup() {
 }
 
 void loop() {
+  // Check if slide switch is on the left (false) and go to sleep.
+  while (!CircuitPlayground.slideSwitch()) {
+    // Turn off the pixels, then go into deep sleep for a second.
+    CircuitPlayground.clearPixels();
+    Watchdog.sleep(1000);
+  }
+
   // Check for any button presses by checking their state twice with
   // a delay inbetween.  If the first press state is different from the
   // second press state then something was pressed/released!
@@ -82,7 +98,7 @@ void loop() {
   // Now check for buttons that were released.
   bool leftSecond = CircuitPlayground.leftButton();
   bool rightSecond = CircuitPlayground.rightButton();
-  
+
   // Left button will change the current demo.
   if (leftFirst && !leftSecond) {
     // Turn off all the pixels when entering new mode.
