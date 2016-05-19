@@ -81,6 +81,7 @@ class Adafruit_CircuitPlayground {
   void clearPixels(void) { strip.clear(); strip.show(); }
   void setPixelColor(uint8_t p, uint32_t c) {strip.setPixelColor(p, c); strip.show();}
   void setPixelColor(uint8_t p, uint8_t r, uint8_t g, uint8_t b) {strip.setPixelColor(p, r, g, b); strip.show();}
+  void setBrightness(uint16_t b){strip.setBrightness(b);}
 
   uint32_t colorWheel(uint8_t x);
  private:
