@@ -42,12 +42,12 @@
 // on the equation: https://en.wikipedia.org/wiki/Linear_interpolation
 float lerp(float x, float x0, float x1, float y0, float y1) {
   // Check if the input value (x) is outside its desired range and clamp to
-  // those min/max values.
+  // those min/max y values.
   if (x <= x0) {
-    return x0;
+    return y0;
   }
   else if (x >= x1) {
-    return x1;
+    return y1;
   }
   // Otherwise compute the value y based on x's position within its range and
   // the desired y min & max.
