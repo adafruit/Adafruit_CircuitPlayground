@@ -45,6 +45,10 @@
 #define BCOEFFICIENT 3950
 // the value of the 'other' resistor
 
+// Configuration to tune the color sensing logic:
+#define LIGHT_SETTLE_MS 100  // Amount of time (in milliseconds) to wait between
+                             // changing the pixel color and reading the light
+                             // sensor.
 
 #if (ARDUINO >= 100)
  #include <Arduino.h>
@@ -84,6 +88,19 @@ class Adafruit_CircuitPlayground {
   void setBrightness(uint16_t b){strip.setBrightness(b);}
 
   uint32_t colorWheel(uint8_t x);
+
+  // Basic RGB color sensing with the light sensor and nearby neopixel.
+  // Both functions do the same thing and just differ in how they return the
+  // result, either as explicit RGB bytes or a 24-bit RGB color value.
+  void senseColor(uint8_t& red, uint8_t& green, uint8_t& blue);
+  uint32_t senseColor() {
+    // Use the individual color component color sense function and then recombine
+    // tbe components into a 24-bit color value.
+    uint8_t red, green, blue;
+    senseColor(red, green, blue);
+    return ((uint32_t)red << 16) | ((uint32_t)green << 8) | blue;
+  }
+
  private:
 
 
