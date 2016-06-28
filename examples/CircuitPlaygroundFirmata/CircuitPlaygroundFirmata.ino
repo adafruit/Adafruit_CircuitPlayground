@@ -102,7 +102,7 @@
                                       //   - Type of click: 0 = no click detection, 1 = single click, 2 = single & double click (default)
                                       //   - Click threshold: 0-255, the higher the value the less sensitive.  Depends on the accelerometer
                                       //     range, good values are: +/-16G = 5-10, +/-8G = 10-20, +/-4G = 20-40, +/-2G = 40-80
-                                      //     80 is the default value (goes well with default of +/-2G) 
+                                      //     80 is the default value (goes well with default of +/-2G)
 #define CP_CAP_READ             0x40  // Read a single capacitive input.  Expects a byte as a parameter with the
                                       // cap touch input to read (0, 1, 2, 3, 6, 9, 10, 12).  Will respond with a
                                       // CP_CAP_REPLY message.
@@ -110,6 +110,14 @@
 #define CP_CAP_OFF              0x42  // Turn off continuous cap touch reads for the specified input (sent as a byte parameter).
 #define CP_CAP_REPLY            0x43  // Capacitive input read response.  Includes a byte with the pin # of the cap input, then
                                       // four bytes of data which represent an int32_t value read from the cap input.
+#define CP_SENSECOLOR           0x50  // Perform a color sense using the NeoPixel and light sensor.
+#define CP_SENSECOLOR_REPLY     0x51  // Result of a color sense, will return the red, green, blue color
+                                      // values that were read from the light sensor.  This will return
+                                      // 6 bytes of data:
+                                      //  - red color (unsigned 8 bit value, split across 2 7-bit bytes)
+                                      //  - green color (unsigned 8 bit value, split across 2 7-bit bytes)
+                                      //  - blue color (unsigned 8 bit value, split across 2 7-bit bytes)
+
 
 // the minimum interval for sampling analog input
 #define MINIMUM_SAMPLING_INTERVAL   1
@@ -643,7 +651,7 @@ void circuitPlaygroundCommand(byte command, byte argc, byte* argv) {
         // Now find the specified cap input and flip on its streaming bit.
         for (int i=0; i<CAP_COUNT; ++i) {
           if (cap_state[i].pin == input) {
-            cap_state[i].streaming = true; 
+            cap_state[i].streaming = true;
           }
         }
       }
@@ -656,7 +664,7 @@ void circuitPlaygroundCommand(byte command, byte argc, byte* argv) {
         // Now find the specified cap input and flip on its streaming bit.
         for (int i=0; i<CAP_COUNT; ++i) {
           if (cap_state[i].pin == input) {
-            cap_state[i].streaming = false; 
+            cap_state[i].streaming = false;
           }
         }
       }
@@ -686,11 +694,30 @@ void circuitPlaygroundCommand(byte command, byte argc, byte* argv) {
         // Set the click threshold values.
         CircuitPlayground.lis.setClick(type, threshold);
       }
+    case CP_SENSECOLOR:
+      // Sense the color of an object over the light sensor and send back
+      // a CP_SENSECOLOR_REPLY response.
+      sendColorSenseResponse();
   }
 }
 
+// Send a color sense response back to the host computer.
+void sendColorSenseResponse() {
+  // Perform a color sense with NeoPixel #1 and the light sensor.
+  uint8_t red, green, blue;
+  CircuitPlayground.senseColor(red, green, blue);
+  // Construct a response data packet and send it.
+  uint8_t data[4] = {0};
+  data[0] = CP_SENSECOLOR_REPLY;
+  data[1] = red;
+  data[2] = green;
+  data[3] = blue;
+  // Send the response.
+  Firmata.sendSysex(CP_COMMAND, 4, data);
+}
+
 // Read the accelerometer and send a response packet.
-void sendAccelResponse() {  
+void sendAccelResponse() {
   // Get an accelerometer X, Y, Z reading.
   sensors_event_t event;
   CircuitPlayground.lis.getEvent(&event);
@@ -740,7 +767,7 @@ void sendCapResponse(uint8_t pin) {
     struct {
       uint8_t type;
       uint8_t pin;
-      int32_t value; 
+      int32_t value;
     } data;
     uint8_t bytes[6];
   } response;
@@ -1071,7 +1098,7 @@ void setup()
     DEBUG_OUTPUT.begin(DEBUG_BAUD);
     DEBUG_PRINTLN("Circuit Playground Firmata starting up!");
   #endif
-  
+
   // Circuit playground setup:
   if (!CircuitPlayground.begin()) {
     // Failed to initialize circuit playground, fast blink the red LED on the board.
@@ -1084,7 +1111,7 @@ void setup()
       delay(100);
     }
   }
-    
+
   Firmata.setFirmwareVersion(FIRMATA_MAJOR_VERSION, FIRMATA_MINOR_VERSION);
 
   Firmata.attach(ANALOG_MESSAGE, analogWriteCallback);
@@ -1111,7 +1138,7 @@ void setup()
   pinConfig[9]  = PIN_MODE_IGNORE;   // Pin 9  = SPI
   pinConfig[28] = PIN_MODE_IGNORE;   // Pin 28 = D8 = LIS3DH CS
   pinConfig[26] = PIN_MODE_IGNORE;   // Messes with CS too?
-  
+
   //while (!Serial) {
   //  ; // wait for serial port to connect. Only needed for ATmega32u4-based boards (Leonardo, etc).
   //}
