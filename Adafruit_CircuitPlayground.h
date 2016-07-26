@@ -84,7 +84,7 @@ class Adafruit_CircuitPlayground {
   void setAccelRange(lis3dh_range_t range) { lis.setRange(range); }
   void setAccelTap(uint8_t c, uint8_t clickthresh) 
     { lis.setClick(c, clickthresh, 10, 20, 255); }
-  uint8_t getAccelTap(void) { return lis.getClick(); }
+  uint8_t getAccelTap(void) { return (lis.getClick() >> 8) & 0x3; }
 
 
   // neopixels
