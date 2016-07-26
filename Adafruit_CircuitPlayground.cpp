@@ -11,6 +11,7 @@ boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
 
   strip = Adafruit_CPlay_NeoPixel(10, CPLAY_NEOPIXELPIN, NEO_GRB + NEO_KHZ800);
   lis = Adafruit_CPlay_LIS3DH(CPLAY_LIS3DH_CS);
+  mic = Adafruit_CPlay_Mic();
 
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
