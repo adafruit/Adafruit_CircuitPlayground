@@ -18,6 +18,7 @@
 #include "utility/Adafruit_CPlay_NeoPixel.h"
 #include "utility/Adafruit_CPlay_LIS3DH.h"
 #include "utility/Adafruit_CPlay_Mic.h"
+#include "utility/Adafruit_CPlay_Speaker.h"
 #include "utility/CPlay_CapacitiveSensor.h"
 
 #ifndef _ADAFRUIT_CIRCUITPLAYGROUND_H_
@@ -65,6 +66,7 @@ class Adafruit_CircuitPlayground {
   Adafruit_CPlay_NeoPixel strip;
   Adafruit_CPlay_LIS3DH lis;
   Adafruit_CPlay_Mic mic;
+  Adafruit_CPlay_Speaker speaker;
   CPlay_CapacitiveSensor cap[8];
 
   boolean slideSwitch(void);
