@@ -15,7 +15,9 @@
 // code is mostly a bunch of tables and weird fixed-point (integer) math
 // that probably doesn't make much sense even with all these comments.
 
-#include "Adafruit_CircuitPlayground.h"
+#include <Adafruit_CircuitPlayground.h>
+#include <Wire.h>
+#include <SPI.h>
 
 // GLOBAL STUFF ------------------------------------------------------------
 

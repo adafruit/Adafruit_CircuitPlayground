@@ -41,7 +41,9 @@
 //
 // Author: Tony DiCola
 // License: MIT License (https://opensource.org/licenses/MIT)
-#include "Adafruit_CircuitPlayground.h"
+#include <Adafruit_CircuitPlayground.h>
+#include <Wire.h>
+#include <SPI.h>
 #include "Adafruit_SleepyDog.h"
 
 // Include all the demos, note that each demo is defined in a separate class to keep the sketch

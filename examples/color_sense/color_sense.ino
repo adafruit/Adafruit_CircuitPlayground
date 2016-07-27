@@ -14,7 +14,9 @@
 //
 // Author: Limor Fried & Tony DiCola
 // License: MIT License (https://opensource.org/licenses/MIT)
-#include "Adafruit_CircuitPlayground.h"
+#include <Adafruit_CircuitPlayground.h>
+#include <Wire.h>
+#include <SPI.h>
 
 void setup() {
   Serial.begin(115200);

@@ -139,8 +139,10 @@ void Adafruit_CPlay_LIS3DH::read(void) {
   } 
   #ifndef __AVR_ATtiny85__
   else {
+#if SPI_HAS_TRANSACTION
     if (_sck == -1)
       SPI.beginTransaction(SPISettings(500000, MSBFIRST, SPI_MODE0));
+#endif
     digitalWrite(_cs, LOW);
     spixfer(LIS3DH_REG_OUT_X_L | 0x80 | 0x40); // read multiple, bit 7&6 high
 
@@ -149,9 +151,10 @@ void Adafruit_CPlay_LIS3DH::read(void) {
     z = spixfer(); z |= ((uint16_t)spixfer()) << 8;
 
     digitalWrite(_cs, HIGH);
+#if SPI_HAS_TRANSACTION
     if (_sck == -1)
       SPI.endTransaction();              // release the SPI bus
-
+#endif
   }
   #endif
   uint8_t range = getRange();
@@ -191,16 +194,20 @@ int16_t Adafruit_CPlay_LIS3DH::readADC(uint8_t adc) {
   } 
   #ifndef __AVR_ATtiny85__
   else {
+#if SPI_HAS_TRANSACTION
     if (_sck == -1)
       SPI.beginTransaction(SPISettings(500000, MSBFIRST, SPI_MODE0));
+#endif
     digitalWrite(_cs, LOW);
     spixfer(reg | 0x80 | 0x40); // read multiple, bit 7&6 high
 
     value = spixfer(); value |= ((uint16_t)spixfer()) << 8;
 
     digitalWrite(_cs, HIGH);
+#if SPI_HAS_TRANSACTION
     if (_sck == -1)
       SPI.endTransaction();              // release the SPI bus
+#endif
   }
   #endif
 
@@ -376,14 +383,18 @@ void Adafruit_CPlay_LIS3DH::writeRegister8(uint8_t reg, uint8_t value) {
   } 
   #ifndef __AVR_ATtiny85__
   else {
+#if SPI_HAS_TRANSACTION
     if (_sck == -1)
       SPI.beginTransaction(SPISettings(500000, MSBFIRST, SPI_MODE0));
+#endif
     digitalWrite(_cs, LOW);
     spixfer(reg & ~0x80); // write, bit 7 low
     spixfer(value);
     digitalWrite(_cs, HIGH);
+#if SPI_HAS_TRANSACTION
     if (_sck == -1)
       SPI.endTransaction();              // release the SPI bus
+#endif
   }
   #endif
 }
@@ -406,14 +417,18 @@ uint8_t Adafruit_CPlay_LIS3DH::readRegister8(uint8_t reg) {
   }  
   #ifndef __AVR_ATtiny85__
   else {
+#if SPI_HAS_TRANSACTION
     if (_sck == -1)
       SPI.beginTransaction(SPISettings(500000, MSBFIRST, SPI_MODE0));
+#endif
     digitalWrite(_cs, LOW);
     spixfer(reg | 0x80); // read, bit 7 high
     value = spixfer(0);
     digitalWrite(_cs, HIGH);
+#if SPI_HAS_TRANSACTION
     if (_sck == -1)
       SPI.endTransaction();              // release the SPI bus
+#endif
   }
   #endif
   return value;

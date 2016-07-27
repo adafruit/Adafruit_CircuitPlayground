@@ -2,6 +2,8 @@
 // digitized sound sample, very quietly (because teeny tiny speaker).
 
 #include <Adafruit_CircuitPlayground.h>
+#include <Wire.h>
+#include <SPI.h>
 
 // Enable ONE of these lines to pick a sound to play back when tapped:
 #include "coin.h" // Super Mario coin sound

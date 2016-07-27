@@ -9,7 +9,7 @@
 
 class CapTouchDemo: public Demo {
 public:
-  CapTouchDemo() {}
+  CapTouchDemo() { playSound = false; }
   ~CapTouchDemo() {}
 
   virtual void loop() {
@@ -79,7 +79,7 @@ public:
   }
 
 private:
-  bool playSound = false;
+  bool playSound;
 };
 
 #endif

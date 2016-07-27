@@ -1,6 +1,8 @@
 // Demo program for testing library and board - flip the switch to turn on/off buzzer
 
 #include <Adafruit_CircuitPlayground.h>
+#include <Wire.h>
+#include <SPI.h>
 
 // we light one pixel at a time, this is our counter
 uint8_t pixeln = 0;

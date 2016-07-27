@@ -24,6 +24,9 @@
 #ifndef _ADAFRUIT_CIRCUITPLAYGROUND_H_
 #define _ADAFRUIT_CIRCUITPLAYGROUND_H_
 
+#ifndef NOT_AN_INTERRUPT // Not defined in Arduino 1.0.5
+#define NOT_AN_INTERRUPT -1
+#endif
 
 #define CPLAY_REDLED 13
 #define CPLAY_NEOPIXELPIN 17

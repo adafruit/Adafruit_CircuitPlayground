@@ -4,7 +4,9 @@
 // object; this code is almost entirely just dressing up the output with
 // a lot of averaging and scaling math and colors.
 
-#include "Adafruit_CircuitPlayground.h"
+#include <Adafruit_CircuitPlayground.h>
+#include <Wire.h>
+#include <SPI.h>
 
 // GLOBAL STUFF ------------------------------------------------------------
 
