@@ -101,7 +101,7 @@ newEnd, float inputValue, float curve){
 
 class VUMeterDemo: public Demo {
 public:
-  VUMeterDemo() {}
+  VUMeterDemo() { currentCeiling = 0; }
   ~VUMeterDemo() {}
 
   virtual void loop() {
@@ -176,7 +176,7 @@ public:
   }
 
 private:
-  int currentCeiling = 0;
+  int currentCeiling;
 };
 
 #endif

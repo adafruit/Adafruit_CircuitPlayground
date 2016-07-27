@@ -18,11 +18,15 @@
 #include "utility/Adafruit_CPlay_NeoPixel.h"
 #include "utility/Adafruit_CPlay_LIS3DH.h"
 #include "utility/Adafruit_CPlay_Mic.h"
+#include "utility/Adafruit_CPlay_Speaker.h"
 #include "utility/CPlay_CapacitiveSensor.h"
 
 #ifndef _ADAFRUIT_CIRCUITPLAYGROUND_H_
 #define _ADAFRUIT_CIRCUITPLAYGROUND_H_
 
+#ifndef NOT_AN_INTERRUPT // Not defined in Arduino 1.0.5
+#define NOT_AN_INTERRUPT -1
+#endif
 
 #define CPLAY_REDLED 13
 #define CPLAY_NEOPIXELPIN 17
@@ -65,6 +69,7 @@ class Adafruit_CircuitPlayground {
   Adafruit_CPlay_NeoPixel strip;
   Adafruit_CPlay_LIS3DH lis;
   Adafruit_CPlay_Mic mic;
+  Adafruit_CPlay_Speaker speaker;
   CPlay_CapacitiveSensor cap[8];
 
   boolean slideSwitch(void);

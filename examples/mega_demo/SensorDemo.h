@@ -23,7 +23,7 @@ static float maxTempF[] = {  85.0,  90.0, 212.0};
 
 class SensorDemo: public Demo {
 public:
-  SensorDemo() {}
+  SensorDemo() { mode = 0; }
   ~SensorDemo() {}
 
   virtual void loop() {
@@ -59,7 +59,7 @@ public:
   }
 
 private:
-  int mode = 0;
+  int mode;
 };
 
 #endif

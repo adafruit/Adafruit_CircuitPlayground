@@ -6,8 +6,10 @@
 // Circuit Playground with the USB cable coming out the top.
 // Author: Tony DiCola
 // License: MIT License (https://opensource.org/licenses/MIT)
-#include "Adafruit_CircuitPlayground.h"
-#include "Mouse.h"
+#include <Adafruit_CircuitPlayground.h>
+#include <Mouse.h>
+#include <Wire.h>
+#include <SPI.h>
 
 
 // Configuration values to adjust the sensitivity and speed of the mouse.

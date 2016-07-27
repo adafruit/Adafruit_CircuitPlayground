@@ -20,6 +20,8 @@ Based on code for the adjustable sensitivity version of amplitie from:
  
  */
 #include <Adafruit_CircuitPlayground.h>
+#include <Wire.h>
+#include <SPI.h>
 #include <math.h>
 
 

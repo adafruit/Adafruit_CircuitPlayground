@@ -21,7 +21,7 @@
 
 class TiltDemo: public Demo {
 public:
-  TiltDemo() {}
+  TiltDemo() { mode = 0; }
   ~TiltDemo() {}
 
   virtual void loop() {
@@ -60,7 +60,7 @@ public:
   }
 
 private:
-  int mode = 0;
+  int mode;
 };
 
 #endif

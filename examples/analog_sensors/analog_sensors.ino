@@ -6,6 +6,8 @@
 // switch is turned to the left will play a music tone proportional
 // to the value.
 #include <Adafruit_CircuitPlayground.h>
+#include <Wire.h>
+#include <SPI.h>
 
 // Change the analog input value below to try different sensors:
 #define ANALOG_INPUT  A5  // Specify the analog input to read.

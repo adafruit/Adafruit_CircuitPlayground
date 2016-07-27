@@ -9,7 +9,7 @@ static int speeds[] = { 5, 10, 50, 100 };
 
 class RainbowCycleDemo: public Demo {
 public:
-  RainbowCycleDemo() {}
+  RainbowCycleDemo() { currentSpeed = 0; }
   ~RainbowCycleDemo() {}
 
   virtual void loop() {
@@ -32,7 +32,7 @@ public:
   }
 
 private:
-  int currentSpeed = 0;
+  int currentSpeed;
   
 };
 
