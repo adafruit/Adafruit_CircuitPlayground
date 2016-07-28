@@ -32,7 +32,6 @@
 #include <SPI.h>
 #include <Servo.h>
 #include <Wire.h>
-#include <Firmata.h>
 #include <Adafruit_CircuitPlayground.h>
 
 // Uncomment below to enable debug output.
