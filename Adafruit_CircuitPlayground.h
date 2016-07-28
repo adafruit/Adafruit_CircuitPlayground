@@ -20,7 +20,7 @@
 #include "utility/Adafruit_CPlay_Mic.h"
 #include "utility/Adafruit_CPlay_Speaker.h"
 #include "utility/CPlay_CapacitiveSensor.h"
-#include "utility/CPlay_Firmata.h"
+#include "utility/CP_Firmata.h"
 
 #ifndef _ADAFRUIT_CIRCUITPLAYGROUND_H_
 #define _ADAFRUIT_CIRCUITPLAYGROUND_H_
