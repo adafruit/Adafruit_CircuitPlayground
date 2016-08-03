@@ -3,6 +3,8 @@
 // pin #13 red LED is lit when data is sent to Scratch!
 
 #include <Adafruit_CircuitPlayground.h>
+#include <Wire.h>
+#include <SPI.h>
 
 #define SCRATCH_DATA_REQUEST  0x01
 #define SCRATCH_FW_VER        0x04
