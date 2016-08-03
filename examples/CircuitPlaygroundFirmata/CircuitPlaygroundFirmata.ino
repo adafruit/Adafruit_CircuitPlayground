@@ -136,38 +136,14 @@ typedef struct {
 } cap_state_type;
 
 cap_state_type cap_state[CAP_COUNT] = {
-  {
-    .streaming = false,
-    .pin       = 0
-  },
-  {
-    .streaming = false,
-    .pin       = 1
-  },
-  {
-    .streaming = false,
-    .pin       = 2
-  },
-  {
-    .streaming = false,
-    .pin       = 3
-  },
-  {
-    .streaming = false,
-    .pin       = 6
-  },
-  {
-    .streaming = false,
-    .pin       = 9
-  },
-  {
-    .streaming = false,
-    .pin       = 10
-  },
-  {
-    .streaming = false,
-    .pin       = 12
-  }
+  { false,  0 },
+  { false,  1 },
+  { false,  2 },
+  { false,  3 },
+  { false,  6 },
+  { false,  9 },
+  { false, 10 },
+  { false, 12 }
 };
 
 
