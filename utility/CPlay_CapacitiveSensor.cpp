@@ -27,24 +27,37 @@ CPlay_CapacitiveSensor::CPlay_CapacitiveSensor(uint8_t sendPin, uint8_t receiveP
 	// initialize this instance's variables
 	// Serial.begin(9600);		// for debugging
 	error = 1;
-	loopTimingFactor = 310;		// determined empirically -  a hack
+	loopTimingFactor = 300;		// determined empirically -  a hack
 
 	CS_Timeout_Millis = (2000 * (float)loopTimingFactor * (float)F_CPU) / 16000000;
 	CS_AutocaL_Millis = 20000;
 
 	// Serial.print("timwOut =  ");
 	// Serial.println(CS_Timeout_Millis);
-
+g
 	// get pin mapping and port for send Pin - from PinMode function in core
 
 #ifdef NUM_DIGITAL_PINS
 	if (sendPin >= NUM_DIGITAL_PINS) error = -1;
-	if (receivePin >= NUM_DIGITAL_PINS) error = -1;
+	if (receivePin >= NUM_DIGITAL_PINS) error = -2;
+#endif
+	
+	// sendpin to OUTPUT
+#ifdef ARDUINO_TEEONARDU_FLORA
+	// terrible hack!
+	DDRD |= _BV(5);
+#else
+	pinMode(sendPin, OUTPUT);
 #endif
 
-	pinMode(sendPin, OUTPUT);						// sendpin to OUTPUT
 	pinMode(receivePin, INPUT);						// receivePin to INPUT
+
+#ifdef ARDUINO_TEEONARDU_FLORA
+	// terrible hack!
+	PORTD &= ~_BV(5);
+#else
 	digitalWrite(sendPin, LOW);
+#endif
 
 	sBit = PIN_TO_BITMASK(sendPin);					// get send pin's ports and bitmask
 	sReg = PIN_TO_BASEREG(sendPin);					// get pointer to output register
@@ -149,8 +162,7 @@ int CPlay_CapacitiveSensor::SenseOneCycle(void)
 	while ( !DIRECT_READ(rReg, rBit) && (total < CS_Timeout_Millis) ) {  // while receive pin is LOW AND total is positive value
 		total++;
 	}
-	//Serial.print("SenseOneCycle(1): ");
-	//Serial.println(total);
+	//Serial.print("SenseOneCycle(1): "); Serial.println(total);
 
 	if (total > CS_Timeout_Millis) {
 		return -2;         //  total variable over timeout
