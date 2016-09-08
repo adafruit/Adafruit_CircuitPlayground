@@ -34,7 +34,6 @@ CPlay_CapacitiveSensor::CPlay_CapacitiveSensor(uint8_t sendPin, uint8_t receiveP
 
 	// Serial.print("timwOut =  ");
 	// Serial.println(CS_Timeout_Millis);
-g
 	// get pin mapping and port for send Pin - from PinMode function in core
 
 #ifdef NUM_DIGITAL_PINS
