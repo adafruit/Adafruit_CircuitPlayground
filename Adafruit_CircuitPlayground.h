@@ -53,7 +53,7 @@
 #define TEMPERATURENOMINAL 25
 
 // The beta coefficient of the thermistor (usually 3000-4000)
-#define BCOEFFICIENT 3950
+#define BCOEFFICIENT 3380
 // the value of the 'other' resistor
 
 // Configuration to tune the color sensing logic:
