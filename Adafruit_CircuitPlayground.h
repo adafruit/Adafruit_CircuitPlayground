@@ -75,7 +75,7 @@ class Adafruit_CircuitPlayground {
 
   boolean slideSwitch(void);
   void redLED(boolean v);
-  void playTone(uint16_t freq, uint16_t time);
+  void playTone(uint16_t freq, uint16_t time, boolean wait=true);
   boolean leftButton(void);
   boolean rightButton(void);
   uint16_t lightSensor(void);

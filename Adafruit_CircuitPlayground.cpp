@@ -76,8 +76,9 @@ boolean Adafruit_CircuitPlayground::rightButton(void) {
   return digitalRead(CPLAY_RIGHTBUTTON);
 }
 
-void Adafruit_CircuitPlayground::playTone(uint16_t freq, uint16_t time) {
+void Adafruit_CircuitPlayground::playTone(uint16_t freq, uint16_t time, boolean wait) {
   tone(CPLAY_BUZZER, freq, time);
+  if (wait) delay(time);
 }
 
 uint16_t Adafruit_CircuitPlayground::lightSensor(void) {
