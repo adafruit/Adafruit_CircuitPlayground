@@ -8,17 +8,19 @@ These sketches were tested and verified with:
 * Adafruit AVR Boards 1.4.9
 * Adafruit Circuit Playground Library 1.6.1
 
+## Hello_Accelerometer
+The readings (in m/s<sup>2</sup>) from the 3 axes of the accelerometer are sent
+to the serial monitor once per second. (1G ~= 9.8 m/s<sup>2</sup>)
+```
+X: -0.33  Y: 2.41  Z: 9.40
+X: -1.25  Y: 4.20  Z: 1.86
+X: -7.95  Y: -3.50  Z: -2.47
+X: 0.11  Y: -8.38  Z: 2.25
+X: -2.28  Y: 2.73  Z: 9.10
+```
+
 ## Hello_Blink
 Blinks the little red LED next to the micro USB connector once per second.
-
-## Hello_SlideSwitch
-The position (+ or -) of the slide switch is sent to the serial monitor once
-per second.
-```
-Slide Switch: -
-Slide Switch: +
-Slide Switch: +
-```
 
 ## Hello_Buttons
 The position (UP or DOWN) of the two push buttons are sent to the serial
@@ -28,6 +30,25 @@ Left Button:   UP   Right Button:   UP
 Left Button: DOWN   Right Button:   UP
 Left Button:   UP   Right Button:   UP
 Left Button:   UP   Right Button: DOWN
+```
+
+## Hello_CapTouch
+The readings from the 8 capacitive touch pads are sent to the serial monitor
+once per second.
+```
+159	11	4	3	1	0	1	0	
+4	335	4	3	2	1	1	0	
+3	4	2	2	1	2	1	0	
+4	4	297	30	2	2	0	2	
+3	2	2	3	2	2	0	1	
+0	3	2	330	2	2	2	2	
+3	2	2	3	2	0	2	2	
+3	3	2	3	385	12	2	2	
+4	2	2	3	2	3	3	1	
+4	3	3	2	10	191	2	2	
+0	3	4	3	0	2	156	2	
+4	2	4	3	2	0	204	1	
+3	2	4	3	0	3	1	297
 ```
 
 ## Hello_LightSensor
@@ -41,24 +62,18 @@ Light Sensor: 192
 Light Sensor: 688
 ```
 
-## Hello_Temperature
-The temperature is sent to the serial monitor once per second.
-```
-tempC: 28.25  tempF: 83.02
-tempC: 29.71  tempF: 85.64
-tempC: 30.72  tempF: 87.30
-tempC: 31.85  tempF: 89.32
-```
+## Hello_NeoPixels
+Clears all pixels for 0.5 seconds then displays colors on the fist 5 pixels
+using individual 8-bit values and the same colors on the next 5 pixels using
+24-bit values. After 5 seconds, this repeats.
 
-## Hello_Accelerometer
-The readings (in m/s<sup>2</sup>) from the 3 axes of the accelerometer are sent
-to the serial monitor once per second. (1G ~= 9.8 m/s<sup>2</sup>)
+## Hello_SlideSwitch
+The position (+ or -) of the slide switch is sent to the serial monitor once
+per second.
 ```
-X: -0.33  Y: 2.41  Z: 9.40
-X: -1.25  Y: 4.20  Z: 1.86
-X: -7.95  Y: -3.50  Z: -2.47
-X: 0.11  Y: -8.38  Z: 2.25
-X: -2.28  Y: 2.73  Z: 9.10
+Slide Switch: -
+Slide Switch: +
+Slide Switch: +
 ```
 
 ## Hello_SoundSensor
@@ -78,7 +93,11 @@ Sound Sensor: 336
 Plays a 500Hz tone for 0.1 seconds on the speaker, followed by 1 second of
 silence.
 
-## Hello_NeoPixels
-Clears all pixels for 0.5 seconds then displays colors on the fist 5 pixels
-using individual 8-bit values and the same colors on the next 5 pixels using
-24-bit values. After 5 seconds, this repeats.
+## Hello_Temperature
+The temperature is sent to the serial monitor once per second.
+```
+tempC: 28.25  tempF: 83.02
+tempC: 29.71  tempF: 85.64
+tempC: 30.72  tempF: 87.30
+tempC: 31.85  tempF: 89.32
+```
