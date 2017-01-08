@@ -60,6 +60,7 @@ Adafruit_CPlay_NeoPixel::Adafruit_CPlay_NeoPixel() :
 Adafruit_CPlay_NeoPixel::~Adafruit_CPlay_NeoPixel() {
   if(pixels)   free(pixels);
   if(pin >= 0) pinMode(pin, INPUT);
+  pixels = NULL;
 }
 
 void Adafruit_CPlay_NeoPixel::begin(void) {

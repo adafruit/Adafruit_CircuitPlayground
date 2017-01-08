@@ -9,7 +9,11 @@ boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   pinMode(CPLAY_BUZZER, OUTPUT);
   pinMode(CPLAY_CAPSENSE_SHARED, OUTPUT);
 
-  strip = Adafruit_CPlay_NeoPixel(10, CPLAY_NEOPIXELPIN, NEO_GRB + NEO_KHZ800);
+  strip = Adafruit_CPlay_NeoPixel(); 
+  strip.updateType(NEO_GRB + NEO_KHZ800);
+  strip.updateLength(10);
+  strip.setPin(CPLAY_NEOPIXELPIN);
+
   lis = Adafruit_CPlay_LIS3DH(CPLAY_LIS3DH_CS);
   mic = Adafruit_CPlay_Mic();
 
@@ -76,8 +80,9 @@ boolean Adafruit_CircuitPlayground::rightButton(void) {
   return digitalRead(CPLAY_RIGHTBUTTON);
 }
 
-void Adafruit_CircuitPlayground::playTone(uint16_t freq, uint16_t time) {
+void Adafruit_CircuitPlayground::playTone(uint16_t freq, uint16_t time, boolean wait) {
   tone(CPLAY_BUZZER, freq, time);
+  if (wait) delay(time);
 }
 
 uint16_t Adafruit_CircuitPlayground::lightSensor(void) {
