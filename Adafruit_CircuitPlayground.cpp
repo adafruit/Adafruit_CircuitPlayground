@@ -1,4 +1,4 @@
-#include <Adafruit_Circuit_Playground.h>
+#include <Adafruit_CircuitPlayground.h>
 
 
 boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
