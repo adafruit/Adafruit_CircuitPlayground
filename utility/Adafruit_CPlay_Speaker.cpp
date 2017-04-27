@@ -11,6 +11,7 @@
 // 50% (speaker idle position).
 
 void Adafruit_CPlay_Speaker::begin(void) {
+#ifdef __AVR__
   // Set up Timer4 for fast PWM on !OC4A
   PLLFRQ  = (PLLFRQ & 0xCF) | 0x30;   // Route PLL to async clk
   TCCR4A  = _BV(COM4A0) | _BV(PWM4A); // Clear on match, PWMA on
@@ -23,6 +24,7 @@ void Adafruit_CPlay_Speaker::begin(void) {
   OCR4A   = 127;                      // 50% duty (idle position) to start
   started = true;
   pinMode(5, OUTPUT);                // Enable output
+#endif
 }
 
 // -------------------------------------------------------------------------
@@ -30,9 +32,11 @@ void Adafruit_CPlay_Speaker::begin(void) {
 // Turns off PWM output to the speaker.
 
 void Adafruit_CPlay_Speaker::end(void) {
+#ifdef __AVR__
   pinMode(5, INPUT);
   TCCR4A  = 0; // PWMA off
   started = false;
+#endif
 }
 
 // -------------------------------------------------------------------------
@@ -40,8 +44,10 @@ void Adafruit_CPlay_Speaker::end(void) {
 // Sets speaker position (0-255; 127=idle), enables PWM output if needed.
 
 void Adafruit_CPlay_Speaker::set(uint8_t value) {
+#ifdef __AVR__
   if(!started) begin();
   TCCR4A = value;
+#endif
 }
 
 // -------------------------------------------------------------------------
@@ -54,6 +60,7 @@ void Adafruit_CPlay_Speaker::set(uint8_t value) {
 
 void Adafruit_CPlay_Speaker::playSound(
   const uint8_t *data, uint16_t bytesToGo, uint16_t sampleRate) {
+#ifdef __AVR__
 
   if(sampleRate < 7620) sampleRate = 7620; // Because 8-bit delay counter
 
@@ -87,4 +94,5 @@ void Adafruit_CPlay_Speaker::playSound(
    : "r30", "r31" ); // Z is clobbered
 
   OCR4A = 127; // Idle position for next sound
+#endif
 }
