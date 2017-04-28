@@ -90,35 +90,19 @@
 
 // Add NEO_KHZ400 to the color order value to indicate a 400 KHz
 // device.  All but the earliest v1 NeoPixels expect an 800 KHz data
-// stream, this is the default if unspecified.  Because flash space
-// is very limited on ATtiny devices (e.g. Trinket, Gemma), v1
-// NeoPixels aren't handled by default on those chips, though it can
-// be enabled by removing the ifndef/endif below -- but code will be
-// bigger.  Conversely, can disable the NEO_KHZ400 line on other MCUs
-// to remove v1 support and save a little space.
+// stream, this is the default if unspecified.
 
 #define NEO_KHZ800 0x0000 // 800 KHz datastream
-#ifndef __AVR_ATtiny85__
 #define NEO_KHZ400 0x0100 // 400 KHz datastream
-#endif
 
-// If 400 KHz support is enabled, the third parameter to the constructor
-// requires a 16-bit value (in order to select 400 vs 800 KHz speed).
-// If only 800 KHz is enabled (as is default on ATtiny), an 8-bit value
-// is sufficient to encode pixel color order, saving some space.
-
-#ifdef NEO_KHZ400
 typedef uint16_t neoPixelType;
-#else
-typedef uint8_t  neoPixelType;
-#endif
 
 class Adafruit_CPlay_NeoPixel {
 
  public:
 
   // Constructor: number of LEDs, pin number, LED type
-  Adafruit_CPlay_NeoPixel(uint16_t n, uint8_t p=6, neoPixelType t=NEO_GRB + NEO_KHZ800);
+  Adafruit_CPlay_NeoPixel(uint16_t n, uint8_t p=17, neoPixelType t=NEO_GRB + NEO_KHZ800);
   Adafruit_CPlay_NeoPixel(void);
   ~Adafruit_CPlay_NeoPixel();
 

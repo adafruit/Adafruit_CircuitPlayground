@@ -9,7 +9,7 @@ boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   pinMode(CPLAY_BUZZER, OUTPUT);
   pinMode(CPLAY_CAPSENSE_SHARED, OUTPUT);
 
-  strip = Adafruit_CPlay_NeoPixel(); 
+  strip = Adafruit_CPlay_NeoPixel();
   strip.updateType(NEO_GRB + NEO_KHZ800);
   strip.updateLength(10);
   strip.setPin(CPLAY_NEOPIXELPIN);
@@ -30,10 +30,7 @@ boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   cap[6] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 10);
   cap[7] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 12);
 
-  if (! lis.begin(0x18)) {   // change this to 0x19 for alternative i2c address
-    return false;
-  }
-  return true;
+  return lis.begin(0x18); // change to 0x19 for alternative i2c address
 }
 
 uint16_t Adafruit_CircuitPlayground::readCap(uint8_t p, uint8_t samples) {
