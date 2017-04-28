@@ -2,11 +2,17 @@
 
 boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   pinMode(CPLAY_REDLED, OUTPUT);
-  pinMode(CPLAY_SLIDESWITCHPIN, INPUT);
-  pinMode(CPLAY_LEFTBUTTON, INPUT);
-  pinMode(CPLAY_RIGHTBUTTON, INPUT);
   pinMode(CPLAY_BUZZER, OUTPUT);
   pinMode(CPLAY_CAPSENSE_SHARED, OUTPUT);
+#ifdef __AVR__
+  pinMode(CPLAY_LEFTBUTTON, INPUT);
+  pinMode(CPLAY_RIGHTBUTTON, INPUT);
+  pinMode(CPLAY_SLIDESWITCHPIN, INPUT);
+#else // Circuit Playground Express // Circuit Playground Express
+  pinMode(CPLAY_LEFTBUTTON, INPUT_PULLDOWN);
+  pinMode(CPLAY_RIGHTBUTTON, INPUT_PULLDOWN);
+  pinMode(CPLAY_SLIDESWITCHPIN, INPUT_PULLUP);
+#endif
 
   strip = Adafruit_CPlay_NeoPixel();
   strip.updateType(NEO_GRB + NEO_KHZ800);
