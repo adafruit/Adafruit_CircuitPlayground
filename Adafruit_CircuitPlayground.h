@@ -30,29 +30,33 @@
 #endif
 
 #ifdef __AVR__ // Circuit Playground 'classic'
- #define CPLAY_REDLED          13
- #define CPLAY_NEOPIXELPIN     17
- #define CPLAY_SLIDESWITCHPIN  21
- #define CPLAY_LEFTBUTTON       4
- #define CPLAY_RIGHTBUTTON     19
- #define CPLAY_LIGHTSENSOR     A5
- #define CPLAY_THERMISTORPIN   A0
- #define CPLAY_SOUNDSENSOR     A4
- #define CPLAY_BUZZER           5
- #define CPLAY_LIS3DH_CS        8
+ #define CPLAY_REDLED           13
+ #define CPLAY_NEOPIXELPIN      17
+ #define CPLAY_SLIDESWITCHPIN   21
+ #define CPLAY_LEFTBUTTON        4
+ #define CPLAY_RIGHTBUTTON      19
+ #define CPLAY_LIGHTSENSOR      A5
+ #define CPLAY_THERMISTORPIN    A0
+ #define CPLAY_SOUNDSENSOR      A4
+ #define CPLAY_BUZZER            5
+ #define CPLAY_LIS3DH_CS         8
+ #define CPLAY_LIS3DH_INTERRUPT  7
+ #define CPLAY_LIS3DH_ADDRESS 0x18
 #else // Circuit Playground Express
- #define CPLAY_REDLED          13
- #define CPLAY_NEOPIXELPIN      8
- #define CPLAY_SLIDESWITCHPIN   7
- #define CPLAY_LEFTBUTTON       4
- #define CPLAY_RIGHTBUTTON      5
- #define CPLAY_LIGHTSENSOR     A8
- #define CPLAY_THERMISTORPIN   A9
- #define CPLAY_SOUNDSENSOR     A4 // TBD I2S
- #define CPLAY_BUZZER          A0
- #define CPLAY_LIS3DH_CS       -1 // I2C
+ #define CPLAY_REDLED           13
+ #define CPLAY_NEOPIXELPIN       8
+ #define CPLAY_SLIDESWITCHPIN    7
+ #define CPLAY_LEFTBUTTON        4
+ #define CPLAY_RIGHTBUTTON       5
+ #define CPLAY_LIGHTSENSOR      A8
+ #define CPLAY_THERMISTORPIN    A9
+ #define CPLAY_SOUNDSENSOR      A4 // TBD I2S
+ #define CPLAY_BUZZER           A0
+ #define CPLAY_LIS3DH_CS        -1 // I2C
+ #define CPLAY_LIS3DH_INTERRUPT 36
+ #define CPLAY_LIS3DH_ADDRESS 0x19
 #endif
-#define CPLAY_CAPSENSE_SHARED  30
+#define CPLAY_CAPSENSE_SHARED   30
 
 #define SERIESRESISTOR 10000
 // resistance at 25 degrees C

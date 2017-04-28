@@ -1,6 +1,5 @@
 #include <Adafruit_CircuitPlayground.h>
 
-
 boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   pinMode(CPLAY_REDLED, OUTPUT);
   pinMode(CPLAY_SLIDESWITCHPIN, INPUT);
@@ -30,7 +29,7 @@ boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   cap[6] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 10);
   cap[7] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 12);
 
-  return lis.begin(0x18); // change to 0x19 for alternative i2c address
+  return lis.begin(CPLAY_LIS3DH_ADDRESS);
 }
 
 uint16_t Adafruit_CircuitPlayground::readCap(uint8_t p, uint8_t samples) {
@@ -55,7 +54,6 @@ uint16_t Adafruit_CircuitPlayground::readCap(uint8_t p, uint8_t samples) {
     return 0;
   }
 }
-
 
 // just turn on/off the red #13 LED
 void Adafruit_CircuitPlayground::redLED(boolean v) {
@@ -139,7 +137,6 @@ float Adafruit_CircuitPlayground::temperatureF(void) {
   float tempF = CircuitPlayground.temperature() * 1.8 + 32;
   return tempF;
 }
-
 
 // Input a value 0 to 255 to get a color value.
 // The colours are a transition r - g - b - back to r.
