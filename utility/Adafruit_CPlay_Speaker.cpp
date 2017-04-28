@@ -23,7 +23,12 @@ void Adafruit_CPlay_Speaker::begin(void) {
   OCR4C   = 255;                      // TOP
   OCR4A   = 127;                      // 50% duty (idle position) to start
   started = true;
-  pinMode(5, OUTPUT);                // Enable output
+  pinMode(5, OUTPUT);                 // Enable output
+#else
+  // PWM/timer not needed on CPlay Express, has true analog out.
+  // Set analogWrite resolution to 8 bits to match AVR calls.
+  analogWriteResolution(8);
+  pinMode(A0, OUTPUT);                // Enable output
 #endif
 }
 
@@ -33,10 +38,12 @@ void Adafruit_CPlay_Speaker::begin(void) {
 
 void Adafruit_CPlay_Speaker::end(void) {
 #ifdef __AVR__
-  pinMode(5, INPUT);
   TCCR4A  = 0; // PWMA off
-  started = false;
+  pinMode(5, INPUT);
+#else
+  pinMode(A0, INPUT);
 #endif
+  started = false;
 }
 
 // -------------------------------------------------------------------------
@@ -44,9 +51,11 @@ void Adafruit_CPlay_Speaker::end(void) {
 // Sets speaker position (0-255; 127=idle), enables PWM output if needed.
 
 void Adafruit_CPlay_Speaker::set(uint8_t value) {
-#ifdef __AVR__
   if(!started) begin();
+#ifdef __AVR__
   TCCR4A = value;
+#else
+  analogWrite(A0, value);
 #endif
 }
 
@@ -57,15 +66,14 @@ void Adafruit_CPlay_Speaker::set(uint8_t value) {
 // 8 Kbytes/second).  Max ~20K space avail on Circuit Playground.
 // This function currently "blocks" -- it will not play sounds in the
 // background while other code runs.
-
 void Adafruit_CPlay_Speaker::playSound(
-  const uint8_t *data, uint16_t bytesToGo, uint16_t sampleRate) {
+  const uint8_t *data, uint32_t len, uint16_t sampleRate) {
 #ifdef __AVR__
-
   if(sampleRate < 7620) sampleRate = 7620; // Because 8-bit delay counter
 
-  uint8_t interval = (F_CPU / 4 + sampleRate / 2) / sampleRate - 6,
-          x, counter;
+  uint8_t  interval = (F_CPU / 4 + sampleRate / 2) / sampleRate - 6,
+           x, counter;
+  uint16_t bytesToGo = len;
 
   if(!started) begin();
 
@@ -94,5 +102,17 @@ void Adafruit_CPlay_Speaker::playSound(
    : "r30", "r31" ); // Z is clobbered
 
   OCR4A = 127; // Idle position for next sound
+#else
+  uint32_t i, startTime, r2 = sampleRate / 2;
+
+  startTime = micros();
+  for(i=0; i<len; i++) {
+    while(((micros() - startTime + 50) / 100) <
+      ((i * 10000UL + r2) / sampleRate));
+    analogWrite(A0, data[i]);
+  }
+  while(((micros() - startTime + 50) / 100) <
+    ((i * 10000UL + r2) / sampleRate));
+  analogWrite(A0, 127);
 #endif
 }

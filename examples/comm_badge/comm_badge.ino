@@ -26,7 +26,7 @@ void setup() {
   // feature to call myFunction() automatically when tapped.
   CircuitPlayground.setAccelRange(LIS3DH_RANGE_4_G);
   CircuitPlayground.setAccelTap(1, 127);
-  attachInterrupt(digitalPinToInterrupt(7), myFunction, RISING);
+  attachInterrupt(digitalPinToInterrupt(CPLAY_LIS3DH_INTERRUPT), myFunction, RISING);
 }
 
 void loop() {
