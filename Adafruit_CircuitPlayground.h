@@ -139,14 +139,6 @@ class Adafruit_CircuitPlayground {
     return ((uint32_t)red << 16) | ((uint32_t)green << 8) | blue;
   }
 
-
-#ifdef __AVR__ // Circuit Playground 'classic'
-
-#else  // Circuit Playground Express
-  void speakerOff(void) { digitalWrite(CPLAY_SPEAKER_SHUTDOWN, LOW); }
-  void speakerOn(void)  { digitalWrite(CPLAY_SPEAKER_SHUTDOWN, HIGH); }
-#endif
-
  private:
 
 

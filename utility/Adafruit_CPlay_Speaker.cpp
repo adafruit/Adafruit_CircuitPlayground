@@ -32,6 +32,14 @@ void Adafruit_CPlay_Speaker::begin(void) {
 #endif
 }
 
+
+void Adafruit_CPlay_Speaker::enable(boolean e)  { 
+#ifdef __AVR__
+#else             // circuit playground express has nicer amp w/shutdown
+  digitalWrite(CPLAY_SPEAKER_SHUTDOWN, e);
+#endif 
+}
+
 // -------------------------------------------------------------------------
 
 // Turns off PWM output to the speaker.
