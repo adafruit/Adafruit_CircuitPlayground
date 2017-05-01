@@ -3,8 +3,8 @@
 boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   pinMode(CPLAY_REDLED, OUTPUT);
   pinMode(CPLAY_BUZZER, OUTPUT);
-  pinMode(CPLAY_CAPSENSE_SHARED, OUTPUT);
 #ifdef __AVR__
+  pinMode(CPLAY_CAPSENSE_SHARED, OUTPUT);
   pinMode(CPLAY_LEFTBUTTON, INPUT);
   pinMode(CPLAY_RIGHTBUTTON, INPUT);
   pinMode(CPLAY_SLIDESWITCHPIN, INPUT);
@@ -12,6 +12,8 @@ boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   pinMode(CPLAY_LEFTBUTTON, INPUT_PULLDOWN);
   pinMode(CPLAY_RIGHTBUTTON, INPUT_PULLDOWN);
   pinMode(CPLAY_SLIDESWITCHPIN, INPUT_PULLUP);
+  pinMode(CPLAY_SPEAKER_SHUTDOWN, OUTPUT);
+  digitalWrite(CPLAY_SPEAKER_SHUTDOWN, HIGH);
 #endif
 
   strip = Adafruit_CPlay_NeoPixel();
@@ -26,6 +28,7 @@ boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   strip.show(); // Initialize all pixels to 'off'
   strip.setBrightness(brightness);
 
+#ifdef __AVR__
   cap[0] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 0);
   cap[1] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 1);
   cap[2] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 2);
@@ -34,31 +37,33 @@ boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   cap[5] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 9);
   cap[6] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 10);
   cap[7] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 12);
+#else // Circuit Playground Express // Circuit Playground Express
+  for(int i=0; i<7; i++) {
+    cap[i] = Adafruit_FreeTouch(A1+i, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
+    if (! cap[i].begin()) return false;
+  }
+#endif
 
   return lis.begin(CPLAY_LIS3DH_ADDRESS);
 }
 
 uint16_t Adafruit_CircuitPlayground::readCap(uint8_t p, uint8_t samples) {
+#ifdef __AVR__  // Circuit Playground Classi
   switch (p) {
-  case 0:
-    return cap[0].capacitiveSensor(samples);
-  case 1:
-    return cap[1].capacitiveSensor(samples);
-  case 2:
-    return cap[2].capacitiveSensor(samples);
-  case 3:
-    return cap[3].capacitiveSensor(samples);
-  case 6:
-    return cap[4].capacitiveSensor(samples);
-  case 9:
-    return cap[5].capacitiveSensor(samples);
-  case 10:
-    return cap[6].capacitiveSensor(samples);
-  case 12:
-    return cap[7].capacitiveSensor(samples);
-  default:
-    return 0;
+    case 0:    return cap[0].capacitiveSensor(samples);
+    case 1:    return cap[1].capacitiveSensor(samples);
+    case 2:    return cap[2].capacitiveSensor(samples);
+    case 3:    return cap[3].capacitiveSensor(samples);
+    case 6:    return cap[4].capacitiveSensor(samples);
+    case 9:    return cap[5].capacitiveSensor(samples);
+    case 10:   return cap[6].capacitiveSensor(samples);
+    case 12:   return cap[7].capacitiveSensor(samples);
+    default:   return 0;
   }
+#else // Circuit Playground Express // Circuit Playground Express
+  if ((p < A1) || (p > A7)) return 0;
+  return cap[p - A1].measure();
+#endif
 }
 
 // just turn on/off the red #13 LED
