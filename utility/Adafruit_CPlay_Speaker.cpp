@@ -69,58 +69,79 @@ void Adafruit_CPlay_Speaker::set(uint8_t value) {
 
 // -------------------------------------------------------------------------
 
-// Plays digitized 8-bit audio from a PROGMEM (flash memory) buffer.  Maybe
-// 1-3 seconds tops depending on sampling rate (e.g. 8000 Hz data =
-// 8 Kbytes/second).  Max ~20K space avail on Circuit Playground.
+// Plays digitized 8-bit audio (optionally 10 bits on Express board) from
+// a PROGMEM (flash memory) buffer.  Maybe 1-3 seconds tops depending on
+// sampling rate (e.g. 8000 Hz = 8 Kbytes/second).  Max ~20K space avail on
+// Circuit Playground, lots more on Circuit Playground Express.
 // This function currently "blocks" -- it will not play sounds in the
 // background while other code runs.
 void Adafruit_CPlay_Speaker::playSound(
   const uint8_t *data, uint32_t len, uint16_t sampleRate, boolean tenBit) {
-#ifdef __AVR__
-  if(sampleRate < 7620) sampleRate = 7620; // Because 8-bit delay counter
-
-  uint8_t  interval = (F_CPU / 4 + sampleRate / 2) / sampleRate - 6,
-           x, counter;
-  uint16_t bytesToGo = len;
 
   if(!started) begin();
 
-  // Trying cycle counting here (instead of interrupt) to avoid ISR
-  // conflicts (some sketches may need their own timers or related
-  // interrupts -- a precious resource!).  Could also try this using
-  // micros(), but that might lack adequate resolution.
-  asm volatile(
-   "movw   r30         , %[data]"     "\n\t" // Z = data
-   "audioSampleLoop:"
-    "lpm   %[x]        , Z+"          "\n\t" // x = pgm_read_byte(data++)
-    "sts   %[pwmReg]   , %[x]"        "\n\t" // OCR4A = x
-    "mov   %[counter]  , %[interval]" "\n\t" // counter = interval
-    "audioDelayLoop:"                 "\n\t"
-     "nop"                            "\n\t"
-     "dec  %[counter]"                "\n\t" // counter--
-     "brne audioDelayLoop"            "\n\t" // if(counter) goto audioDelay
-    "sbiw  %[bytesToGo], 1"           "\n\t" // bytesToGo--
-    "brne  audioSampleLoop"           "\n"   // if(bytesToGo) goto audioSample
-   : [x]         "+r" (x),
-     [counter]   "+r" (counter),
-     [bytesToGo] "+w" (bytesToGo)
-   : [data]       "e" (data),
-     [pwmReg]     "M" (_SFR_ADDR(OCR4A)),
-     [interval]   "r" (interval)
-   : "r30", "r31" ); // Z is clobbered
-
-  OCR4A = 127; // Idle position for next sound
+  uint32_t i;
+#ifdef __AVR__
+  uint16_t interval = 1000000L / sampleRate;
 #else
-  uint32_t i, startTime, r2 = sampleRate / 2;
-
-  startTime = micros();
-  for(i=0; i<len; i++) {
-    while(((micros() - startTime + 50) / 100) <
-      ((i * 10000UL + r2) / sampleRate));
-    analogWrite(A0, data[i]);
-  }
-  while(((micros() - startTime + 50) / 100) <
-    ((i * 10000UL + r2) / sampleRate));
-  analogWrite(A0, 127);
+  uint32_t r2 = sampleRate / 2;
+  uint32_t startTime = micros();
 #endif
+
+  if(tenBit) { // 10-bit audio samples?
+    uint8_t loIdx = 4;
+#ifdef __AVR__
+    // Because it uses 8-bit PWM for output, the AVR code must filter
+    // 10-bit data down to 8 bits.  This is ONLY here for compatibility
+    // with sketches with 10-bit samples.  If targeting a project for AVR,
+    // it's best to produce and use optimized 8-bit audio, else it's just
+    // wasted space!  Timer/Counter 4 DOES offer a 10-bit mode, but it's
+    // not used in this library, just not worth it in the limited flash
+    // space of the 32U4 chip.
+    uint16_t idx = 0;
+    uint8_t  hiBits;
+    for(i=0; i<len; i++) {
+      if(++loIdx >= 4) {
+        hiBits = pgm_read_byte(&data[idx++]);
+        loIdx  = 0;
+      }
+      OCR4A    = ((hiBits & 0xC0) | (pgm_read_byte(&data[idx++]) >> 2));
+      hiBits <<= 2; // Do this after write, because of masking op above
+      delayMicroseconds(interval);
+    }
+    OCR4A = 127;
+#else
+    // Circuit Playground Express -- use 10-bit analogWrite()
+    uint32_t idx = 0;
+    uint16_t hiBits;
+    analogWriteResolution(10);
+    for(i=0; i<len; i++) {
+      if(++loIdx >= 4) {
+        hiBits = (uint16_t)pgm_read_byte(&data[idx++]);
+        loIdx  = 0;
+      }
+      hiBits <<= 2; // Do this before write, because of masking op below
+      analogWrite(A0, (hiBits & 0x300) | pgm_read_byte(&data[idx++]));
+      while(((micros()-startTime+50)/100) < ((i*10000UL+r2)/sampleRate));
+    }
+    analogWriteResolution(8); // Return to 8 bits for set() compatibility
+    analogWrite(A0, 127);
+#endif
+
+  } else { // 8-bit audio samples
+
+#ifdef __AVR__
+    for(i=0; i<len; i++) {
+      OCR4A = pgm_read_byte(&data[i]);
+      delayMicroseconds(interval);
+    }
+    OCR4A = 127;
+#else
+    for(i=0; i<len; i++) {
+      analogWrite(A0, pgm_read_byte(&data[i]));
+      while(((micros()-startTime+50)/100) < ((i*10000UL+r2)/sampleRate));
+    }
+    analogWrite(A0, 127);
+#endif
+  }
 }
