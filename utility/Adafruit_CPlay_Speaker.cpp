@@ -75,7 +75,7 @@ void Adafruit_CPlay_Speaker::set(uint8_t value) {
 // This function currently "blocks" -- it will not play sounds in the
 // background while other code runs.
 void Adafruit_CPlay_Speaker::playSound(
-  const uint8_t *data, uint32_t len, uint16_t sampleRate) {
+  const uint8_t *data, uint32_t len, uint16_t sampleRate, boolean tenBit) {
 #ifdef __AVR__
   if(sampleRate < 7620) sampleRate = 7620; // Because 8-bit delay counter
 

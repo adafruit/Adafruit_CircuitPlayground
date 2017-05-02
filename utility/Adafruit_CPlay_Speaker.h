@@ -17,9 +17,8 @@ class Adafruit_CPlay_Speaker {
   void begin(void),
        end(void),
        set(uint8_t value),
-       playSound(const uint8_t *data, uint32_t length, uint16_t sampleRate),
+       playSound(const uint8_t *data, uint32_t length, uint16_t sampleRate, boolean tenBit=false),
        say(const uint8_t *address);
-
 
   void enable(boolean e);
   void off(void) { enable(false); };

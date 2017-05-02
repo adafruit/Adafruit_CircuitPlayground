@@ -197,5 +197,14 @@ void Adafruit_CircuitPlayground::senseColor(uint8_t& red, uint8_t& green, uint8_
   blue = min(255, raw_blue/4);
 }
 
+// Returns true if Circuit Playground Express, false if "classic"
+boolean Adafruit_CircuitPlayground::isExpress(void) {
+#ifdef __AVR__
+  return false;
+#else
+  return true;
+#endif
+}
+
 // instantiate static
 Adafruit_CircuitPlayground CircuitPlayground;

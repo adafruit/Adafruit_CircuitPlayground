@@ -139,6 +139,8 @@ class Adafruit_CircuitPlayground {
     return ((uint32_t)red << 16) | ((uint32_t)green << 8) | blue;
   }
 
+  boolean isExpress(void);
+
  private:
 
 
