@@ -4,6 +4,11 @@
 */
 #include <Adafruit_CircuitPlayground.h>
 
+#if !defined(ADAFRUIT_CIRCUITPLAYGROUND_M0)
+  #error "Infrared support is only for the Circuit Playground Express, it doesn't work with the Classic version"
+#endif
+
+
 /* IR signals consist of a protocol number, a value, and a number of bits.
  *  Store all of these values for future use.
  */

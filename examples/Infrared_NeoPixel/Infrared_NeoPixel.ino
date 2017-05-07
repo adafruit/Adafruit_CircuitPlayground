@@ -18,6 +18,11 @@
 #include <Adafruit_CircuitPlayground.h>
 #include "adafruit_mini_codes.h"
 
+#if !defined(ADAFRUIT_CIRCUITPLAYGROUND_M0)
+  #error "Infrared support is only for the Circuit Playground Express, it doesn't work with the Classic version"
+#endif
+
+
 //Pattern numbers
 #define RAINBOW    0
 #define CANDY_CANE 1

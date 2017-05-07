@@ -4,6 +4,11 @@
 */
 #include <Adafruit_CircuitPlayground.h>
 
+#if !defined(ADAFRUIT_CIRCUITPLAYGROUND_M0)
+  #error "Infrared support is only for the Circuit Playground Express, it doesn't work with the Classic version"
+#endif
+
+
 void setup() {
   CircuitPlayground.begin();
   Serial.begin(9600);
