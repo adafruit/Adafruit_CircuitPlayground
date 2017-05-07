@@ -29,6 +29,7 @@
   #include "utility/CPlay_CapacitiveSensor.h"
 #else
   #include <Adafruit_FreeTouch.h>
+  #include "utility/IRLibCPE.h"
 #endif
 
 #ifndef NOT_AN_INTERRUPT // Not defined in Arduino 1.0.5
@@ -62,7 +63,8 @@
  #define CPLAY_LIS3DH_CS        -1 // I2C
  #define CPLAY_LIS3DH_INTERRUPT 36
  #define CPLAY_LIS3DH_ADDRESS   0x19
-
+ #define CPLAY_IR_RECEIVER      39
+ #define CPLAY_IR_EMITTER       29
  #define CPLAY_SPEAKER_SHUTDOWN 40
 #endif
 
@@ -95,6 +97,9 @@ class Adafruit_CircuitPlayground {
   CPlay_CapacitiveSensor cap[8];
 #else
   Adafruit_FreeTouch     cap[7];
+  IRrecvPCI              irReceiver;
+  IRdecode               irDecoder;
+  IRsend                 irSend;
 #endif
 
   boolean slideSwitch(void);

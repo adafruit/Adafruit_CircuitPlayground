@@ -14,6 +14,8 @@ boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   pinMode(CPLAY_SLIDESWITCHPIN, INPUT_PULLUP);
   pinMode(CPLAY_SPEAKER_SHUTDOWN, OUTPUT);
   digitalWrite(CPLAY_SPEAKER_SHUTDOWN, HIGH);
+  irReceiver=IRrecvPCI(CPLAY_IR_RECEIVER);
+//  irDecoder=IRdecode();
 #endif
 
   strip = Adafruit_CPlay_NeoPixel();
