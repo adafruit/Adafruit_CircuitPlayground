@@ -27,6 +27,10 @@
                                   // If the pixels spin in the opposite direction of your
                                   // flick all the time then try changing this value.
 
+// Configure pixel brightness.
+// Set this to a value from 0 to 255 (minimum to maximum brightness).
+#define BRIGHTNESS          255
+
 // Configure peak detector behavior:
 #define LAG                 30     // Lag, how large is the buffer of filtered samples.
                                    // Must be an integer value!
@@ -36,7 +40,7 @@
                                    // when storing them back in the filtered values.
                                    // Should be a value from 0 to 1.0 where smaller
                                    // values mean peaks have less influence.
-                                   
+
 // Configure spinner decay, i.e. how much it slows down.  This should
 // be a value from 0 to 1 where smaller values cause the spinner to
 // slow down faster.
@@ -57,7 +61,7 @@ typedef struct {
   uint32_t secondary;
 } colorCombo;
 // Add or remove color combos here:
-colorCombo colors[] = { 
+colorCombo colors[] = {
   // Each color combo has the following form:
   // { .primary = 24-bit RGB color (use hex), .secondary = 24-bit RGB color },
   // Make sure each combo ends in a comma EXCEPT for the last one!
@@ -96,7 +100,7 @@ void setup() {
   Serial.begin(115200);
   // Initialize Circuit Playground library and set accelerometer
   // to its widest +/-16G range.
-  CircuitPlayground.begin();
+  CircuitPlayground.begin(BRIGHTNESS);
   CircuitPlayground.setAccelRange(LIS3DH_RANGE_16_G);
   // Initialize starting button state.
   lastButton1 = CircuitPlayground.leftButton();
@@ -111,14 +115,14 @@ void loop() {
   lastMS = currentMS;
 
   // Grab the current accelerometer axis value and look for a sudden peak.
-  float y = AXIS;
-  int result = peakDetector.detect(y);
+  float accel = AXIS;
+  int result = peakDetector.detect(accel);
 
   // If in debug mode, print out the current acceleration and peak detector
   // state (average, standard deviation, and peak result).  Use the serial
   // plotter to view this over time.
   #ifdef DEBUG
-    Serial.print(y);
+    Serial.print(accel);
     Serial.print(",");
     Serial.print(peakDetector.getAvg());
     Serial.print(",");
@@ -126,19 +130,19 @@ void loop() {
     Serial.print(",");
     Serial.println(result);
   #endif
-  
+
   // If there was a peak and enough time has elapsed since the last peak
-  // (i.e. to 'debounce' the noisey peak signal a bit) then start the spinner 
+  // (i.e. to 'debounce' the noisey peak signal a bit) then start the spinner
   // moving at a velocity proportional to the accelerometer value.
   if ((result != 0) && (currentMS >= peakDebounce)) {
     peakDebounce = currentMS + PEAK_DEBOUNCE_MS;
-    // Invert y because accelerometer axis positive/negative is flipped
+    // Invert accel because accelerometer axis positive/negative is flipped
     // with respect to pixel positive/negative movement.
     if (INVERT_AXIS) {
-      fidgetSpinner.spin(-y);
+      fidgetSpinner.spin(-accel);
     }
     else {
-      fidgetSpinner.spin(y);
+      fidgetSpinner.spin(accel);
     }
   }
 
@@ -263,4 +267,3 @@ void animateSine(float pos, float frequency) {
   }
   CircuitPlayground.strip.show();
 }
-
