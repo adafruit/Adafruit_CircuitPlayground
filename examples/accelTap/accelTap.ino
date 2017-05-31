@@ -22,7 +22,7 @@ void setup(void) {
   CircuitPlayground.setAccelTap(1, CLICKTHRESHHOLD);
   
   // have a procedure called when a tap is detected
-  attachInterrupt(digitalPinToInterrupt(7), tapTime, FALLING);
+  attachInterrupt(digitalPinToInterrupt(CPLAY_LIS3DH_INTERRUPT), tapTime, FALLING);
 }
 
 void tapTime(void) {

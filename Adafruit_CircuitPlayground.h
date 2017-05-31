@@ -14,37 +14,64 @@
   You should have received a copy of the GNU Lesser General Public
   License along with DotStar.  If not, see <http://www.gnu.org/licenses/>.
   ------------------------------------------------------------------------*/
+#ifndef _ADAFRUIT_CIRCUITPLAYGROUND_H_
+#define _ADAFRUIT_CIRCUITPLAYGROUND_H_
+
+#include <Arduino.h>
 #ifndef __INC_FASTSPI_LED2_H
 #include "utility/Adafruit_CPlay_NeoPixel.h"
 #endif
 #include "utility/Adafruit_CPlay_LIS3DH.h"
 #include "utility/Adafruit_CPlay_Mic.h"
 #include "utility/Adafruit_CPlay_Speaker.h"
-#include "utility/CPlay_CapacitiveSensor.h"
 #include "utility/CP_Firmata.h"
 
-#ifndef _ADAFRUIT_CIRCUITPLAYGROUND_H_
-#define _ADAFRUIT_CIRCUITPLAYGROUND_H_
+#ifdef __AVR__ // Circuit Playground 'classic'
+  #include "utility/CPlay_CapacitiveSensor.h"
+#else
+  #include <Adafruit_FreeTouch.h>
+  #include "utility/IRLibCPE.h"
+#endif
 
 #ifndef NOT_AN_INTERRUPT // Not defined in Arduino 1.0.5
 #define NOT_AN_INTERRUPT -1
 #endif
 
-#define CPLAY_REDLED 13
-
+#ifdef __AVR__ // Circuit Playground 'classic'
+ #define CPLAY_CAPSENSE_SHARED   30
+ #define CPLAY_REDLED           13
 #ifndef __INC_FASTSPI_LED2_H
-#define CPLAY_NEOPIXELPIN 17
+ #define CPLAY_NEOPIXELPIN      17
 #endif
-
-#define CPLAY_SLIDESWITCHPIN 21
-#define CPLAY_LEFTBUTTON 4
-#define CPLAY_RIGHTBUTTON 19
-#define CPLAY_LIGHTSENSOR A5
-#define CPLAY_LIS3DH_CS 8
-#define CPLAY_THERMISTORPIN A0
-#define CPLAY_SOUNDSENSOR A4
-#define CPLAY_BUZZER 5
-#define CPLAY_CAPSENSE_SHARED 30
+ #define CPLAY_SLIDESWITCHPIN   21
+ #define CPLAY_LEFTBUTTON        4
+ #define CPLAY_RIGHTBUTTON      19
+ #define CPLAY_LIGHTSENSOR      A5
+ #define CPLAY_THERMISTORPIN    A0
+ #define CPLAY_SOUNDSENSOR      A4
+ #define CPLAY_BUZZER            5
+ #define CPLAY_LIS3DH_CS         8
+ #define CPLAY_LIS3DH_INTERRUPT  7
+ #define CPLAY_LIS3DH_ADDRESS    0x18
+#else // Circuit Playground Express
+ #define CPLAY_REDLED           13
+ #ifndef __INC_FASTSPI_LED2_H
+ #define CPLAY_NEOPIXELPIN       8
+#endif
+ #define CPLAY_SLIDESWITCHPIN    7
+ #define CPLAY_LEFTBUTTON        4
+ #define CPLAY_RIGHTBUTTON       5
+ #define CPLAY_LIGHTSENSOR      A8
+ #define CPLAY_THERMISTORPIN    A9
+ #define CPLAY_SOUNDSENSOR      A4 // TBD I2S
+ #define CPLAY_BUZZER           A0
+ #define CPLAY_LIS3DH_CS        -1 // I2C
+ #define CPLAY_LIS3DH_INTERRUPT 36
+ #define CPLAY_LIS3DH_ADDRESS   0x19
+ #define CPLAY_IR_RECEIVER      39
+ #define CPLAY_IR_EMITTER       29
+ #define CPLAY_SPEAKER_SHUTDOWN 40
+#endif
 
 #define SERIESRESISTOR 10000
 // resistance at 25 degrees C
@@ -61,12 +88,6 @@
                              // changing the pixel color and reading the light
                              // sensor.
 
-#if (ARDUINO >= 100)
- #include <Arduino.h>
-#else
- #include <WProgram.h>
- #include <pins_arduino.h>
-#endif
 
 class Adafruit_CircuitPlayground {
  public:
@@ -78,7 +99,15 @@ class Adafruit_CircuitPlayground {
   Adafruit_CPlay_LIS3DH lis;
   Adafruit_CPlay_Mic mic;
   Adafruit_CPlay_Speaker speaker;
+
+#ifdef __AVR__ // Circuit Playground 'classic'
   CPlay_CapacitiveSensor cap[8];
+#else
+  Adafruit_FreeTouch     cap[7];
+  IRrecvPCI              irReceiver;
+  IRdecode               irDecoder;
+  IRsend                 irSend;
+#endif
 
   boolean slideSwitch(void);
   void redLED(boolean v);
@@ -123,11 +152,12 @@ class Adafruit_CircuitPlayground {
   }
 #endif
 
+  boolean isExpress(void);
+
  private:
 
 
 };
-
 
 
 extern Adafruit_CircuitPlayground CircuitPlayground;
