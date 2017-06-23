@@ -28,12 +28,12 @@
 #ifdef __AVR__ // Circuit Playground 'classic'
   #include "utility/CPlay_CapacitiveSensor.h"
 #else
-  #include <Adafruit_FreeTouch.h>
+  #include "utility/Adafruit_CPlay_FreeTouch.h"
   #include "utility/IRLibCPE.h"
 #endif
 
 #ifndef NOT_AN_INTERRUPT // Not defined in Arduino 1.0.5
-#define NOT_AN_INTERRUPT -1
+  #define NOT_AN_INTERRUPT -1
 #endif
 
 #ifdef __AVR__ // Circuit Playground 'classic'
@@ -95,7 +95,7 @@ class Adafruit_CircuitPlayground {
 #ifdef __AVR__ // Circuit Playground 'classic'
   CPlay_CapacitiveSensor cap[8];
 #else
-  Adafruit_FreeTouch     cap[7];
+  Adafruit_CPlay_FreeTouch     cap[7];
   IRrecvPCI              irReceiver;
   IRdecode               irDecoder;
   IRsend                 irSend;
