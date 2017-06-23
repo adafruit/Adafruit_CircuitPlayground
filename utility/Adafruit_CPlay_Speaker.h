@@ -8,7 +8,7 @@
 
 #ifdef __AVR__
 #else             // circuit playground express has nicer amp w/shutdown
-  #define CPLAY_SPEAKER_SHUTDOWN 40
+  #define CPLAY_SPEAKER_SHUTDOWN 11
 #endif
 
 class Adafruit_CPlay_Speaker {

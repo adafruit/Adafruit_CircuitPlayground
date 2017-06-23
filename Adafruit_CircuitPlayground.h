@@ -51,21 +51,20 @@
  #define CPLAY_LIS3DH_INTERRUPT  7
  #define CPLAY_LIS3DH_ADDRESS    0x18
 #else // Circuit Playground Express
- #define CPLAY_REDLED           13
- #define CPLAY_NEOPIXELPIN       8
- #define CPLAY_SLIDESWITCHPIN    7
  #define CPLAY_LEFTBUTTON        4
  #define CPLAY_RIGHTBUTTON       5
+ #define CPLAY_SLIDESWITCHPIN    7
+ #define CPLAY_NEOPIXELPIN       8
+ #define CPLAY_REDLED           13
+ #define CPLAY_IR_EMITTER       25
+ #define CPLAY_IR_RECEIVER      26
+ #define CPLAY_BUZZER           A0
  #define CPLAY_LIGHTSENSOR      A8
  #define CPLAY_THERMISTORPIN    A9
  #define CPLAY_SOUNDSENSOR      A4 // TBD I2S
- #define CPLAY_BUZZER           A0
  #define CPLAY_LIS3DH_CS        -1 // I2C
- #define CPLAY_LIS3DH_INTERRUPT 36
+ #define CPLAY_LIS3DH_INTERRUPT 27
  #define CPLAY_LIS3DH_ADDRESS   0x19
- #define CPLAY_IR_RECEIVER      39
- #define CPLAY_IR_EMITTER       29
- #define CPLAY_SPEAKER_SHUTDOWN 40
 #endif
 
 #define SERIESRESISTOR 10000
