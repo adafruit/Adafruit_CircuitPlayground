@@ -83,7 +83,7 @@
                                   // between measurements.  Default is
                                   // one second (1000 milliseconds).
 
-#define DISPLAY_ADDRESS    0x72   // I2C address of the display.  Use the default
+#define DISPLAY_ADDRESS    0x70   // I2C address of the display.  Use the default
                                   // 0x70 unless you've manually changed the
                                   // devices address by soldering closed a bridge.
 
