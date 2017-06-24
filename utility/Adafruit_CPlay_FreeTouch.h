@@ -1,7 +1,8 @@
 #include <Arduino.h>
+
+#if defined(__SAMD21G18A__)
 #ifndef ADAFRUIT_FREETOUCH_H
 #define ADAFRUIT_FREETOUCH_H
-
 
 
 /*************** CONTROL A register ***************/
@@ -423,4 +424,5 @@ class Adafruit_CPlay_FreeTouch {
 };
 
 
+#endif
 #endif

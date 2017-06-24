@@ -25,7 +25,7 @@
 
 #include "Adafruit_CPlay_FreeTouch.h"
 
-
+#if defined(__SAMD21G18A__)
 
 Adafruit_CPlay_FreeTouch::Adafruit_CPlay_FreeTouch(int p, oversample_t f, series_resistor_t r, freq_mode_t fh) {
   pin = p;
@@ -491,3 +491,4 @@ void Adafruit_CPlay_FreeTouch::printPTCregs(uint32_t base, uint8_t *regs, uint8_
        }
   }
 }
+#endif
