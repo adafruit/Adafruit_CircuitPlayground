@@ -25,6 +25,8 @@ void Adafruit_CPlay_Speaker::begin(void) {
   started = true;
   pinMode(5, OUTPUT);                 // Enable output
 #else
+  pinMode(CPLAY_SPEAKER_SHUTDOWN, OUTPUT);
+  digitalWrite(CPLAY_SPEAKER_SHUTDOWN, HIGH);
   // PWM/timer not needed on CPlay Express, has true analog out.
   // Set analogWrite resolution to 8 bits to match AVR calls.
   analogWriteResolution(8);
