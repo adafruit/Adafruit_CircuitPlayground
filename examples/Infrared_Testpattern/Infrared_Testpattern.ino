@@ -1,4 +1,4 @@
-/* ir_pattern.ino Example sketch for IRLib2 and Circuit Playground Express
+/* Infrared_Testpattern.ino Example sketch for IRLib2 and Circuit Playground Express
  *  Send an easily recognized pattern of bits from one Arduino
  *  to another to verify that your protocol is working. Load
  *  this sketch to send a signal. Use the "dump" sketch on the other
