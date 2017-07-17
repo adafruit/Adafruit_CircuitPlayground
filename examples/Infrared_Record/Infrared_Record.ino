@@ -1,6 +1,6 @@
-/* ir_record.ino Example sketch for IRLib2 and Circuit Playground Express
+/* Infrared_Record.ino Example sketch for IRLib2 and Circuit Playground Express
    Illustrates how to receive an IR signal, decode and save it.
-   Then retransmit it whenever you push tthe left pushbutton.
+   Then retransmit it whenever you push the left pushbutton.
 */
 #include <Adafruit_CircuitPlayground.h>
 
@@ -17,6 +17,7 @@ uint32_t IR_value;
 uint16_t IR_bits;
 
 void setup() {
+  Serial.begin(9600);
   while (!Serial);
   Serial.println("Send an IR signal and I will record it.");
   Serial.println("Press the left button and we will retransmit it.");

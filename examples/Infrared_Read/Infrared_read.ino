@@ -1,4 +1,4 @@
-/* Infraread_read.ino Example sketch for IRLib2 and Circuit Playground Express
+/* Infrared_Read.ino Example sketch for IRLib2 and Circuit Playground Express
    Illustrates how to receive an IR signal, decode it and print
    information about it to the serial monitor.
 */
