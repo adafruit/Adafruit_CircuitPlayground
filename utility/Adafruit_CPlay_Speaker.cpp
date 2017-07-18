@@ -12,17 +12,6 @@
 
 void Adafruit_CPlay_Speaker::begin(void) {
 #ifdef __AVR__
-  // Set up Timer4 for fast PWM on !OC4A
-  PLLFRQ  = (PLLFRQ & 0xCF) | 0x30;   // Route PLL to async clk
-  TCCR4A  = _BV(COM4A0) | _BV(PWM4A); // Clear on match, PWMA on
-  TCCR4B  = _BV(PWM4X)  |_BV(CS40);   // PWM invert, 1:1 prescale
-  TCCR4D  = 0;                        // Fast PWM mode
-  TCCR4E  = 0;                        // Not enhanced mode
-  TC4H    = 0;                        // Not 10-bit mode
-  DT4     = 0;                        // No dead time
-  OCR4C   = 255;                      // TOP
-  OCR4A   = 127;                      // 50% duty (idle position) to start
-  started = true;
   pinMode(5, OUTPUT);                 // Enable output
 #else
   pinMode(CPLAY_SPEAKER_SHUTDOWN, OUTPUT);
@@ -80,9 +69,24 @@ void Adafruit_CPlay_Speaker::set(uint8_t value) {
 void Adafruit_CPlay_Speaker::playSound(
   const uint8_t *data, uint32_t len, uint16_t sampleRate, boolean tenBit) {
 
-  if(!started) begin();
-
   uint32_t i;
+
+  if(!started) {
+#ifdef __AVR__
+    // Set up Timer4 for fast PWM on !OC4A
+    PLLFRQ  = (PLLFRQ & 0xCF) | 0x30;   // Route PLL to async clk
+    TCCR4A  = _BV(COM4A0) | _BV(PWM4A); // Clear on match, PWMA on
+    TCCR4B  = _BV(PWM4X)  |_BV(CS40);   // PWM invert, 1:1 prescale
+    TCCR4D  = 0;                        // Fast PWM mode
+    TCCR4E  = 0;                        // Not enhanced mode
+    TC4H    = 0;                        // Not 10-bit mode
+    DT4     = 0;                        // No dead time
+    OCR4C   = 255;                      // TOP
+    OCR4A   = 127;                      // 50% duty (idle position) to start
+    started = true;
+#endif
+  }
+
 #ifdef __AVR__
   uint16_t interval = 1000000L / sampleRate;
 #else
