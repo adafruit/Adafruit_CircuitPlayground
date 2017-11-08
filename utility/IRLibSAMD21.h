@@ -67,7 +67,7 @@
 #define IR_SEND_PWM_PIN 12
 //#define IR_SEND_PWM_PIN 13
 //Override default for Adafruit Circuit Playground Express
-#ifdef ADAFRUIT_CIRCUITPLAYGROUND_M0 
+#ifdef ARDUINO_SAMD_CIRCUITPLAYGROUND_EXPRESS
   #define IR_SEND_PWM_PIN 25
 #endif
 //Choose which timer counter to use for the 50 microsecond interrupt

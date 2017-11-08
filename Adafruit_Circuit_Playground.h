@@ -1,6 +1,6 @@
-// this is a placeholder file. dont undo or delete this 'clever hack' :)
+/*------------------------------------------------------------------------
+  This file is part of the Adafruit Dot Star library.
 
-<<<<<<< HEAD
   Adafruit Dot Star is free software: you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public License
   as published by the Free Software Foundation, either version 3 of
@@ -14,13 +14,12 @@
   You should have received a copy of the GNU Lesser General Public
   License along with DotStar.  If not, see <http://www.gnu.org/licenses/>.
   ------------------------------------------------------------------------*/
+
 #ifndef _ADAFRUIT_CIRCUITPLAYGROUND_H_
 #define _ADAFRUIT_CIRCUITPLAYGROUND_H_
 
 #include <Arduino.h>
-#ifndef __INC_FASTSPI_LED2_H
 #include "utility/Adafruit_CPlay_NeoPixel.h"
-#endif
 #include "utility/Adafruit_CPlay_LIS3DH.h"
 #include "utility/Adafruit_CPlay_Mic.h"
 #include "utility/Adafruit_CPlay_Speaker.h"
@@ -40,9 +39,7 @@
 #ifdef __AVR__ // Circuit Playground 'classic'
  #define CPLAY_CAPSENSE_SHARED   30
  #define CPLAY_REDLED           13
-#ifndef __INC_FASTSPI_LED2_H
  #define CPLAY_NEOPIXELPIN      17
-#endif
  #define CPLAY_SLIDESWITCHPIN   21
  #define CPLAY_LEFTBUTTON        4
  #define CPLAY_RIGHTBUTTON      19
@@ -54,14 +51,6 @@
  #define CPLAY_LIS3DH_INTERRUPT  7
  #define CPLAY_LIS3DH_ADDRESS    0x18
 #else // Circuit Playground Express
-<<<<<<< HEAD
- #define CPLAY_REDLED           13
- #ifndef __INC_FASTSPI_LED2_H
- #define CPLAY_NEOPIXELPIN       8
-#endif
- #define CPLAY_SLIDESWITCHPIN    7
-=======
->>>>>>> refs/heads/pr/2
  #define CPLAY_LEFTBUTTON        4
  #define CPLAY_RIGHTBUTTON       5
  #define CPLAY_SLIDESWITCHPIN    7
@@ -98,9 +87,7 @@ class Adafruit_CircuitPlayground {
  public:
   boolean begin(uint8_t brightness=20);
 
-#ifndef __INC_FASTSPI_LED2_H
   Adafruit_CPlay_NeoPixel strip;
-#endif
   Adafruit_CPlay_LIS3DH lis;
   Adafruit_CPlay_Mic mic;
   Adafruit_CPlay_Speaker speaker;
@@ -131,11 +118,11 @@ class Adafruit_CircuitPlayground {
   float motionY(void);
   float motionZ(void);
   void setAccelRange(lis3dh_range_t range) { lis.setRange(range); }
-  void setAccelTap(uint8_t c, uint8_t clickthresh)
+  void setAccelTap(uint8_t c, uint8_t clickthresh) 
     { lis.setClick(c, clickthresh, 10, 20, 255); }
   uint8_t getAccelTap(void) { return (lis.getClick() >> 8) & 0x3; }
 
-#ifndef __INC_FASTSPI_LED2_H
+
   // neopixels
   void clearPixels(void) { strip.clear(); strip.show(); }
   void setPixelColor(uint8_t p, uint32_t c) {strip.setPixelColor(p, c); strip.show();}
@@ -155,7 +142,6 @@ class Adafruit_CircuitPlayground {
     senseColor(red, green, blue);
     return ((uint32_t)red << 16) | ((uint32_t)green << 8) | blue;
   }
-#endif
 
   boolean isExpress(void);
 
@@ -168,6 +154,3 @@ class Adafruit_CircuitPlayground {
 extern Adafruit_CircuitPlayground CircuitPlayground;
 
 #endif
-=======
-#include <Adafruit_Circuit_Playground.h>
->>>>>>> refs/heads/pr/4
