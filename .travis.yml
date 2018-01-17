@@ -15,6 +15,9 @@ env:
 before_install:
    - source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/dm-cplay/install.sh)
 
+install:
+   - arduino --install-library "Adafruit LED Backpack Library"
+
 script:
    - build_cplay_platforms
 
