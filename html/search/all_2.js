@@ -1,7 +1,7 @@
 var searchData=
 [
   ['cap',['cap',['../class_adafruit___circuit_playground.html#af1d0c3b099a5ed16515e81675d665aca',1,'Adafruit_CircuitPlayground']]],
-  ['circuitplayground',['CircuitPlayground',['../_adafruit___circuit___playground_8h.html#a0b940bbd5fe674c94baa3e04ac8849ed',1,'Adafruit_CircuitPlayground.cpp']]],
+  ['circuitplayground',['CircuitPlayground',['../_adafruit___circuit___playground_8h.html#a0b940bbd5fe674c94baa3e04ac8849ed',1,'CircuitPlayground():&#160;Adafruit_CircuitPlayground.cpp'],['../_adafruit___circuit_playground_8cpp.html#a0b940bbd5fe674c94baa3e04ac8849ed',1,'CircuitPlayground():&#160;Adafruit_CircuitPlayground.cpp']]],
   ['clearpixels',['clearPixels',['../class_adafruit___circuit_playground.html#a5a7dd271d9478c13a0dbcc3addba34c2',1,'Adafruit_CircuitPlayground']]],
   ['colorwheel',['colorWheel',['../class_adafruit___circuit_playground.html#a788663b6c0bc5f909a71b6505ccfd3f9',1,'Adafruit_CircuitPlayground']]],
   ['cplay_5fbuzzer',['CPLAY_BUZZER',['../_adafruit___circuit___playground_8h.html#a66cf79541c7e370e22c8637cfd556475',1,'Adafruit_Circuit_Playground.h']]],
