@@ -1,3 +1,32 @@
+/*!
+ * @file Adafruit_CircuitPlayground.cpp
+ *
+ * @mainpage Adafruit CircuitPlayground Library
+ *
+ * @section intro_sec Introduction
+ *
+ * This is the documentation for Adafruit's CircuitPlayground driver for the
+ * Arduino platform.  It is designed specifically to work with the
+ * Adafruit CircuitPlayground boards: 
+ *  - https://www.adafruit.com/products/3000
+ *  - https://www.adafruit.com/products/3333
+ *
+ *
+ * Adafruit invests time and resources providing this open source code,
+ * please support Adafruit and open-source hardware by purchasing
+ * products from Adafruit!
+ *
+ *
+ * @section author Author
+ *
+ * Written by Ladyada and others for Adafruit Industries.
+ *
+ * @section license License
+ *
+ * BSD license, all text here must be included in any redistribution.
+ *
+ */
+
 #include <Adafruit_Circuit_Playground.h>
 
 /**************************************************************************/
