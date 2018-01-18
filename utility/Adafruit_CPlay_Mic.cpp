@@ -9,13 +9,18 @@
 #define DC_OFFSET       (1023 / 3)
 #define NOISE_THRESHOLD 3
 
-// -------------------------------------------------------------------------
+/**************************************************************************/
+/*! 
+    @brief  Reads ADC for given interval (in milliseconds, 1-65535). Uses ADC free-run mode w/polling on AVR.
+     Any currently-installed ADC interrupt handler will be temporarily
+     disabled while this runs.
+    @param ms the number of milliseconds to sample
+    @return max deviation from DC_OFFSET (e.g. 0-341)
 
-// Reads ADC for given interval (in milliseconds, 1-65535), returns max
-// deviation from DC_OFFSET (e.g. 0-341).  Uses ADC free-run mode w/polling.
-// Any currently-installed ADC interrupt handler will be temporarily
-// disabled while this runs.
-
+    @note THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
+      please use soundPressureLevel(ms) instead
+*/
+/**************************************************************************/
 int Adafruit_CPlay_Mic::peak(uint16_t ms) {
 #ifdef __AVR__
   uint8_t  admux_save, adcsra_save, adcsrb_save, timsk0_save, channel;
@@ -72,15 +77,20 @@ int Adafruit_CPlay_Mic::peak(uint16_t ms) {
 #endif
 }
 
-// -------------------------------------------------------------------------
+/**************************************************************************/
+/*! 
+    @brief  capture the passed number of samples and place them in buf.
+    @param buf the buffer to store the samples in
+    @param nSamples the number of samples to take
 
-// Captures ADC audio samples at maximum speed supported by 32u4 (9615 Hz).
-// Ostensibly for FFT code (below), but might have other uses.  Uses ADC
-// free-run mode w/polling.  Any currently-installed ADC interrupt handler
-// will be temporarily disabled while this runs.  No other interrupts are
-// disabled; as long as interrupt handlers are minor (e.g. Timer/Counter 0
-// handling of millis() and micros()), this isn't likely to lose readings.
-
+    @note ON AVR: Captures ADC audio samples at maximum speed supported by 32u4 (9615 Hz).
+      Ostensibly for FFT code (below), but might have other uses.  Uses ADC
+      free-run mode w/polling.  Any currently-installed ADC interrupt handler
+      will be temporarily disabled while this runs.  No other interrupts are
+      disabled; as long as interrupt handlers are minor (e.g. Timer/Counter 0
+      handling of millis() and micros()), this isn't likely to lose readings.
+*/
+/**************************************************************************/
 void Adafruit_CPlay_Mic::capture(int16_t *buf, uint8_t nSamples) {
 #ifdef __AVR__
   uint8_t admux_save, adcsra_save, adcsrb_save, timsk0_save, channel;
@@ -133,16 +143,14 @@ void Adafruit_CPlay_Mic::capture(int16_t *buf, uint8_t nSamples) {
 #endif
 }
 
-// -------------------------------------------------------------------------
-
-// Performs one cycle of fast Fourier transform (FFT) with audio captured
-// from mic on A4.  Output is 32 'bins,' each covering an equal range of
-// frequencies from 0 to 4800 Hz (i.e. 0-150 Hz, 150-300 Hz, 300-450, etc).
-// Needs about 450 bytes free RAM to operate.
-
+/**************************************************************************/
+/*! 
+    @brief  16 bit complex data type
+*/
+/**************************************************************************/
 typedef struct {
-  int16_t r;
-  int16_t i;
+  int16_t r; ///< real portion
+  int16_t i; ///< imaginary portion
 } complex_t;
 
 extern "C" { // In ffft.S
@@ -151,6 +159,17 @@ extern "C" { // In ffft.S
        fft_output(complex_t *, uint16_t *);
 } 
 
+/**************************************************************************/
+/*! 
+    @brief  AVR ONLY: Performs one cycle of fast Fourier transform (FFT) with audio captured
+      from mic on A4.  Output is 32 'bins,' each covering an equal range of
+      frequencies from 0 to 4800 Hz (i.e. 0-150 Hz, 150-300 Hz, 300-450, etc).
+      Needs about 450 bytes free RAM to operate.
+    @param spectrum the buffer to store the results in. Must be 32 bytes in length.
+
+    @note THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
+*/
+/**************************************************************************/
 void Adafruit_CPlay_Mic::fft(
  uint16_t *spectrum) {               // Spectrum output buffer, uint16_t[32]
   if(spectrum) {

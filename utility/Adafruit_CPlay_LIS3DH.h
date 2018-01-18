@@ -155,12 +155,21 @@ class Adafruit_CPlay_LIS3DH : public Adafruit_Sensor {
   void setClick(uint8_t c, uint8_t clickthresh, uint8_t timelimit = 10, uint8_t timelatency = 20, uint8_t timewindow = 255);
   uint8_t getClick(void);
 
-  int16_t 
-          x, ///> integer x-axis reading 
+/**************************************************************************/
+/*! 
+    @brief  integer axis readings
+*/
+/**************************************************************************/
+  int16_t x, ///> integer x-axis reading 
           y, ///> integer y-axis reading
           z; ///> integer z-axis reading
-  float 
-        x_g,  ///> floating point G reading for x axis
+
+/**************************************************************************/
+/*! 
+    @brief  floating point axis readings
+*/
+/**************************************************************************/
+  float x_g,  ///> floating point G reading for x axis
         y_g,  ///> floating point G reading for y axis
         z_g; ///> floating point G reading for z axis
 

@@ -6,6 +6,11 @@
 #ifndef ADAFRUIT_CPLAY_MIC_H
 #define ADAFRUIT_CPLAY_MIC_H
 
+/**************************************************************************/
+/*! 
+    @brief  Class that stores state and functions for the microphone on CircuitPlayground boards
+*/
+/**************************************************************************/
 class Adafruit_CPlay_Mic {
  public:
   Adafruit_CPlay_Mic(void) {}; // Empty constructor

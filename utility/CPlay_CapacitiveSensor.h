@@ -197,7 +197,11 @@ void directWriteHigh(volatile IO_REG_TYPE *base, IO_REG_TYPE pin)
 #define FIVE_VOLT_TOLERANCE_WORKAROUND
 #endif
 
-// library interface description
+/**************************************************************************/
+/*! 
+    @brief  Class that stores state and functions for the capacitive sensor on CircuitPlayground boards
+*/
+/**************************************************************************/
 class CPlay_CapacitiveSensor
 {
   // user-accessible "public" interface

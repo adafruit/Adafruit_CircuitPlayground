@@ -111,8 +111,7 @@ class Adafruit_CPlay_NeoPixel {
   Adafruit_CPlay_NeoPixel(void);
   ~Adafruit_CPlay_NeoPixel();
 
-  void
-    begin(void),
+  void begin(void),
     show(void),
     setPin(uint8_t p),
     setPixelColor(uint16_t n, uint8_t r, uint8_t g, uint8_t b),

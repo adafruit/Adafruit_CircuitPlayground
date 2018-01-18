@@ -113,7 +113,7 @@ void Adafruit_CPlay_NeoPixel::updateLength(uint16_t n) {
 /**************************************************************************/
 /*! 
     @brief  set the type of neopixel we are using
-    @t the type of neopixel. Can be NEO_KHZ800 or NEO_KHZ400
+    @param t the type of neopixel. Can be NEO_KHZ800 or NEO_KHZ400
 */
 /**************************************************************************/
 void Adafruit_CPlay_NeoPixel::updateType(neoPixelType t) {
@@ -688,11 +688,22 @@ void Adafruit_CPlay_NeoPixel::setBrightness(uint8_t b) {
   }
 }
 
-//Return the brightness value
+/**************************************************************************/
+/*! 
+    @brief  get the global brightness value
+    @return the global brightness
+*/
+/**************************************************************************/
 uint8_t Adafruit_CPlay_NeoPixel::getBrightness(void) const {
   return brightness - 1;
 }
 
+/**************************************************************************/
+/*! 
+    @brief  set all neopixel data to 'off' in internal memory.
+    @note this does not automatically update pixels. Update with show() after calling clear()
+*/
+/**************************************************************************/
 void Adafruit_CPlay_NeoPixel::clear() {
   memset(pixels, 0, numBytes);
 }

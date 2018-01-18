@@ -4,12 +4,13 @@
 #include <Arduino.h>
 #include "Adafruit_CPlay_Speaker.h"
 
-// -------------------------------------------------------------------------
-
-// Sets up Circuit Playground speaker for PWM audio output: enables 48 KHz
-// high-speed PWM mode, configures Timer/Counter 4, sets PWM duty cycle to
-// 50% (speaker idle position).
-
+/**************************************************************************/
+/*! 
+    @brief  Sets up Circuit Playground speaker for PWM audio output: enables 48 KHz
+        high-speed PWM mode, configures Timer/Counter 4, sets PWM duty cycle to
+        50% (speaker idle position).
+*/
+/**************************************************************************/
 void Adafruit_CPlay_Speaker::begin(void) {
 #ifdef __AVR__
   pinMode(5, OUTPUT);                 // Enable output
@@ -23,6 +24,12 @@ void Adafruit_CPlay_Speaker::begin(void) {
 #endif
 }
 
+/**************************************************************************/
+/*! 
+    @brief  enable or disable the speaker. This function only works on 'Express' boards.
+    @param e pass true to enable, false to disable
+*/
+/**************************************************************************/
 
 void Adafruit_CPlay_Speaker::enable(boolean e)  { 
 #ifdef __AVR__
@@ -31,10 +38,11 @@ void Adafruit_CPlay_Speaker::enable(boolean e)  {
 #endif 
 }
 
-// -------------------------------------------------------------------------
-
-// Turns off PWM output to the speaker.
-
+/**************************************************************************/
+/*! 
+    @brief  Turns off PWM output to the speaker.
+*/
+/**************************************************************************/
 void Adafruit_CPlay_Speaker::end(void) {
 #ifdef __AVR__
   TCCR4A  = 0; // PWMA off
@@ -45,10 +53,12 @@ void Adafruit_CPlay_Speaker::end(void) {
   started = false;
 }
 
-// -------------------------------------------------------------------------
-
-// Sets speaker position (0-255; 127=idle), enables PWM output if needed.
-
+/**************************************************************************/
+/*! 
+    @brief  Sets speaker position, enables PWM output if needed.
+    @param value the value to set (0-255; 127=idle)
+*/
+/**************************************************************************/
 void Adafruit_CPlay_Speaker::set(uint8_t value) {
   if(!started) begin();
 #ifdef __AVR__
@@ -58,14 +68,20 @@ void Adafruit_CPlay_Speaker::set(uint8_t value) {
 #endif
 }
 
-// -------------------------------------------------------------------------
-
-// Plays digitized 8-bit audio (optionally 10 bits on Express board) from
-// a PROGMEM (flash memory) buffer.  Maybe 1-3 seconds tops depending on
-// sampling rate (e.g. 8000 Hz = 8 Kbytes/second).  Max ~20K space avail on
-// Circuit Playground, lots more on Circuit Playground Express.
-// This function currently "blocks" -- it will not play sounds in the
-// background while other code runs.
+/**************************************************************************/
+/*! 
+    @brief  Plays digitized 8-bit audio (optionally 10 bits on Express board) from
+      a PROGMEM (flash memory) buffer.  Maybe 1-3 seconds tops depending on
+      sampling rate (e.g. 8000 Hz = 8 Kbytes/second).  Max ~20K space avail on
+      Circuit Playground, lots more on Circuit Playground Express.
+      This function currently "blocks" -- it will not play sounds in the
+      background while other code runs.
+    @param data pointer to the audio data to play
+    @param len the length of the data in samples
+    @param sampleRate the sample rate of the data in samples per second
+    @param tenBit Optional flag if true 10-bit mode is enabled. AVR ONLY
+*/
+/**************************************************************************/
 void Adafruit_CPlay_Speaker::playSound(
   const uint8_t *data, uint32_t len, uint16_t sampleRate, boolean tenBit) {
 
