@@ -82,7 +82,7 @@
 
 /**************************************************************************/
 /*! 
-    @brief  Class that stores state and functions for interacting CircuitPlayground hardware
+    @brief  Class that stores state and functions for interacting with CircuitPlayground hardware
 */
 /**************************************************************************/
 class Adafruit_CircuitPlayground {

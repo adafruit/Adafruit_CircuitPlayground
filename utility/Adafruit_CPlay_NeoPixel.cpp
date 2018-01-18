@@ -34,7 +34,14 @@
 
 #include "Adafruit_CPlay_NeoPixel.h"
 
-// Constructor when length, pin and type are known at compile-time:
+/**************************************************************************/
+/*! 
+    @brief  Constructor when length, pin and type are known at compile-time
+    @param n number of pixels
+    @param p pin the pixels are attached to
+    @param t the type of neopixel. can be NEO_KHZ800 or NEO_KHZ400
+*/
+/**************************************************************************/
 Adafruit_CPlay_NeoPixel::Adafruit_CPlay_NeoPixel(uint16_t n, uint8_t p, neoPixelType t) :
   begun(false), brightness(0), pixels(NULL), endTime(0)
 {
@@ -48,6 +55,16 @@ Adafruit_CPlay_NeoPixel::Adafruit_CPlay_NeoPixel(uint16_t n, uint8_t p, neoPixel
 // read from internal flash memory or an SD card, or arrive via serial
 // command.  If using this constructor, MUST follow up with updateType(),
 // updateLength(), etc. to establish the strand type, length and pin number!
+
+/**************************************************************************/
+/*! 
+    @brief  via Michael Vogt/neophob: empty constructor is used when strand length
+      isn't known at compile-time; situations where program config might be
+      read from internal flash memory or an SD card, or arrive via serial
+      command.  If using this constructor, MUST follow up with updateType(),
+      updateLength(), etc. to establish the strand type, length and pin number!
+*/
+/**************************************************************************/
 Adafruit_CPlay_NeoPixel::Adafruit_CPlay_NeoPixel() :
   is800KHz(true),
   begun(false), numLEDs(0), numBytes(0), pin(-1), brightness(0), pixels(NULL),
@@ -61,6 +78,11 @@ Adafruit_CPlay_NeoPixel::~Adafruit_CPlay_NeoPixel() {
   pixels = NULL;
 }
 
+/**************************************************************************/
+/*! 
+    @brief  initialize necessary hardware to drive the pixels.
+*/
+/**************************************************************************/
 void Adafruit_CPlay_NeoPixel::begin(void) {
   if(pin >= 0) {
     pinMode(pin, OUTPUT);
@@ -69,6 +91,12 @@ void Adafruit_CPlay_NeoPixel::begin(void) {
   begun = true;
 }
 
+/**************************************************************************/
+/*! 
+    @brief  Set the number of pixels in the strip
+    @param n the number of pixels in the strip
+*/
+/**************************************************************************/
 void Adafruit_CPlay_NeoPixel::updateLength(uint16_t n) {
   if(pixels) free(pixels); // Free existing data (if any)
 
@@ -82,6 +110,12 @@ void Adafruit_CPlay_NeoPixel::updateLength(uint16_t n) {
   }
 }
 
+/**************************************************************************/
+/*! 
+    @brief  set the type of neopixel we are using
+    @t the type of neopixel. Can be NEO_KHZ800 or NEO_KHZ400
+*/
+/**************************************************************************/
 void Adafruit_CPlay_NeoPixel::updateType(neoPixelType t) {
   boolean oldThreeBytesPerPixel = (wOffset == rOffset); // false if RGBW
 
@@ -99,6 +133,12 @@ void Adafruit_CPlay_NeoPixel::updateType(neoPixelType t) {
   }
 }
 
+/**************************************************************************/
+/*! 
+    @brief  Write data to the neopixels
+    @note this disables interrupts on the chip until the write is complete.
+*/
+/**************************************************************************/
 void Adafruit_CPlay_NeoPixel::show(void) {
 
   if(!pixels) return;
@@ -388,7 +428,12 @@ void Adafruit_CPlay_NeoPixel::show(void) {
   endTime = micros(); // Save EOD time for latch on next call
 }
 
-// Set the output pin number
+/**************************************************************************/
+/*! 
+    @brief  Set the output pin number
+    @param p the pin number
+*/
+/**************************************************************************/
 void Adafruit_CPlay_NeoPixel::setPin(uint8_t p) {
   if(begun && (pin >= 0)) pinMode(pin, INPUT);
     pin = p;
@@ -402,7 +447,15 @@ void Adafruit_CPlay_NeoPixel::setPin(uint8_t p) {
 #endif
 }
 
-// Set pixel color from separate R,G,B components:
+/**************************************************************************/
+/*! 
+    @brief  Set pixel color from separate R,G,B components:
+    @param n the pixel number to set
+    @param r the red component
+    @param g the green component
+    @param b the blue component
+*/
+/**************************************************************************/
 void Adafruit_CPlay_NeoPixel::setPixelColor(
  uint16_t n, uint8_t r, uint8_t g, uint8_t b) {
 
@@ -425,6 +478,16 @@ void Adafruit_CPlay_NeoPixel::setPixelColor(
   }
 }
 
+/**************************************************************************/
+/*! 
+    @brief  Set pixel color from separate R,G,B,W components:
+    @param n the pixel number to set
+    @param r the red component
+    @param g the green component
+    @param b the blue component
+    @param w the white component
+*/
+/**************************************************************************/
 void Adafruit_CPlay_NeoPixel::setPixelColor(
  uint16_t n, uint8_t r, uint8_t g, uint8_t b, uint8_t w) {
 
@@ -448,7 +511,13 @@ void Adafruit_CPlay_NeoPixel::setPixelColor(
   }
 }
 
-// Set pixel color from 'packed' 32-bit RGB color:
+/**************************************************************************/
+/*! 
+    @brief  Set pixel color from 'packed' 32-bit RGB color:
+    @param n the pixel number to set
+    @param c the packed 32-bit color data
+*/
+/**************************************************************************/
 void Adafruit_CPlay_NeoPixel::setPixelColor(uint16_t n, uint32_t c) {
   if(n < numLEDs) {
     uint8_t *p,
@@ -473,19 +542,46 @@ void Adafruit_CPlay_NeoPixel::setPixelColor(uint16_t n, uint32_t c) {
   }
 }
 
-// Convert separate R,G,B into packed 32-bit RGB color.
-// Packed format is always RGB, regardless of LED strand color order.
+/**************************************************************************/
+/*! 
+    @brief  Convert separate R,G,B into packed 32-bit RGB color.
+    @param r the red component
+    @param g the green component
+    @param b the blue component
+    @return the converted 32-bit color
+
+    @note Packed format is always RGB, regardless of LED strand color order.
+*/
+/**************************************************************************/
 uint32_t Adafruit_CPlay_NeoPixel::Color(uint8_t r, uint8_t g, uint8_t b) {
   return ((uint32_t)r << 16) | ((uint32_t)g <<  8) | b;
 }
 
-// Convert separate R,G,B,W into packed 32-bit WRGB color.
-// Packed format is always WRGB, regardless of LED strand color order.
+/**************************************************************************/
+/*! 
+    @brief  Convert separate R,G,B,W into packed 32-bit WRGB color.
+    @param r the red component
+    @param g the green component
+    @param b the blue component
+    @param w the white component
+    @return the converted 32-bit color
+
+    @note Packed format is always WRGB, regardless of LED strand color order.
+*/
+/**************************************************************************/
 uint32_t Adafruit_CPlay_NeoPixel::Color(uint8_t r, uint8_t g, uint8_t b, uint8_t w) {
   return ((uint32_t)w << 24) | ((uint32_t)r << 16) | ((uint32_t)g <<  8) | b;
 }
 
-// Query color from previously-set pixel (returns packed 32-bit RGB value)
+/**************************************************************************/
+/*! 
+    @brief  Query color from previously-set pixel (returns packed 32-bit RGB value)
+    @param n the number of the pixel to check
+    @return the 32-bit color of the pixel
+
+    @note this does not read from the pixel itself. It just checks the value that was previously set.
+*/
+/**************************************************************************/
 uint32_t Adafruit_CPlay_NeoPixel::getPixelColor(uint16_t n) const {
   if(n >= numLEDs) return 0; // Out of bounds, return no color.
 
@@ -524,29 +620,49 @@ uint32_t Adafruit_CPlay_NeoPixel::getPixelColor(uint16_t n) const {
   }
 }
 
-// Returns pointer to pixels[] array.  Pixel data is stored in device-
-// native format and is not translated here.  Application will need to be
-// aware of specific pixel data format and handle colors appropriately.
+
+/**************************************************************************/
+/*! 
+    @brief  Returns pointer to pixels[] array.  Pixel data is stored in device-
+      native format and is not translated here.  Application will need to be
+      aware of specific pixel data format and handle colors appropriately.
+    @return pointer to the pixel array.
+*/
+/**************************************************************************/
 uint8_t *Adafruit_CPlay_NeoPixel::getPixels(void) const {
   return pixels;
 }
 
+
+/**************************************************************************/
+/*! 
+    @brief  get the number of pixels in the strip
+    @return the number of pixels
+*/
+/**************************************************************************/
 uint16_t Adafruit_CPlay_NeoPixel::numPixels(void) const {
   return numLEDs;
 }
 
-// Adjust output brightness; 0=darkest (off), 255=brightest.  This does
-// NOT immediately affect what's currently displayed on the LEDs.  The
-// next call to show() will refresh the LEDs at this level.  However,
-// this process is potentially "lossy," especially when increasing
-// brightness.  The tight timing in the WS2811/WS2812 code means there
-// aren't enough free cycles to perform this scaling on the fly as data
-// is issued.  So we make a pass through the existing color data in RAM
-// and scale it (subsequent graphics commands also work at this
-// brightness level).  If there's a significant step up in brightness,
-// the limited number of steps (quantization) in the old data will be
-// quite visible in the re-scaled version.  For a non-destructive
-// change, you'll need to re-render the full strip data.  C'est la vie.
+/**************************************************************************/
+/*! 
+    @brief  Adjust output brightness; 0=darkest (off), 255=brightest.
+    @param b the brightness to set
+    @return the number of pixels
+
+    @note This does NOT immediately affect what's currently displayed on the LEDs.  The
+      next call to show() will refresh the LEDs at this level.  However,
+      this process is potentially "lossy," especially when increasing
+      brightness.  The tight timing in the WS2811/WS2812 code means there
+      aren't enough free cycles to perform this scaling on the fly as data
+      is issued.  So we make a pass through the existing color data in RAM
+      and scale it (subsequent graphics commands also work at this
+      brightness level).  If there's a significant step up in brightness,
+      the limited number of steps (quantization) in the old data will be
+      quite visible in the re-scaled version.  For a non-destructive
+      change, you'll need to re-render the full strip data.  C'est la vie.
+*/
+/**************************************************************************/
 void Adafruit_CPlay_NeoPixel::setBrightness(uint8_t b) {
   // Stored brightness value is different than what's passed.
   // This simplifies the actual scaling math later, allowing a fast
