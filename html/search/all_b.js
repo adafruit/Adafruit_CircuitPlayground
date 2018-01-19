@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['name',['name',['../structsensor__t.html#a4383b68d36f9dc4096d83583c3b009bf',1,'sensor_t']]],
-  ['not_5fan_5finterrupt',['NOT_AN_INTERRUPT',['../_adafruit___circuit___playground_8h.html#ace73be9d32b9ad15d9120c47304266dc',1,'Adafruit_Circuit_Playground.h']]],
-  ['numpixels',['numPixels',['../class_adafruit___c_play___neo_pixel.html#a74033e888679b4a4ae113d85c39cf876',1,'Adafruit_CPlay_NeoPixel']]]
+  ['temperature',['temperature',['../class_adafruit___circuit_playground.html#a310cc2140af44ee0ed40a3b83d18bc79',1,'Adafruit_CircuitPlayground']]],
+  ['temperaturef',['temperatureF',['../class_adafruit___circuit_playground.html#a5ba26152d08aab16631345dc0e47d358',1,'Adafruit_CircuitPlayground']]],
+  ['temperaturenominal',['TEMPERATURENOMINAL',['../_adafruit___circuit___playground_8h.html#ad131decb98217dffe7e5c6d0f7fcb453',1,'Adafruit_Circuit_Playground.h']]],
+  ['thermistornominal',['THERMISTORNOMINAL',['../_adafruit___circuit___playground_8h.html#a38f2d877dee7ea0fbb35efd14ee2ca42',1,'Adafruit_Circuit_Playground.h']]]
 ];

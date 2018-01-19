@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['acceleration',['acceleration',['../structsensors__event__t.html#a91a4325f468d3155e6921358a6f61baa',1,'sensors_event_t']]]
+  ['cap',['cap',['../class_adafruit___circuit_playground.html#af1d0c3b099a5ed16515e81675d665aca',1,'Adafruit_CircuitPlayground']]],
+  ['circuitplayground',['CircuitPlayground',['../_adafruit___circuit___playground_8h.html#a0b940bbd5fe674c94baa3e04ac8849ed',1,'CircuitPlayground():&#160;Adafruit_CircuitPlayground.cpp'],['../_adafruit___circuit_playground_8cpp.html#a0b940bbd5fe674c94baa3e04ac8849ed',1,'CircuitPlayground():&#160;Adafruit_CircuitPlayground.cpp']]]
 ];
