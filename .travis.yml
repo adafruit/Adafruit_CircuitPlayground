@@ -8,20 +8,19 @@ branches:
 
 env:
   global:
-     - PRETTYNAME="Adafruit CircuitPlayground Arduino Library"
-# Optional, will default to "$TRAVIS_BUILD_DIR/Doxyfile"
-    #- DOXYFILE: $TRAVIS_BUILD_DIR/Doxyfile
+    - PRETTYNAME="Adafruit CircuitPlayground Arduino Library"
+    - DOXYFILE: $TRAVIS_BUILD_DIR/Doxyfile
 
 before_install:
-   #- source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)
+   - source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)
 
 install:
-   #- arduino --install-library "Adafruit LED Backpack Library","Adafruit GFX Library","Adafruit SleepyDog Library"
+   - arduino --install-library "Adafruit LED Backpack Library","Adafruit GFX Library","Adafruit SleepyDog Library"
 
 script:
-   #- build_cplay_platforms
+   - build_cplay_platforms
 
 # Generate and deploy documentation
 after_success:
   - source <(curl -SLs  https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/library_check.sh)
-  - source <(curl -SLs  https://raw.githubusercontent.com/adafruit/travis-ci-arduino/dm-cplay/doxy_gen_and_deploy.sh)
+  - source <(curl -SLs  https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/doxy_gen_and_deploy.sh)
