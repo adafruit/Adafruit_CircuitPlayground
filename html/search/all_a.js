@@ -1,13 +1,11 @@
 var searchData=
 [
-  ['sensecolor',['senseColor',['../class_adafruit___circuit_playground.html#a220587e07466040a53396f13415bd5ab',1,'Adafruit_CircuitPlayground::senseColor(uint8_t &amp;red, uint8_t &amp;green, uint8_t &amp;blue)'],['../class_adafruit___circuit_playground.html#a98e66e91960fd7c4c28676f8527d548d',1,'Adafruit_CircuitPlayground::senseColor()']]],
-  ['seriesresistor',['SERIESRESISTOR',['../_adafruit___circuit___playground_8h.html#aeda514ffe2696b78d945bc12a07b63cf',1,'Adafruit_Circuit_Playground.h']]],
-  ['setaccelrange',['setAccelRange',['../class_adafruit___circuit_playground.html#ad3da16136643f374f36987af46ef5cf7',1,'Adafruit_CircuitPlayground']]],
-  ['setacceltap',['setAccelTap',['../class_adafruit___circuit_playground.html#a0cd203aff1eaadbd0e7aa7c63556c6b2',1,'Adafruit_CircuitPlayground']]],
-  ['setbrightness',['setBrightness',['../class_adafruit___circuit_playground.html#a1806b9d22f73edcdd30e28fc9878d29f',1,'Adafruit_CircuitPlayground']]],
-  ['setpixelcolor',['setPixelColor',['../class_adafruit___circuit_playground.html#aeabcd5c97e80eea7028e49d75ddebdd5',1,'Adafruit_CircuitPlayground::setPixelColor(uint8_t p, uint32_t c)'],['../class_adafruit___circuit_playground.html#ab733a86d2fb5435121db18c0cfc747f0',1,'Adafruit_CircuitPlayground::setPixelColor(uint8_t p, uint8_t r, uint8_t g, uint8_t b)']]],
-  ['slideswitch',['slideSwitch',['../class_adafruit___circuit_playground.html#a49e41b3e566d1152daae1caf72d01a22',1,'Adafruit_CircuitPlayground']]],
-  ['soundsensor',['soundSensor',['../class_adafruit___circuit_playground.html#a14faca5dc9ca52878edd19c1ea306826',1,'Adafruit_CircuitPlayground']]],
-  ['speaker',['speaker',['../class_adafruit___circuit_playground.html#adef3edb490a581e3174dc5ac2459a63d',1,'Adafruit_CircuitPlayground']]],
-  ['strip',['strip',['../class_adafruit___circuit_playground.html#a760a8742d496a0a916d1c8de650be977',1,'Adafruit_CircuitPlayground']]]
+  ['magnetic',['magnetic',['../structsensors__event__t.html#aa634d41a024e1cacdceecf85ec326698',1,'sensors_event_t']]],
+  ['max_5fvalue',['max_value',['../structsensor__t.html#a1a17359f1080eb169a452656f7dec1ee',1,'sensor_t']]],
+  ['mic',['mic',['../class_adafruit___circuit_playground.html#ac1b17f3f8b6ba0cd115683358a5b0b0c',1,'Adafruit_CircuitPlayground']]],
+  ['min_5fdelay',['min_delay',['../structsensor__t.html#a1cd271377ff25ec9ca54886f876c87ec',1,'sensor_t']]],
+  ['min_5fvalue',['min_value',['../structsensor__t.html#a4556ed82a0389a7f6af25a6fd0ee1431',1,'sensor_t']]],
+  ['motionx',['motionX',['../class_adafruit___circuit_playground.html#a1f1572fe8ad1dea0433a3096d759ce79',1,'Adafruit_CircuitPlayground']]],
+  ['motiony',['motionY',['../class_adafruit___circuit_playground.html#af93578a067cb8663c12225746e090ea0',1,'Adafruit_CircuitPlayground']]],
+  ['motionz',['motionZ',['../class_adafruit___circuit_playground.html#a85eaee6e9851b2aa801521a8897d7d53',1,'Adafruit_CircuitPlayground']]]
 ];

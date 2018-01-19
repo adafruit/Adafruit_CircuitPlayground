@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['speaker',['speaker',['../class_adafruit___circuit_playground.html#adef3edb490a581e3174dc5ac2459a63d',1,'Adafruit_CircuitPlayground']]],
-  ['strip',['strip',['../class_adafruit___circuit_playground.html#a760a8742d496a0a916d1c8de650be977',1,'Adafruit_CircuitPlayground']]]
+  ['g',['g',['../structsensors__color__t.html#ac91ecea980718cf134f60c497d2a0049',1,'sensors_color_t']]],
+  ['gyro',['gyro',['../structsensors__event__t.html#ad108ea8c3a18d02cfc674ba27e94a2c4',1,'sensors_event_t']]]
 ];
