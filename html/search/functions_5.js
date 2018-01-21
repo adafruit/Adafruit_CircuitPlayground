@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['gamma8',['gamma8',['../class_adafruit___circuit_playground.html#aeb6d798f853da3abae8f7aaa8d048703',1,'Adafruit_CircuitPlayground::gamma8()'],['../class_adafruit___c_play___neo_pixel.html#ae427cb412c699ab9b242559bb765353f',1,'Adafruit_CPlay_NeoPixel::gamma8()']]],
   ['getacceltap',['getAccelTap',['../class_adafruit___circuit_playground.html#a7d32a281f194e63b0331499cbf4e0945',1,'Adafruit_CircuitPlayground']]],
   ['getbrightness',['getBrightness',['../class_adafruit___c_play___neo_pixel.html#a229ea25085dee4ff3fc7b290d0a60b13',1,'Adafruit_CPlay_NeoPixel']]],
   ['getclick',['getClick',['../class_adafruit___c_play___l_i_s3_d_h.html#aab75b8f18939e4c0124f46a50a8d6444',1,'Adafruit_CPlay_LIS3DH']]],

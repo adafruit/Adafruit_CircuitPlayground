@@ -138,6 +138,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a1806b9d22f73edcdd30e28fc9878d29f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___circuit_playground.html#a1806b9d22f73edcdd30e28fc9878d29f">setBrightness</a> (uint16_t b)</td></tr>
 <tr class="memdesc:a1806b9d22f73edcdd30e28fc9878d29f"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the global brightness of all neopixels.  <a href="#a1806b9d22f73edcdd30e28fc9878d29f">More...</a><br /></td></tr>
 <tr class="separator:a1806b9d22f73edcdd30e28fc9878d29f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9d42a0db0e608a78df856181816451a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___circuit_playground.html#af9d42a0db0e608a78df856181816451a">sine8</a> (uint8_t x)</td></tr>
+<tr class="memdesc:af9d42a0db0e608a78df856181816451a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a sinusoidal value from a sine table.  <a href="#af9d42a0db0e608a78df856181816451a">More...</a><br /></td></tr>
+<tr class="separator:af9d42a0db0e608a78df856181816451a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb6d798f853da3abae8f7aaa8d048703"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___circuit_playground.html#aeb6d798f853da3abae8f7aaa8d048703">gamma8</a> (uint8_t x)</td></tr>
+<tr class="memdesc:aeb6d798f853da3abae8f7aaa8d048703"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a gamma-corrected value from a gamma table.  <a href="#aeb6d798f853da3abae8f7aaa8d048703">More...</a><br /></td></tr>
+<tr class="separator:aeb6d798f853da3abae8f7aaa8d048703"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a788663b6c0bc5f909a71b6505ccfd3f9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___circuit_playground.html#a788663b6c0bc5f909a71b6505ccfd3f9">colorWheel</a> (uint8_t x)</td></tr>
 <tr class="memdesc:a788663b6c0bc5f909a71b6505ccfd3f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">get a color value from the color wheel.  <a href="#a788663b6c0bc5f909a71b6505ccfd3f9">More...</a><br /></td></tr>
 <tr class="separator:a788663b6c0bc5f909a71b6505ccfd3f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -779,6 +785,76 @@ IRsend&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="af9d42a0db0e608a78df856181816451a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9d42a0db0e608a78df856181816451a">&#9670;&nbsp;</a></span>sine8()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t Adafruit_CircuitPlayground::sine8 </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get a sinusoidal value from a sine table. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>a 0 to 255 value corresponding to an index to the sine table </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An 8-bit sinusoidal value back </dd></dl>
+
+</div>
+</div>
+<a id="aeb6d798f853da3abae8f7aaa8d048703"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb6d798f853da3abae8f7aaa8d048703">&#9670;&nbsp;</a></span>gamma8()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t Adafruit_CircuitPlayground::gamma8 </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get a gamma-corrected value from a gamma table. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>a 0 to 255 value corresponding to an index to the gamma table </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An 8-bit gamma-corrected value back </dd></dl>
 
 </div>
 </div>

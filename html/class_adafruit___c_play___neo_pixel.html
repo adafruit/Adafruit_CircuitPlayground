@@ -118,6 +118,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a229ea25085dee4ff3fc7b290d0a60b13"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a229ea25085dee4ff3fc7b290d0a60b13">getBrightness</a> (void) const</td></tr>
 <tr class="memdesc:a229ea25085dee4ff3fc7b290d0a60b13"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the global brightness value  <a href="#a229ea25085dee4ff3fc7b290d0a60b13">More...</a><br /></td></tr>
 <tr class="separator:a229ea25085dee4ff3fc7b290d0a60b13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0982a58ad2739b67a3d9b693baa43564"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a0982a58ad2739b67a3d9b693baa43564">sine8</a> (uint8_t) const</td></tr>
+<tr class="memdesc:a0982a58ad2739b67a3d9b693baa43564"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a sinusoidal value from a sine table.  <a href="#a0982a58ad2739b67a3d9b693baa43564">More...</a><br /></td></tr>
+<tr class="separator:a0982a58ad2739b67a3d9b693baa43564"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae427cb412c699ab9b242559bb765353f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#ae427cb412c699ab9b242559bb765353f">gamma8</a> (uint8_t) const</td></tr>
+<tr class="memdesc:ae427cb412c699ab9b242559bb765353f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a gamma-corrected value from a gamma table.  <a href="#ae427cb412c699ab9b242559bb765353f">More...</a><br /></td></tr>
+<tr class="separator:ae427cb412c699ab9b242559bb765353f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a74033e888679b4a4ae113d85c39cf876"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a74033e888679b4a4ae113d85c39cf876">numPixels</a> (void) const</td></tr>
 <tr class="memdesc:a74033e888679b4a4ae113d85c39cf876"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the number of pixels in the strip  <a href="#a74033e888679b4a4ae113d85c39cf876">More...</a><br /></td></tr>
 <tr class="separator:a74033e888679b4a4ae113d85c39cf876"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -517,6 +523,60 @@ Static Public Member Functions</h2></td></tr>
 
 <p>get the global brightness value </p>
 <dl class="section return"><dt>Returns</dt><dd>the global brightness </dd></dl>
+
+</div>
+</div>
+<a id="a0982a58ad2739b67a3d9b693baa43564"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0982a58ad2739b67a3d9b693baa43564">&#9670;&nbsp;</a></span>sine8()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t Adafruit_CPlay_NeoPixel::sine8 </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a sinusoidal value from a sine table. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>a 0 to 255 value corresponding to an index to the sine table </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An 8-bit sinusoidal value back </dd></dl>
+
+</div>
+</div>
+<a id="ae427cb412c699ab9b242559bb765353f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae427cb412c699ab9b242559bb765353f">&#9670;&nbsp;</a></span>gamma8()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t Adafruit_CPlay_NeoPixel::gamma8 </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a gamma-corrected value from a gamma table. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>a 0 to 255 value corresponding to an index to the gamma table </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An 8-bit gamma-corrected value back </dd></dl>
 
 </div>
 </div>

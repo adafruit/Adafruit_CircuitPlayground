@@ -5,7 +5,7 @@ var searchData=
   ['cap',['cap',['../class_adafruit___circuit_playground.html#af1d0c3b099a5ed16515e81675d665aca',1,'Adafruit_CircuitPlayground']]],
   ['capacitivesensor',['capacitiveSensor',['../class_c_play___capacitive_sensor.html#a50f26e155ce2f990e887de2d05ea211d',1,'CPlay_CapacitiveSensor']]],
   ['capacitivesensorraw',['capacitiveSensorRaw',['../class_c_play___capacitive_sensor.html#a6f55c17967e9334434ff707018c547c7',1,'CPlay_CapacitiveSensor']]],
-  ['capture',['capture',['../class_adafruit___c_play___mic.html#ad563d760b01f104090dc5aaca3d4e112',1,'Adafruit_CPlay_Mic']]],
+  ['capture',['capture',['../class_adafruit___c_play___mic.html#a339a099b5257a16f880e4159f1216032',1,'Adafruit_CPlay_Mic']]],
   ['circuitplayground',['CircuitPlayground',['../_adafruit___circuit___playground_8h.html#a0b940bbd5fe674c94baa3e04ac8849ed',1,'CircuitPlayground():&#160;Adafruit_CircuitPlayground.cpp'],['../_adafruit___circuit_playground_8cpp.html#a0b940bbd5fe674c94baa3e04ac8849ed',1,'CircuitPlayground():&#160;Adafruit_CircuitPlayground.cpp']]],
   ['clear',['clear',['../class_adafruit___c_play___neo_pixel.html#a92f1db0c61e7a77346f39677f09da5d1',1,'Adafruit_CPlay_NeoPixel']]],
   ['clearpixels',['clearPixels',['../class_adafruit___circuit_playground.html#a5a7dd271d9478c13a0dbcc3addba34c2',1,'Adafruit_CircuitPlayground']]],
