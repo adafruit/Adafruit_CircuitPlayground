@@ -59,7 +59,7 @@ int Adafruit_CPlay_Mic::peak(uint16_t ms) {
       handling of millis() and micros()), this isn't likely to lose readings.
 */
 /**************************************************************************/
-void Adafruit_CPlay_Mic::capture(int16_t *buf, uint8_t nSamples) {
+void Adafruit_CPlay_Mic::capture(int16_t *buf, uint16_t nSamples) {
 #ifdef __AVR__
   uint8_t admux_save, adcsra_save, adcsrb_save, timsk0_save, channel;
   int16_t adc;
