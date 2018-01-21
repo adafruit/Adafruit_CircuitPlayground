@@ -190,6 +190,9 @@ class Adafruit_CircuitPlayground {
 /**************************************************************************/
   void setBrightness(uint16_t b){strip.setBrightness(b);}
 
+  uint8_t sine8(uint16_t x) { return strip.sine8(x); }
+  uint8_t gamma8(uint16_t x) { return strip.gamma8(x); }
+
   uint32_t colorWheel(uint8_t x);
 
   // Basic RGB color sensing with the light sensor and nearby neopixel.
