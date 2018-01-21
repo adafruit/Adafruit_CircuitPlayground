@@ -725,10 +725,16 @@ static const int _GBASE_ = __COUNTER__ + 1; // Index of 1st __COUNTER__ below
 #define _G3_ _G2_ _G2_ _G2_ _G2_ _G2_ _G2_ _G2_ _G2_ // Expands to 64 items
 static const uint8_t PROGMEM _gammaTable[] = { _G3_ _G3_ _G3_ _G3_ }; // 256
 
+/*!  @brief Get a sinusoidal value from a sine table
+     @param x a 0 to 255 value corresponding to an index to the sine table
+     @returns An 8-bit sinusoidal value back */
 uint8_t Adafruit_CPlay_NeoPixel::sine8(uint8_t x) const {
   return pgm_read_byte(&_sineTable[x]); // 0-255 in, 0-255 out
 }
 
+/*!  @brief Get a gamma-corrected value from a gamma table
+     @param x a 0 to 255 value corresponding to an index to the gamma table
+     @returns An 8-bit gamma-corrected value back */
 uint8_t Adafruit_CPlay_NeoPixel::gamma8(uint8_t x) const {
   return pgm_read_byte(&_gammaTable[x]); // 0-255 in, 0-255 out
 }

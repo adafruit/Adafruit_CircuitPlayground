@@ -26,7 +26,7 @@
 class Adafruit_CPlay_Mic {
  public:
   Adafruit_CPlay_Mic(void) {}; // Empty constructor
-  DEPRECATED(int  peak(uint16_t ms));
+  int  peak(uint16_t ms)  __attribute__ ((deprecated));
   void capture(int16_t *buf, uint16_t nSamples),
        fft(uint16_t *spectrum);
 

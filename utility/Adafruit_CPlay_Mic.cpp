@@ -34,7 +34,8 @@ static bool pdmConfigured = false;
      disabled while this runs.
     @param ms the number of milliseconds to sample
     @return max deviation from DC_OFFSET (e.g. 0-341)
-
+    @deprecated THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
+      please use soundPressureLevel(ms) instead
     @note THIS FUNCTION IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
       please use soundPressureLevel(ms) instead
 */
@@ -148,6 +149,13 @@ void Adafruit_CPlay_Mic::capture(int16_t *buf, uint16_t nSamples) {
 #endif
 }
 
+/**************************************************************************/
+/*! 
+    @brief Returns somewhat-calibrated sound pressure level.
+    @param ms Milliseconds to continuously sample microphone over, 10ms is a good start.
+    @returns Floating point Sound Pressure Level, tends to range from 40-120 db SPL
+*/
+/**************************************************************************/
 float Adafruit_CPlay_Mic::soundPressureLevel(uint16_t ms){
   float gain;
   int16_t *ptr;

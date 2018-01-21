@@ -181,17 +181,20 @@ class Adafruit_CircuitPlayground {
 /**************************************************************************/
   void setPixelColor(uint8_t p, uint8_t r, uint8_t g, uint8_t b) {strip.setPixelColor(p, r, g, b); strip.show();}
   
-/**************************************************************************/
-/*! 
-  @brief set the global brightness of all neopixels.
-  @param b a 0 to 255 value corresponding to the desired brightness. The default brightness
-  of all neopixels is 30.
-*/
-/**************************************************************************/
+/*!  @brief set the global brightness of all neopixels.
+     @param b a 0 to 255 value corresponding to the desired brightness. The default brightness
+     of all neopixels is 30. */
   void setBrightness(uint16_t b){strip.setBrightness(b);}
 
-  uint8_t sine8(uint16_t x) { return strip.sine8(x); }
-  uint8_t gamma8(uint16_t x) { return strip.gamma8(x); }
+/*!  @brief Get a sinusoidal value from a sine table
+     @param x a 0 to 255 value corresponding to an index to the sine table
+     @returns An 8-bit sinusoidal value back */
+  uint8_t sine8(uint8_t x) { return strip.sine8(x); }
+
+/*!  @brief Get a gamma-corrected value from a gamma table
+     @param x a 0 to 255 value corresponding to an index to the gamma table
+     @returns An 8-bit gamma-corrected value back */
+  uint8_t gamma8(uint8_t x) { return strip.gamma8(x); }
 
   uint32_t colorWheel(uint8_t x);
 
