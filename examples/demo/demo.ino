@@ -1,8 +1,6 @@
 // Demo program for testing library and board - flip the switch to turn on/off buzzer
 
 #include <Adafruit_CircuitPlayground.h>
-#include <Wire.h>
-#include <SPI.h>
 
 // we light one pixel at a time, this is our counter
 uint8_t pixeln = 0;
@@ -26,7 +24,9 @@ void loop() {
   /************* TEST CAPTOUCH */
   Serial.print("Capsense #3: "); Serial.println(CircuitPlayground.readCap(3));
   Serial.print("Capsense #2: "); Serial.println(CircuitPlayground.readCap(2));
-  Serial.print("Capsense #0: "); Serial.println(CircuitPlayground.readCap(0));
+  if (! CircuitPlayground.isExpress()) {  // CPX does not have this captouch pin
+    Serial.print("Capsense #0: "); Serial.println(CircuitPlayground.readCap(0));
+  }
   Serial.print("Capsense #1: "); Serial.println(CircuitPlayground.readCap(1));
   Serial.print("Capsense #12: "); Serial.println(CircuitPlayground.readCap(12));
   Serial.print("Capsense #6: "); Serial.println(CircuitPlayground.readCap(6));
@@ -38,7 +38,7 @@ void loop() {
     Serial.println("Slide to the left");
   } else {
     Serial.println("Slide to the right");
-    CircuitPlayground.playTone(500 + pixeln * 500, 250);
+    CircuitPlayground.playTone(500 + pixeln * 500, 100);
   }
 
   /************* TEST 10 NEOPIXELS */
@@ -62,7 +62,7 @@ void loop() {
 
   /************* TEST SOUND SENSOR */
   Serial.print("Sound sensor: ");
-  Serial.println(CircuitPlayground.soundSensor());
+  Serial.println(CircuitPlayground.mic.soundPressureLevel(10));
 
   /************* TEST ACCEL */
   // Display the results (acceleration is measured in m/s*s)

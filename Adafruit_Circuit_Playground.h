@@ -109,7 +109,7 @@ class Adafruit_CircuitPlayground {
   boolean leftButton(void);
   boolean rightButton(void);
   uint16_t lightSensor(void);
-  uint16_t soundSensor(void);
+  int16_t soundSensor(void);
   float temperature(void);
   float temperatureF(void);
 

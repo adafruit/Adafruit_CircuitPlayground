@@ -141,6 +141,7 @@ void Adafruit_CPlay_Mic::capture(int16_t *buf, uint16_t nSamples) {
     //Serial.println(runningsum);
     
     runningsum /= 64 ; // convert 16 bit -> 10 bit
+    runningsum -= 512;  // make it close to 0-offset signed
 
     *ptr++ = runningsum;
   }

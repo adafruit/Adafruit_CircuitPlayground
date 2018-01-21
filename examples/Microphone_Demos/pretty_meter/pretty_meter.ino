@@ -1,5 +1,5 @@
 // Audio level visualizer for Adafruit Circuit Playground: uses the
-// built-in mic on A4, 10x NeoPixels for display.  Like the FFT example,
+// built-in microphone, 10x NeoPixels for display.  Like the FFT example,
 // the real work is done in the Circuit Playground library via the 'mic'
 // object; this code is almost entirely just dressing up the output with
 // a lot of averaging and scaling math and colors.

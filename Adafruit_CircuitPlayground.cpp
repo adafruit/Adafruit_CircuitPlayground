@@ -202,8 +202,10 @@ uint16_t Adafruit_CircuitPlayground::lightSensor(void) {
     @returns value of the sound sensor
 */
 /**************************************************************************/
-uint16_t Adafruit_CircuitPlayground::soundSensor(void) {
-  return analogRead(CPLAY_SOUNDSENSOR);
+int16_t Adafruit_CircuitPlayground::soundSensor(void) {
+  int16_t x;
+  mic.capture(&x, 1);
+  return x;
 }
 
 /**************************************************************************/
