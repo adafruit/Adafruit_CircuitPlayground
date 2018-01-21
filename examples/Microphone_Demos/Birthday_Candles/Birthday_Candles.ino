@@ -11,8 +11,6 @@
 //    flickering animation will be used.
 // After all the candles are blown out press reset to reset and start over!
 //
-// NOTE: This currently works with only Circuit Playground Classic!
-//       Express support is coming soon!
 // Author: Tony DiCola
 // License: MIT (https://opensource.org/licenses/MIT)
 #include <Adafruit_CircuitPlayground.h>
@@ -438,7 +436,7 @@ void loop() {
   playNote(NOTE_E4, QUARTER);       // Bar 1
   playNote(NOTE_D4, QUARTER);
   playNote(NOTE_G4, QUARTER);
-  playNote(NOTE_F4, HALF);          // Bar 2
+  playNote(NOTE_FS4, HALF);         // Bar 2
   playNote(NOTE_D4, EIGHTH, true);
   playNote(NOTE_D4, EIGHTH);
   playNote(NOTE_E4, QUARTER);       // Bar 3
@@ -450,7 +448,7 @@ void loop() {
   playNote(NOTE_D5, QUARTER);       // Bar 5
   playNote(NOTE_B4, QUARTER);
   playNote(NOTE_G4, QUARTER);
-  playNote(NOTE_F4, QUARTER);       // Bar 6
+  playNote(NOTE_FS4, QUARTER);      // Bar 6
   playNote(NOTE_E4, QUARTER);
   playNote(NOTE_C5, EIGHTH, true);
   playNote(NOTE_C5, EIGHTH);
