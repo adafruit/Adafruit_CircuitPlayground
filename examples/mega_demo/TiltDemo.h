@@ -44,6 +44,11 @@ public:
     uint8_t green = (uint8_t)lerp(accel, MIN_ACCEL, MAX_ACCEL, MIN_COLOR_GREEN, MAX_COLOR_GREEN);
     uint8_t blue = (uint8_t)lerp(accel, MIN_ACCEL, MAX_ACCEL, MIN_COLOR_BLUE, MAX_COLOR_BLUE);
 
+    // Gamma correction makes LED brightness appear more linear
+    red   = CircuitPlayground.gamma8(red);
+    green = CircuitPlayground.gamma8(green);
+    blue  = CircuitPlayground.gamma8(blue);
+
     // Light up all the pixels the interpolated color.
     for (int i=0; i<10; ++i) {
       CircuitPlayground.strip.setPixelColor(i, red, green, blue);
