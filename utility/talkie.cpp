@@ -77,6 +77,12 @@ static uint8_t getBits(uint8_t bits) {
 #define read8(base, bits)  pgm_read_byte(&base[getBits(bits)]);
 #define read16(base, bits) pgm_read_word(&base[getBits(bits)]);
 
+/**************************************************************************/
+/*! 
+    @brief  speak the data at the passed location
+    @param addr pointer to the data
+*/
+/**************************************************************************/
 void Adafruit_CPlay_Speaker::say(const uint8_t *addr) {
 
 	int16_t  x0=0, x1=0, x2=0, x3=0, x4=0,
@@ -96,7 +102,11 @@ void Adafruit_CPlay_Speaker::say(const uint8_t *addr) {
 
 	for(;;) {
 		while(((nowTime = micros()) - prevTime) < USEC);
+#ifdef __AVR__
 		OCR4A    = nextPwm;
+#else
+		analogWrite(A0, nextPwm);
+#endif
 		prevTime = nowTime;
 
 		if(++iCount >= TICKS) {
@@ -105,7 +115,11 @@ void Adafruit_CPlay_Speaker::say(const uint8_t *addr) {
 			if((energy = getBits(4)) == 0) {  // Rest frame
 				synthEnergy = 0;
 			} else if(energy == 0xF) {        // Stop frame; silence
+#ifdef __AVR__
 				TCCR4A = 0x7F;
+#else
+				analogWrite(A0, 0x7F);
+#endif
 				break;
 			} else {
 				synthEnergy    = pgm_read_byte(&tmsEnergy[energy]);

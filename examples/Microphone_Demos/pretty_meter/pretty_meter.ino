@@ -1,5 +1,5 @@
 // Audio level visualizer for Adafruit Circuit Playground: uses the
-// built-in mic on A4, 10x NeoPixels for display.  Like the FFT example,
+// built-in microphone, 10x NeoPixels for display.  Like the FFT example,
 // the real work is done in the Circuit Playground library via the 'mic'
 // object; this code is almost entirely just dressing up the output with
 // a lot of averaging and scaling math and colors.
@@ -26,7 +26,7 @@ int8_t   peakV  = 0;            // Velocity of peak dot
 
 void setup() {
   CircuitPlayground.begin();
-  CircuitPlayground.setBrightness(255);
+  CircuitPlayground.setBrightness(128);
   CircuitPlayground.clearPixels();
 
   for(uint8_t i=0; i<FRAMES; i++) lvl[i] = 256;
@@ -67,8 +67,11 @@ const uint8_t PROGMEM
 void loop() {
   uint8_t  i, r, g, b;
   uint16_t minLvl, maxLvl, a, scaled;
+  int16_t  p;
 
-  a           = CircuitPlayground.mic.peak(10); // 10 ms of audio
+  p           = CircuitPlayground.mic.soundPressureLevel(10); // 10 ms
+  p           = map(p, 56, 140, 0, 350); // Scale to 0-350 (may overflow)
+  a           = constrain(p, 0, 350);    // Clip to 0-350 range
   sum        -= lvl[lvlIdx];
   lvl[lvlIdx] = a;
   sum        += a;                              // Sum of lvl[] array

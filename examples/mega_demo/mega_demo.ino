@@ -13,6 +13,7 @@
 // NOTE: This example requires the Adafruit SleepyDog sleep & watchdog library
 // be installed.  Use the library manager to install, or grab it from its home:
 //   - https://github.com/adafruit/Adafruit_SleepyDog
+//   - https://github.com/adafruit/Adafruit_ASFcore (for Express)
 //
 // The following demos are available (in order):
 // - NeoPixel color rainbow cycle

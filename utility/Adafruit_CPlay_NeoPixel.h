@@ -90,40 +90,28 @@
 
 // Add NEO_KHZ400 to the color order value to indicate a 400 KHz
 // device.  All but the earliest v1 NeoPixels expect an 800 KHz data
-// stream, this is the default if unspecified.  Because flash space
-// is very limited on ATtiny devices (e.g. Trinket, Gemma), v1
-// NeoPixels aren't handled by default on those chips, though it can
-// be enabled by removing the ifndef/endif below -- but code will be
-// bigger.  Conversely, can disable the NEO_KHZ400 line on other MCUs
-// to remove v1 support and save a little space.
+// stream, this is the default if unspecified.
 
 #define NEO_KHZ800 0x0000 // 800 KHz datastream
-#ifndef __AVR_ATtiny85__
 #define NEO_KHZ400 0x0100 // 400 KHz datastream
-#endif
 
-// If 400 KHz support is enabled, the third parameter to the constructor
-// requires a 16-bit value (in order to select 400 vs 800 KHz speed).
-// If only 800 KHz is enabled (as is default on ATtiny), an 8-bit value
-// is sufficient to encode pixel color order, saving some space.
-
-#ifdef NEO_KHZ400
 typedef uint16_t neoPixelType;
-#else
-typedef uint8_t  neoPixelType;
-#endif
 
+/**************************************************************************/
+/*! 
+    @brief  Class that stores state and functions for neopixels on CircuitPlayground boards
+*/
+/**************************************************************************/
 class Adafruit_CPlay_NeoPixel {
 
  public:
 
   // Constructor: number of LEDs, pin number, LED type
-  Adafruit_CPlay_NeoPixel(uint16_t n, uint8_t p=6, neoPixelType t=NEO_GRB + NEO_KHZ800);
+  Adafruit_CPlay_NeoPixel(uint16_t n, uint8_t p=17, neoPixelType t=NEO_GRB + NEO_KHZ800);
   Adafruit_CPlay_NeoPixel(void);
   ~Adafruit_CPlay_NeoPixel();
 
-  void
-    begin(void),
+  void begin(void),
     show(void),
     setPin(uint8_t p),
     setPixelColor(uint16_t n, uint8_t r, uint8_t g, uint8_t b),
@@ -135,7 +123,9 @@ class Adafruit_CPlay_NeoPixel {
     updateType(neoPixelType t);
   uint8_t
    *getPixels(void) const,
-    getBrightness(void) const;
+    getBrightness(void) const,
+    sine8(uint8_t) const,
+    gamma8(uint8_t) const;
   uint16_t
     numPixels(void) const;
   static uint32_t
@@ -143,6 +133,13 @@ class Adafruit_CPlay_NeoPixel {
     Color(uint8_t r, uint8_t g, uint8_t b, uint8_t w);
   uint32_t
     getPixelColor(uint16_t n) const;
+
+/**************************************************************************/
+/*! 
+    @brief  check if enough time has elapsed and the pixels are ready to refresh.
+    @return true if ready to show, false otherwise.
+*/
+/**************************************************************************/
   inline bool
     canShow(void) { return (micros() - endTime) >= 50L; }
 
@@ -150,28 +147,28 @@ class Adafruit_CPlay_NeoPixel {
 
   boolean
 #ifdef NEO_KHZ400  // If 400 KHz NeoPixel support enabled...
-    is800KHz,      // ...true if 800 KHz pixels
+    is800KHz,      ///< ...true if 800 KHz pixels
 #endif
-    begun;         // true if begin() previously called
+    begun;         ///< true if begin() previously called
   uint16_t
-    numLEDs,       // Number of RGB LEDs in strip
-    numBytes;      // Size of 'pixels' buffer below (3 or 4 bytes/pixel)
+    numLEDs,       ///< Number of RGB LEDs in strip
+    numBytes;      ///< Size of 'pixels' buffer below (3 or 4 bytes/pixel)
   int8_t
-    pin;           // Output pin number (-1 if not yet set)
+    pin;           ///< Output pin number (-1 if not yet set)
   uint8_t
     brightness,
-   *pixels,        // Holds LED color values (3 or 4 bytes each)
-    rOffset,       // Index of red byte within each 3- or 4-byte pixel
-    gOffset,       // Index of green byte
-    bOffset,       // Index of blue byte
-    wOffset;       // Index of white byte (same as rOffset if no white)
+   *pixels,        ///< Holds LED color values (3 or 4 bytes each)
+    rOffset,       ///< Index of red byte within each 3- or 4-byte pixel
+    gOffset,       ///< Index of green byte
+    bOffset,       ///< Index of blue byte
+    wOffset;       ///< Index of white byte (same as rOffset if no white)
   uint32_t
-    endTime;       // Latch timing reference
+    endTime;       ///< Latch timing reference
 #ifdef __AVR__
   volatile uint8_t
-    *port;         // Output PORT register
+    *port;         ///< Output PORT register
   uint8_t
-    pinMask;       // Output PORT bitmask
+    pinMask;       ///< Output PORT bitmask
 #endif
 
 };

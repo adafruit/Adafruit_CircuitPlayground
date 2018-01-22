@@ -1,6 +1,6 @@
 #include <Adafruit_CircuitPlayground.h>
 
-int value;
+float value;
 
 void setup() {
   Serial.begin(9600);
@@ -8,10 +8,11 @@ void setup() {
 }
 
 void loop() {
-  value = CircuitPlayground.soundSensor();
+  // Take 10 milliseconds of sound data to calculate
+  value = CircuitPlayground.mic.soundPressureLevel(10);
   
-  Serial.print("Sound Sensor: ");
+  Serial.print("Sound Sensor SPL: ");
   Serial.println(value);
-  
-  delay(1000);
+
+  delay(90);
 }
