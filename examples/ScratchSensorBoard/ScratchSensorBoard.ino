@@ -38,7 +38,7 @@ void loop() {
   }
   sendPacket(0x4, CircuitPlayground.temperature() * 10);
   sendPacket(0x5, 1023 - CircuitPlayground.lightSensor());
-  float s = CircuitPlayground.mic.soundPressureLevel();
+  float s = CircuitPlayground.mic.soundPressureLevel(10);
   sendPacket(0x6, s);
   float z = CircuitPlayground.motionZ();
   z *= -50; // reverse direction
