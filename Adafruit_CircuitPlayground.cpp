@@ -197,8 +197,8 @@ uint16_t Adafruit_CircuitPlayground::lightSensor(void) {
 
 /**************************************************************************/
 /*! 
-    @brief read the onboard sound sensor. A reading of ~300 is silent, and
-    loud audio will result in a reading between 0 and 800 or so.
+    @brief read the onboard sound sensor. A reading of ~0 is silent, and
+    loud audio will result in a reading between -500 and 500 or so.
     @returns value of the sound sensor
 */
 /**************************************************************************/
