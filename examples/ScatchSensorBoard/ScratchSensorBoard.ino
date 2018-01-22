@@ -3,8 +3,6 @@
 // pin #13 red LED is lit when data is sent to Scratch!
 
 #include <Adafruit_CircuitPlayground.h>
-#include <Wire.h>
-#include <SPI.h>
 
 #define SCRATCH_DATA_REQUEST  0x01
 #define SCRATCH_FW_VER        0x04
@@ -40,9 +38,7 @@ void loop() {
   }
   sendPacket(0x4, CircuitPlayground.temperature() * 10);
   sendPacket(0x5, 1023 - CircuitPlayground.lightSensor());
-  float s = CircuitPlayground.soundSensor();
-  s -= 340;
-  s = abs(s * 1.5);
+  float s = CircuitPlayground.mic.soundPressureLevel();
   sendPacket(0x6, s);
   float z = CircuitPlayground.motionZ();
   z *= -50; // reverse direction
