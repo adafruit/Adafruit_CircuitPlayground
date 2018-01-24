@@ -6,13 +6,18 @@ uint8_t CPX_pads[] = {A1, A2, A3, A4, A5, A6, A7};
 // Circuit Playground Classic pads
 uint8_t CPC_pads[] = {3, 2, 0, 1, 12, 6, 9, 10};
 
+bool express;
+
 void setup() {
   Serial.begin(9600);
   CircuitPlayground.begin();
+
+  // Check if board is a Circuit Playground Express
+  express = CircuitPlayground.isExpress();
 }
 
 void loop() {
-  if (CircuitPlayground.isExpress()) {
+  if (express) {
     //
     // Circuit Playground Express
     //
@@ -31,5 +36,5 @@ void loop() {
   }
   
   Serial.println();
-  delay(1000);
+  delay(500);
 }
