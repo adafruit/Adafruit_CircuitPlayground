@@ -1,8 +1,8 @@
 /**************************************************************************/
 /*!
-    @file     Adafruit_LIS3DH.cpp
+    @file     Adafruit_CPlay_LIS3DH.cpp
     @author   K. Townsend / Limor Fried (Adafruit Industries)
-    @license  BSD (see license.txt)
+    license  BSD (see license.txt)
 
     This is a library for the Adafruit LIS3DH Accel breakout board
     ----> https://www.adafruit.com/products/2809
@@ -10,8 +10,6 @@
     Adafruit invests time and resources providing this open source code,
     please support Adafruit and open-source hardware by purchasing
     products from Adafruit!
-
-    @section  HISTORY
 
     v1.0  - First release
 */
@@ -32,19 +30,33 @@
 
 /**************************************************************************/
 /*!
-    @brief  Instantiates a new LIS3DH class in I2C or SPI mode
+    @brief  Instantiates a new LIS3DH class in I2C mode
 */
 /**************************************************************************/
-// I2C
 Adafruit_CPlay_LIS3DH::Adafruit_CPlay_LIS3DH()
   : _cs(-1), _mosi(-1), _miso(-1), _sck(-1), _sensorID(-1)
 {
 }
 
+/**************************************************************************/
+/*!
+    @brief  Instantiates a new LIS3DH class in hardware SPI mode
+    @param cspin the pin used as a chip select
+*/
+/**************************************************************************/
 Adafruit_CPlay_LIS3DH::Adafruit_CPlay_LIS3DH(int8_t cspin)
   : _cs(cspin), _mosi(-1), _miso(-1), _sck(-1), _sensorID(-1)
 { }
 
+/**************************************************************************/
+/*!
+    @brief  Instantiates a new LIS3DH class in software SPI mode
+    @param cspin the pin used as a chip select
+    @param mosipin the pin used as master-out-slave-in
+    @param misopin the pin used as master-in-slave-out
+    @param sckpin the pin used as SPI serial clock
+*/
+/**************************************************************************/
 Adafruit_CPlay_LIS3DH::Adafruit_CPlay_LIS3DH(int8_t cspin, int8_t mosipin, int8_t misopin, int8_t sckpin)
   : _cs(cspin), _mosi(mosipin), _miso(misopin), _sck(sckpin), _sensorID(-1)
 { }
@@ -54,6 +66,8 @@ Adafruit_CPlay_LIS3DH::Adafruit_CPlay_LIS3DH(int8_t cspin, int8_t mosipin, int8_
 /**************************************************************************/
 /*!
     @brief  Setups the HW (reads coefficients values, etc.)
+    @param i2caddr the I2C address the device can be found on. defaults to 0x18
+    @return true on success, false on any failure
 */
 /**************************************************************************/
 bool Adafruit_CPlay_LIS3DH::begin(uint8_t i2caddr) {
@@ -124,7 +138,11 @@ bool Adafruit_CPlay_LIS3DH::begin(uint8_t i2caddr) {
   return true;
 }
 
-
+/**************************************************************************/
+/*!
+    @brief  read x, y, and z axis data and store in class variables.
+*/
+/**************************************************************************/
 void Adafruit_CPlay_LIS3DH::read(void) {
   // read x y z at once
 
@@ -175,9 +193,10 @@ void Adafruit_CPlay_LIS3DH::read(void) {
 /**************************************************************************/
 /*!
     @brief  Read the auxilary ADC
+    @param adc the adc number to read. Valid adc numbers are 1, 2, and 3.
+    @return the measured value
 */
 /**************************************************************************/
-
 int16_t Adafruit_CPlay_LIS3DH::readADC(uint8_t adc) {
   if ((adc < 1) || (adc > 3)) return 0;
   uint16_t value;
@@ -220,9 +239,13 @@ int16_t Adafruit_CPlay_LIS3DH::readADC(uint8_t adc) {
 /**************************************************************************/
 /*!
     @brief  Set INT to output for single or double click
+    @param c the number of taps to detect. pass 1 for single tap on all axis, 2 for double tap on all axis. Pass 0 to disable taps.
+    @param clickthresh the threshold over which to register a tap.
+    @param timelimit Optional time limit for a tap. Defaults to 10
+    @param timelatency Optional tap latency. defaults to 20
+    @param timewindow Optional time window. defaults to 255
 */
 /**************************************************************************/
-
 void Adafruit_CPlay_LIS3DH::setClick(uint8_t c, uint8_t clickthresh, uint8_t timelimit, uint8_t timelatency, uint8_t timewindow) {
   if (!c) {
     //disable int
@@ -249,6 +272,12 @@ void Adafruit_CPlay_LIS3DH::setClick(uint8_t c, uint8_t clickthresh, uint8_t tim
   writeRegister8(LIS3DH_REG_TIMEWINDOW, timewindow); // arbitrary
 }
 
+/**************************************************************************/
+/*!
+    @brief  get a tap reading
+    @return the tap reading
+*/
+/**************************************************************************/
 uint8_t Adafruit_CPlay_LIS3DH::getClick(void) {
   return readRegister8(LIS3DH_REG_CLICKSRC);
 }
@@ -257,6 +286,9 @@ uint8_t Adafruit_CPlay_LIS3DH::getClick(void) {
 /**************************************************************************/
 /*!
     @brief  Sets the g range for the accelerometer
+    @param range the desired range of the device. Pass LIS3DH_RANGE_2_G for highest sensitivity
+      and lowest max/min value (+-2G), LIS3DH_RANGE_16_G for lowest sensitivity and highest max/min value (+-16G).
+      Other acceptable values are LIS3DH_RANGE_4_G and LIS3DH_RANGE_8_G.
 */
 /**************************************************************************/
 void Adafruit_CPlay_LIS3DH::setRange(lis3dh_range_t range)
@@ -270,6 +302,7 @@ void Adafruit_CPlay_LIS3DH::setRange(lis3dh_range_t range)
 /**************************************************************************/
 /*!
     @brief  Sets the g range for the accelerometer
+    @return the range reading from the sensor.
 */
 /**************************************************************************/
 lis3dh_range_t Adafruit_CPlay_LIS3DH::getRange(void)
@@ -281,6 +314,7 @@ lis3dh_range_t Adafruit_CPlay_LIS3DH::getRange(void)
 /**************************************************************************/
 /*!
     @brief  Sets the data rate for the LIS3DH (controls power consumption)
+    @param dataRate the desired datarate.
 */
 /**************************************************************************/
 void Adafruit_CPlay_LIS3DH::setDataRate(lis3dh_dataRate_t dataRate)
@@ -294,6 +328,7 @@ void Adafruit_CPlay_LIS3DH::setDataRate(lis3dh_dataRate_t dataRate)
 /**************************************************************************/
 /*!
     @brief  Sets the data rate for the LIS3DH (controls power consumption)
+    @return the data rate reading from the sensor.
 */
 /**************************************************************************/
 lis3dh_dataRate_t Adafruit_CPlay_LIS3DH::getDataRate(void)
@@ -304,6 +339,8 @@ lis3dh_dataRate_t Adafruit_CPlay_LIS3DH::getDataRate(void)
 /**************************************************************************/
 /*!
     @brief  Gets the most recent sensor event
+    @param event the pointer to place the event reading in
+    @return none
 */
 /**************************************************************************/
 bool Adafruit_CPlay_LIS3DH::getEvent(sensors_event_t *event) {
@@ -325,6 +362,7 @@ bool Adafruit_CPlay_LIS3DH::getEvent(sensors_event_t *event) {
 /**************************************************************************/
 /*!
     @brief  Gets the sensor_t data
+    @param sensor the pointer to place sensor information into.
 */
 /**************************************************************************/
 void Adafruit_CPlay_LIS3DH::getSensor(sensor_t *sensor) {
@@ -347,6 +385,8 @@ void Adafruit_CPlay_LIS3DH::getSensor(sensor_t *sensor) {
 /**************************************************************************/
 /*!
     @brief  Low level SPI
+    @param x the byte to transfer
+    @return the read byte
 */
 /**************************************************************************/
 

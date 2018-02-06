@@ -11,18 +11,15 @@
 //    flickering animation will be used.
 // After all the candles are blown out press reset to reset and start over!
 //
-// NOTE: This currently works with only Circuit Playground Classic!
-//       Express support is coming soon!
 // Author: Tony DiCola
 // License: MIT (https://opensource.org/licenses/MIT)
 #include <Adafruit_CircuitPlayground.h>
 
 // General configuration defines:
-#define BREATH_THRESHOLD  900   // Peak to peak value from the sound sensor that
+#define BREATH_THRESHOLD  92    // Peak to peak sound pressure level that
                                 // determines if someone is blowing on the board.
-                                // Use a very large value close to 1023 (but not
-                                // over) where the higher the value the more
-                                // forceful/loudly you need to blow on the board.
+                                // You can open the serial console to see the sound
+                                // levels and adjust as necessary!
 
 #define FLAME_LIFE_MS     200   // Amount of time (in milliseconds) that each
                                 // candle flame takes to blow out.  Increase this
@@ -201,27 +198,24 @@ void celebrateSong() {
   playNote(NOTE_G5, HALF, false);
 }
 
-// Measure the peak to peak (distance between min and max values)
-// values from the sound sensor for a specified number of milliseconds.
+// Measure the peak to peak sound pressure level from the microphone
+// for a specified number of milliseconds.
 // While measuring the current NeoPixel animation will be updated too.
 float measurePeak(uint32_t milliseconds) {
-  uint16_t soundMin = 1023;  // Keep track of the min and max sound sensor values.
-  uint16_t soundMax = 0;
+  float soundMax = 0;
   // Loop until the specified number of milliseconds have ellapsed.
   uint32_t start = millis();
   uint32_t current = start;
   while ((current - start) < milliseconds) {
-    // Inside the loop update the min and max sensor values.
-    uint16_t sample = CircuitPlayground.soundSensor();
-    soundMin = min(sample, soundMin);
+    // Inside the loop check the sound pressure level 10ms at a time
+    float sample = CircuitPlayground.mic.soundPressureLevel(10);
+    Serial.println(sample);
     soundMax = max(sample, soundMax);
     // Be sure to drive the NeoPixel animation too.
     animatePixels(current);
     current = millis();
   }
-  // Finally compute the peak to peak distance between min and max and return it.
-  float peakToPeak = soundMax - soundMin;
-  return peakToPeak;
+  return soundMax;
 }
 
 // Perform a frame of animation on the NeoPixels.
@@ -442,7 +436,7 @@ void loop() {
   playNote(NOTE_E4, QUARTER);       // Bar 1
   playNote(NOTE_D4, QUARTER);
   playNote(NOTE_G4, QUARTER);
-  playNote(NOTE_F4, HALF);          // Bar 2
+  playNote(NOTE_FS4, HALF);         // Bar 2
   playNote(NOTE_D4, EIGHTH, true);
   playNote(NOTE_D4, EIGHTH);
   playNote(NOTE_E4, QUARTER);       // Bar 3
@@ -454,7 +448,7 @@ void loop() {
   playNote(NOTE_D5, QUARTER);       // Bar 5
   playNote(NOTE_B4, QUARTER);
   playNote(NOTE_G4, QUARTER);
-  playNote(NOTE_F4, QUARTER);       // Bar 6
+  playNote(NOTE_FS4, QUARTER);      // Bar 6
   playNote(NOTE_E4, QUARTER);
   playNote(NOTE_C5, EIGHTH, true);
   playNote(NOTE_C5, EIGHTH);

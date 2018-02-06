@@ -3,15 +3,25 @@
 
 #include "Demo.h"
 
-#define CAP_THRESHOLD    300  // Threshold for a capacitive touch (higher = less sensitive).
+
 #define CAP_SAMPLES      20   // Number of samples to take for a capacitive touch read.
 #define TONE_DURATION_MS 100  // Duration in milliseconds to play a tone when touched.
 
 class CapTouchDemo: public Demo {
 public:
-  CapTouchDemo() { playSound = false; }
+  uint16_t CAP_THRESHOLD = 200;  // Threshold for a capacitive touch (higher = less sensitive).
+
+  CapTouchDemo() { 
+    playSound = false; 
+    if (CircuitPlayground.isExpress()) {
+      CAP_THRESHOLD = 800;
+    } else {
+      CAP_THRESHOLD = 200;
+    }
+  }
   ~CapTouchDemo() {}
 
+  
   virtual void loop() {
     // Clear all the neopixels.
     for (int i=0; i<10; ++i) {

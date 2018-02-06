@@ -97,6 +97,11 @@
 
 typedef uint16_t neoPixelType;
 
+/**************************************************************************/
+/*! 
+    @brief  Class that stores state and functions for neopixels on CircuitPlayground boards
+*/
+/**************************************************************************/
 class Adafruit_CPlay_NeoPixel {
 
  public:
@@ -106,8 +111,7 @@ class Adafruit_CPlay_NeoPixel {
   Adafruit_CPlay_NeoPixel(void);
   ~Adafruit_CPlay_NeoPixel();
 
-  void
-    begin(void),
+  void begin(void),
     show(void),
     setPin(uint8_t p),
     setPixelColor(uint16_t n, uint8_t r, uint8_t g, uint8_t b),
@@ -119,7 +123,9 @@ class Adafruit_CPlay_NeoPixel {
     updateType(neoPixelType t);
   uint8_t
    *getPixels(void) const,
-    getBrightness(void) const;
+    getBrightness(void) const,
+    sine8(uint8_t) const,
+    gamma8(uint8_t) const;
   uint16_t
     numPixels(void) const;
   static uint32_t
@@ -127,6 +133,13 @@ class Adafruit_CPlay_NeoPixel {
     Color(uint8_t r, uint8_t g, uint8_t b, uint8_t w);
   uint32_t
     getPixelColor(uint16_t n) const;
+
+/**************************************************************************/
+/*! 
+    @brief  check if enough time has elapsed and the pixels are ready to refresh.
+    @return true if ready to show, false otherwise.
+*/
+/**************************************************************************/
   inline bool
     canShow(void) { return (micros() - endTime) >= 50L; }
 
@@ -134,28 +147,28 @@ class Adafruit_CPlay_NeoPixel {
 
   boolean
 #ifdef NEO_KHZ400  // If 400 KHz NeoPixel support enabled...
-    is800KHz,      // ...true if 800 KHz pixels
+    is800KHz,      ///< ...true if 800 KHz pixels
 #endif
-    begun;         // true if begin() previously called
+    begun;         ///< true if begin() previously called
   uint16_t
-    numLEDs,       // Number of RGB LEDs in strip
-    numBytes;      // Size of 'pixels' buffer below (3 or 4 bytes/pixel)
+    numLEDs,       ///< Number of RGB LEDs in strip
+    numBytes;      ///< Size of 'pixels' buffer below (3 or 4 bytes/pixel)
   int8_t
-    pin;           // Output pin number (-1 if not yet set)
+    pin;           ///< Output pin number (-1 if not yet set)
   uint8_t
     brightness,
-   *pixels,        // Holds LED color values (3 or 4 bytes each)
-    rOffset,       // Index of red byte within each 3- or 4-byte pixel
-    gOffset,       // Index of green byte
-    bOffset,       // Index of blue byte
-    wOffset;       // Index of white byte (same as rOffset if no white)
+   *pixels,        ///< Holds LED color values (3 or 4 bytes each)
+    rOffset,       ///< Index of red byte within each 3- or 4-byte pixel
+    gOffset,       ///< Index of green byte
+    bOffset,       ///< Index of blue byte
+    wOffset;       ///< Index of white byte (same as rOffset if no white)
   uint32_t
-    endTime;       // Latch timing reference
+    endTime;       ///< Latch timing reference
 #ifdef __AVR__
   volatile uint8_t
-    *port;         // Output PORT register
+    *port;         ///< Output PORT register
   uint8_t
-    pinMask;       // Output PORT bitmask
+    pinMask;       ///< Output PORT bitmask
 #endif
 
 };

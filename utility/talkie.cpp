@@ -77,6 +77,12 @@ static uint8_t getBits(uint8_t bits) {
 #define read8(base, bits)  pgm_read_byte(&base[getBits(bits)]);
 #define read16(base, bits) pgm_read_word(&base[getBits(bits)]);
 
+/**************************************************************************/
+/*! 
+    @brief  speak the data at the passed location
+    @param addr pointer to the data
+*/
+/**************************************************************************/
 void Adafruit_CPlay_Speaker::say(const uint8_t *addr) {
 
 	int16_t  x0=0, x1=0, x2=0, x3=0, x4=0,

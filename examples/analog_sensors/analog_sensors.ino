@@ -60,9 +60,15 @@ void loop() {
   // Map the sensor value to a color.
   // Use the range of minimum and maximum sensor values and
   // min/max colors to do the mapping.
-  int red = map(value, VALUE_MIN, VALUE_MAX, COLOR_RED_MIN, COLOR_RED_MAX);
+  if(value < VALUE_MIN)      value = VALUE_MIN;
+  else if(value > VALUE_MAX) value = VALUE_MAX;
+  int red   = map(value, VALUE_MIN, VALUE_MAX, COLOR_RED_MIN  , COLOR_RED_MAX);
   int green = map(value, VALUE_MIN, VALUE_MAX, COLOR_GREEN_MIN, COLOR_GREEN_MAX);
-  int blue = map(value, VALUE_MIN, VALUE_MAX, COLOR_BLUE_MIN, COLOR_BLUE_MAX);
+  int blue  = map(value, VALUE_MIN, VALUE_MAX, COLOR_BLUE_MIN , COLOR_BLUE_MAX);
+  // Gamma correction gives a more linear appearance to brightness ranges
+  red   = CircuitPlayground.gamma8(red);
+  green = CircuitPlayground.gamma8(green);
+  blue  = CircuitPlayground.gamma8(blue);
 
   // Light up pixel #4 and 5 with the color.
   CircuitPlayground.clearPixels();

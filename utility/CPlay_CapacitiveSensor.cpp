@@ -19,9 +19,13 @@
 
 #include "CPlay_CapacitiveSensor.h"
 
-// Constructor /////////////////////////////////////////////////////////////////
-// Function that handles the creation and setup of instances
-
+/**************************************************************************/
+/*! 
+    @brief  Function that handles the creation and setup of instances
+    @param sendPin send pin for the sensor
+    @param receivePin the receiving pin for the sensor
+*/
+/**************************************************************************/
 CPlay_CapacitiveSensor::CPlay_CapacitiveSensor(uint8_t sendPin, uint8_t receivePin)
 {
 	// initialize this instance's variables
@@ -72,6 +76,14 @@ CPlay_CapacitiveSensor::CPlay_CapacitiveSensor(uint8_t sendPin, uint8_t receiveP
 // Public Methods //////////////////////////////////////////////////////////////
 // Functions available in Wiring sketches, this library, and other libraries
 
+
+/**************************************************************************/
+/*! 
+    @brief  get a capacitive sensor reading
+    @param samples number of samples to take
+    @return the sensor reading
+*/
+/**************************************************************************/
 long CPlay_CapacitiveSensor::capacitiveSensor(uint8_t samples)
 {
 	total = 0;
@@ -117,6 +129,13 @@ long CPlay_CapacitiveSensor::capacitiveSensor(uint8_t samples)
 
 }
 
+/**************************************************************************/
+/*! 
+    @brief  get a raw sensor reading
+    @param samples the number of samples to take
+    @return -1 for error, -2 for timeout, other values are a raw sensor reading
+*/
+/**************************************************************************/
 long CPlay_CapacitiveSensor::capacitiveSensorRaw(uint8_t samples)
 {
 	total = 0;
@@ -130,15 +149,31 @@ long CPlay_CapacitiveSensor::capacitiveSensorRaw(uint8_t samples)
 	return total;
 }
 
-
+/**************************************************************************/
+/*! 
+    @brief  reset the auto calibration
+*/
+/**************************************************************************/
 void CPlay_CapacitiveSensor::reset_CS_AutoCal(void){
 	leastTotal = 0x0FFFFFFFL;
 }
 
+/**************************************************************************/
+/*! 
+    @brief set the auto-calibration time
+    @param autoCal_millis the desired calibration time in milliseconds
+*/
+/**************************************************************************/
 void CPlay_CapacitiveSensor::set_CS_AutocaL_Millis(unsigned long autoCal_millis){
 	CS_AutocaL_Millis = autoCal_millis;
 }
 
+/**************************************************************************/
+/*! 
+    @brief  set the sensor timeout
+    @param timeout_millis the number of milliseconds to set the timeout to
+*/
+/**************************************************************************/
 void CPlay_CapacitiveSensor::set_CS_Timeout_Millis(unsigned long timeout_millis){
 	CS_Timeout_Millis = (timeout_millis * (float)loopTimingFactor * (float)F_CPU) / 16000000;  // floats to deal with large numbers
 }
@@ -146,6 +181,12 @@ void CPlay_CapacitiveSensor::set_CS_Timeout_Millis(unsigned long timeout_millis)
 // Private Methods /////////////////////////////////////////////////////////////
 // Functions only available to other functions in this library
 
+/**************************************************************************/
+/*! 
+    @brief  sense a single sicle
+    @return the reading
+*/
+/**************************************************************************/
 int CPlay_CapacitiveSensor::SenseOneCycle(void)
 {
     noInterrupts();

@@ -1,8 +1,8 @@
 /**************************************************************************/
 /*!
-    @file     Adafruit_LIS3DH.h
+    @file     Adafruit_CPlay_LIS3DH.h
     @author   K. Townsend / Limor Fried (Adafruit Industries)
-    @license  BSD (see license.txt)
+    license  BSD (see license.txt)
 
     This is a library for the Adafruit LIS3DH Accel breakout board
     ----> https://www.adafruit.com/products/2809
@@ -10,8 +10,6 @@
     Adafruit invests time and resources providing this open source code,
     please support Adafruit and open-source hardware by purchasing
     products from Adafruit!
-
-    @section  HISTORY
 
     v1.0  - First release
 */
@@ -35,46 +33,58 @@
 /*=========================================================================
     I2C ADDRESS/BITS
     -----------------------------------------------------------------------*/
-    #define LIS3DH_DEFAULT_ADDRESS  (0x18)    // if SDO/SA0 is 3V, its 0x19
+    #define LIS3DH_DEFAULT_ADDRESS  (0x18)    ///< default I2C address. if SDO/SA0 is 3V, its 0x19.
 /*=========================================================================*/
 
-#define LIS3DH_REG_STATUS1       0x07
-#define LIS3DH_REG_OUTADC1_L     0x08
-#define LIS3DH_REG_OUTADC1_H     0x09
-#define LIS3DH_REG_OUTADC2_L     0x0A
-#define LIS3DH_REG_OUTADC2_H     0x0B
-#define LIS3DH_REG_OUTADC3_L     0x0C
-#define LIS3DH_REG_OUTADC3_H     0x0D
-#define LIS3DH_REG_INTCOUNT      0x0E
-#define LIS3DH_REG_WHOAMI        0x0F
-#define LIS3DH_REG_TEMPCFG       0x1F
-#define LIS3DH_REG_CTRL1         0x20
-#define LIS3DH_REG_CTRL2         0x21
-#define LIS3DH_REG_CTRL3         0x22
-#define LIS3DH_REG_CTRL4         0x23
-#define LIS3DH_REG_CTRL5         0x24
-#define LIS3DH_REG_CTRL6         0x25
-#define LIS3DH_REG_REFERENCE     0x26
-#define LIS3DH_REG_STATUS2       0x27
-#define LIS3DH_REG_OUT_X_L       0x28
-#define LIS3DH_REG_OUT_X_H       0x29
-#define LIS3DH_REG_OUT_Y_L       0x2A
-#define LIS3DH_REG_OUT_Y_H       0x2B
-#define LIS3DH_REG_OUT_Z_L       0x2C
-#define LIS3DH_REG_OUT_Z_H       0x2D
-#define LIS3DH_REG_FIFOCTRL      0x2E
-#define LIS3DH_REG_FIFOSRC       0x2F
-#define LIS3DH_REG_INT1CFG       0x30
-#define LIS3DH_REG_INT1SRC       0x31
-#define LIS3DH_REG_INT1THS       0x32
-#define LIS3DH_REG_INT1DUR       0x33
-#define LIS3DH_REG_CLICKCFG      0x38
-#define LIS3DH_REG_CLICKSRC      0x39
-#define LIS3DH_REG_CLICKTHS      0x3A
-#define LIS3DH_REG_TIMELIMIT     0x3B
-#define LIS3DH_REG_TIMELATENCY   0x3C
-#define LIS3DH_REG_TIMEWINDOW    0x3D
+/**************************************************************************/
+/*! 
+    @brief  LIS3DH register definitions
+*/
+/**************************************************************************/
+enum {
+  LIS3DH_REG_STATUS1  =      0x07,
+  LIS3DH_REG_OUTADC1_L  =    0x08,
+  LIS3DH_REG_OUTADC1_H  =    0x09,
+  LIS3DH_REG_OUTADC2_L  =    0x0A,
+  LIS3DH_REG_OUTADC2_H  =    0x0B,
+  LIS3DH_REG_OUTADC3_L  =    0x0C,
+  LIS3DH_REG_OUTADC3_H  =    0x0D,
+  LIS3DH_REG_INTCOUNT   =     0x0E,
+  LIS3DH_REG_WHOAMI   =      0x0F,
+  LIS3DH_REG_TEMPCFG    =     0x1F,
+  LIS3DH_REG_CTRL1  =        0x20,
+  LIS3DH_REG_CTRL2    =      0x21,
+  LIS3DH_REG_CTRL3    =      0x22,
+  LIS3DH_REG_CTRL4      =     0x23,
+  LIS3DH_REG_CTRL5      =     0x24,
+  LIS3DH_REG_CTRL6      =     0x25,
+  LIS3DH_REG_REFERENCE    =   0x26,
+  LIS3DH_REG_STATUS2      =   0x27,
+  LIS3DH_REG_OUT_X_L      =   0x28,
+  LIS3DH_REG_OUT_X_H    =    0x29,
+  LIS3DH_REG_OUT_Y_L    =    0x2A,
+  LIS3DH_REG_OUT_Y_H    =    0x2B,
+  LIS3DH_REG_OUT_Z_L    =    0x2C,
+  LIS3DH_REG_OUT_Z_H    =    0x2D,
+  LIS3DH_REG_FIFOCTRL     =   0x2E,
+  LIS3DH_REG_FIFOSRC      =   0x2F,
+  LIS3DH_REG_INT1CFG      =   0x30,
+  LIS3DH_REG_INT1SRC      =   0x31,
+  LIS3DH_REG_INT1THS      =   0x32,
+  LIS3DH_REG_INT1DUR      =   0x33,
+  LIS3DH_REG_CLICKCFG     =   0x38,
+  LIS3DH_REG_CLICKSRC     =   0x39,
+  LIS3DH_REG_CLICKTHS     =  0x3A,
+  LIS3DH_REG_TIMELIMIT      = 0x3B,
+  LIS3DH_REG_TIMELATENCY    = 0x3C,
+  LIS3DH_REG_TIMEWINDOW     = 0x3D,
+};
 
+/**************************************************************************/
+/*! 
+    @brief  LIS3DH measurement ranges
+*/
+/**************************************************************************/
 typedef enum
 {
   LIS3DH_RANGE_16_G         = 0b11,   // +/- 16g
@@ -83,6 +93,11 @@ typedef enum
   LIS3DH_RANGE_2_G           = 0b00    // +/- 2g (default value)
 } lis3dh_range_t;
 
+/**************************************************************************/
+/*! 
+    @brief  LIS3DH axis numbers
+*/
+/**************************************************************************/
 typedef enum
 {
   LIS3DH_AXIS_X         = 0x0,
@@ -91,7 +106,12 @@ typedef enum
 } lis3dh_axis_t;
 
 
-/* Used with register 0x2A (LIS3DH_REG_CTRL_REG1) to set bandwidth */
+/**************************************************************************/
+/*! 
+    @brief  LIS3DH datarates
+    @note Used with register 0x2A (LIS3DH_REG_CTRL_REG1) to set bandwidth
+*/
+/**************************************************************************/
 typedef enum
 {
   LIS3DH_DATARATE_400_HZ     = 0b0111, //  400Hz 
@@ -107,6 +127,11 @@ typedef enum
 
 } lis3dh_dataRate_t;
 
+/**************************************************************************/
+/*! 
+    @brief  Class that stores state and functions for LIS3DH accelerometer on the circuitPlayground board
+*/
+/**************************************************************************/
 class Adafruit_CPlay_LIS3DH : public Adafruit_Sensor {
  public:
   Adafruit_CPlay_LIS3DH(void);
@@ -127,13 +152,26 @@ class Adafruit_CPlay_LIS3DH : public Adafruit_Sensor {
   bool getEvent(sensors_event_t *event);
   void getSensor(sensor_t *sensor);
 
-  uint8_t getOrientation(void);
-
   void setClick(uint8_t c, uint8_t clickthresh, uint8_t timelimit = 10, uint8_t timelatency = 20, uint8_t timewindow = 255);
   uint8_t getClick(void);
 
-  int16_t x, y, z;
-  float x_g, y_g, z_g;
+/**************************************************************************/
+/*! 
+    @brief  integer axis readings
+*/
+/**************************************************************************/
+  int16_t x, ///> integer x-axis reading 
+          y, ///> integer y-axis reading
+          z; ///> integer z-axis reading
+
+/**************************************************************************/
+/*! 
+    @brief  floating point axis readings
+*/
+/**************************************************************************/
+  float x_g,  ///> floating point G reading for x axis
+        y_g,  ///> floating point G reading for y axis
+        z_g; ///> floating point G reading for z axis
 
  private:
   
