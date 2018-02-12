@@ -14,8 +14,7 @@
   code editors, etc.
 
   The mapping from CP classic to express pins is as follows.  This is intended to
-  match the physical position of the pins (i.e. where D3 exists upper left of
-  CP classic now points to A4 on CP express in the same position).
+  match the usage of the digital and analog pins:
   - Digital inputs:
     - Firmata D4 -> CP Classic D4/left button -> CP Express D4/button A (no change, direct mapping)
     - Firmata D19 -> CP Classic D19/right button -> CP Express D5/button B
