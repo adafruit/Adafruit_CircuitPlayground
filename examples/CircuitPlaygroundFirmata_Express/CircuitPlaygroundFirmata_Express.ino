@@ -14,7 +14,7 @@
   code editors, etc.
 
   The mapping from CP classic to express pins is as follows.  This is intended to
-  match the usage of the digital and analog pins:
+  match the usage of the digital and analog pins.
   - Digital inputs:
     - Firmata D4 -> CP Classic D4/left button -> CP Express D4/button A (no change, direct mapping)
     - Firmata D19 -> CP Classic D19/right button -> CP Express D5/button B
@@ -356,7 +356,7 @@ uint8_t shimReadPort(uint8_t port, uint8_t bitmask) {
 
 // Shim the is digital and is analog pin defines to use the right pins:
 #define shim_IS_PIN_DIGITAL(pin) IS_PIN_DIGITAL(shimDigitalClassicToExpress(pin))
-#define shim_IS_PIN_ANALOG(pin) IS_PIN_DIGITAL(shimAnalogClassicToExpress(pin))
+#define shim_IS_PIN_ANALOG(pin) IS_PIN_ANALOG(shimAnalogClassicToExpress(pin))
 
 // Shim the pinMode function to apply a forced input mode for certain shimmed inputs (the buttons) following
 // this logic:
@@ -1136,37 +1136,67 @@ void sysexCallback(byte command, byte argc, byte *argv)
       }
       break;
     case CAPABILITY_QUERY:
-      Firmata.write(START_SYSEX);
-      Firmata.write(CAPABILITY_RESPONSE);
-      for (byte pin = 0; pin < TOTAL_PINS; pin++) {
-        if (shim_IS_PIN_DIGITAL(pin)) {
-          Firmata.write((byte)INPUT);
-          Firmata.write(1);
-          Firmata.write((byte)PIN_MODE_PULLUP);
-          Firmata.write(1);
-          Firmata.write((byte)OUTPUT);
-          Firmata.write(1);
+      {
+        Firmata.write(START_SYSEX);
+        Firmata.write(CAPABILITY_RESPONSE);
+        // Again fake out the data here to exactly match circuit playground classic.  See the analog query
+        // below for more discussion of the need to do this.  This data was read by querying a classic board
+        // with the CAPABILITY_QUERY sysex command and recording the exact response to play back below.
+        const uint8_t shimmedCapabilitiesResponse[] {
+          0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e, 
+          0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e, 0x06, 0x01, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 
+          0x01, 0x03, 0x08, 0x04, 0x0e, 0x06, 0x01, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e, 0x7f, 
+          0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x03, 0x08, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 
+          0x03, 0x08, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 
+          0x01, 0x01, 0x01, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x03, 0x08, 0x04, 0x0e, 0x7f, 
+          0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x03, 0x08, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 
+          0x03, 0x08, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 
+          0x01, 0x01, 0x01, 0x03, 0x08, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e, 0x7f, 
+          0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e, 
+          0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x02, 
+          0x0a, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x02, 0x0a, 0x04, 0x0e, 0x7f, 0x00, 0x01, 
+          0x0b, 0x01, 0x01, 0x01, 0x02, 0x0a, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x02, 0x0a, 
+          0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x02, 0x0a, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 
+          0x01, 0x01, 0x01, 0x02, 0x0a, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x02, 0x0a, 0x04, 
+          0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x02, 0x0a, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 
+          0x01, 0x01, 0x02, 0x0a, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x02, 0x0a, 0x04, 0x0e, 
+          0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x02, 0x0a, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 
+          0x01, 0x02, 0x0a, 0x04, 0x0e, 0x7f
+        };
+        for (int i=0; i<sizeof(shimmedCapabilitiesResponse); ++i) {
+          Firmata.write(shimmedCapabilitiesResponse[i]);
         }
-        if (shim_IS_PIN_ANALOG(pin)) {
-          Firmata.write(PIN_MODE_ANALOG);
-          Firmata.write(10); // 10 = 10-bit resolution
-        }
-        if (IS_PIN_PWM(pin)) {
-          Firmata.write(PIN_MODE_PWM);
-          Firmata.write(8); // 8 = 8-bit resolution
-        }
-        if (shim_IS_PIN_DIGITAL(pin)) {
-          Firmata.write(PIN_MODE_SERVO);
-          Firmata.write(14);
-        }
-        if (IS_PIN_I2C(pin)) {
-          Firmata.write(PIN_MODE_I2C);
-          Firmata.write(1);  // TODO: could assign a number to map to SCL or SDA
-        }
-        Firmata.write(127);
+        // Original code:
+        //for (byte pin = 0; pin < TOTAL_PINS; pin++) {
+        //if (shim_IS_PIN_DIGITAL(pin)) {
+        //  Firmata.write((byte)INPUT);
+        //  Firmata.write(1);
+        //  Firmata.write((byte)PIN_MODE_PULLUP);
+        //  Firmata.write(1);
+        //  Firmata.write((byte)OUTPUT);
+        //  Firmata.write(1);
+        //}
+        //if (shim_IS_PIN_ANALOG(pin)) {
+        //  Firmata.write(PIN_MODE_ANALOG);
+        //  Firmata.write(10); // 10 = 10-bit resolution
+        //}
+        //if (IS_PIN_PWM(pin)) {
+        //  Firmata.write(PIN_MODE_PWM);
+        //  Firmata.write(8); // 8 = 8-bit resolution
+        //}
+        //if (shim_IS_PIN_DIGITAL(pin)) {
+        //  Firmata.write(PIN_MODE_SERVO);
+        //  Firmata.write(14);
+        //}
+        //if (IS_PIN_I2C(pin)) {
+        //  Firmata.write(PIN_MODE_I2C);
+        //  Firmata.write(1);  // TODO: could assign a number to map to SCL or SDA
+        //}
+        //Firmata.write(127);
+        //}
+        Firmata.write(END_SYSEX);
+        break;
       }
-      Firmata.write(END_SYSEX);
-      break;
     case PIN_STATE_QUERY:
       if (argc > 0) {
         byte pin = argv[0];
@@ -1185,9 +1215,23 @@ void sysexCallback(byte command, byte argc, byte *argv)
     case ANALOG_MAPPING_QUERY:
       Firmata.write(START_SYSEX);
       Firmata.write(ANALOG_MAPPING_RESPONSE);
-      for (byte pin = 0; pin < TOTAL_PINS; pin++) {
-        Firmata.write(shim_IS_PIN_ANALOG(pin) ? shimAnalogClassicToExpress(PIN_TO_ANALOG(pin)) : 127);
+      // Fake out the analog mapping query response to mimic exactly circuit playground classic.
+      // This is _really_ ugly but necessary for now as code.org editor validates the contents
+      // and how firmata generates this is very tightly coupled to the board config (attempting to
+      // shim it is very, very difficult and bug prone--avoid at all costs!).
+      // First send 18 responses with value 127 to indicate no analog channels on first 18 pins.
+      for (int i=0; i<18; ++i) {
+        Firmata.write(127); // 127 means no analog channel for this pin.
       }
+      // Then send 12 responses that increase by one for each ADC channel A0 to A11.
+      for (int i=0; i<12; ++i) {
+        Firmata.write(i);
+      }
+      // Old code that enumerated each pin and its state:
+      // Note the failed attempt to shim.
+      //for (byte pin = 0; pin < TOTAL_PINS; pin++) {
+      //  Firmata.write(shim_IS_PIN_ANALOG(pin) ? shimAnalogClassicToExpress(PIN_TO_ANALOG(pin)) : 127);
+      //}
       Firmata.write(END_SYSEX);
       break;
   }
@@ -1352,8 +1396,10 @@ void setup()
   }
   // Now turn on the ability to use the pins that are accessible on the board using
   // Firmata's generic digital and analog control functions.
-  pinConfig[0] = 0;  // A6 / RX
-  pinConfig[1] = 0;  // A7 / TX
+  #ifndef DEBUG_MODE
+    pinConfig[0] = 0;  // A6 / RX  // Don't clobber the Serial1 pins in debug mode.
+    pinConfig[1] = 0;  // A7 / TX
+  #endif
   pinConfig[2] = 0;  // D2 / A5
   pinConfig[3] = 0;  // D3 / A4
   pinConfig[4] = 0;  // D4 / left button
@@ -1380,6 +1426,7 @@ void setup()
 #endif
 
   systemResetCallback();  // reset to default config
+  DEBUG_PRINTLN("Running...");
 }
 
 /*==============================================================================
