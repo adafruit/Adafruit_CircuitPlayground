@@ -805,18 +805,27 @@ void circuitPlaygroundCommand(byte command, byte argc, byte* argv) {
         uint16_t frequency = ((argv[1] & 0x7F) << 7) | (argv[0] & 0x7F);
         uint16_t duration = ((argv[3] & 0x7F) << 7) | (argv[2] & 0x7F);
         // If duration is zero then interpret that as continuous tone playback.
+        // Force output mode of speaker and speaker enable pin as it might have
+        // been clobbered by user code since A0 / D12 is also the speaker output.
+        pinMode(CPLAY_SPEAKER, OUTPUT);
+        pinMode(CPLAY_SPEAKER_SHUTDOWN, OUTPUT);
+        digitalWrite(CPLAY_SPEAKER_SHUTDOWN, HIGH);
         if (duration == 0) {
           tone(CPLAY_SPEAKER, frequency);
         }
         else {
           tone(CPLAY_SPEAKER, frequency, duration);
         }
-        digitalWrite(CPLAY_SPEAKER_SHUTDOWN, HIGH);
       }
       break;
     case CP_NO_TONE:
       // Stop tone playback.
+      // Force output mode of speaker and speaker enable pin as it might have
+      // been clobbered by user code since A0 / D12 is also the speaker output.
+      pinMode(CPLAY_SPEAKER, OUTPUT);
+      pinMode(CPLAY_SPEAKER_SHUTDOWN, OUTPUT);
       digitalWrite(CPLAY_SPEAKER_SHUTDOWN, LOW);
+      tone(CPLAY_SPEAKER, 100, 1);  // Very short tone to stop playback as noTone locks the board.
       //noTone(CPLAY_SPEAKER);  TODO: Notone broken! Locks up
       break;
     case CP_ACCEL_READ:
