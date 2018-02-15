@@ -410,8 +410,8 @@ uint8_t shimReadPort(uint8_t port, uint8_t bitmask) {
 //  - Firmata D19 -> CP classic D19/right button -> CP Express D5/button B is forced to INPUT_PULLDOWN
 //  - Firmata D21 -> CP classic D21/slide switch -> CP Express D7/slide switch is forced to INPUT_PULLUP
 void shimPinMode(int pin, int mode) {
-  // Ignore pins above 13 as they are internal to classic/express.
-  if (pin > 13) {
+  // Ignore pins above 13 as they are internal to classic/express (but not 19 or 21 as those are classic buttons).
+  if ((pin != 19) && (pin != 21) && (pin > 13)) {
     return;
   }
   // Handle any shimmed pins to override their input mode.
