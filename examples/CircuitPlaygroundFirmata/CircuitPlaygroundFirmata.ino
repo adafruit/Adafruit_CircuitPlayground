@@ -1134,10 +1134,6 @@ void setup()
 
   // Tell Firmata to ignore pins that are used by the Circuit Playground hardware.
   // This MUST be called or else Firmata will 'clobber' pins like the SPI CS!
-  pinConfig[1]  = PIN_MODE_IGNORE;   // Pin 1 = LIS3DH interrupt
-  pinConfig[11] = PIN_MODE_IGNORE;   // Pin 11 = SPI
-  pinConfig[10] = PIN_MODE_IGNORE;   // Pin 10 = SPI
-  pinConfig[9]  = PIN_MODE_IGNORE;   // Pin 9  = SPI
   pinConfig[28] = PIN_MODE_IGNORE;   // Pin 28 = D8 = LIS3DH CS
   pinConfig[26] = PIN_MODE_IGNORE;   // Messes with CS too?
 
