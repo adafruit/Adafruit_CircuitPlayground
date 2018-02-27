@@ -1,10 +1,79 @@
 /*
-  Circuit Playground Firmata Firmware
+  Circuit Playground Express Firmata Firmware
 
   Special version of the Firmata firmware for Adafruit's Circuit Playground
-  physical computing board.  Based on the StandardFirmata firmware but
+  Express physical computing board.  Based on the StandardFirmata firmware but
   with extensions for the components and sensors on the Circuit Playground
   board (NeoPixels, LIS3DH accelerometer, etc).
+
+  NOTE: This version ONLY works with Circuit Playground Express!  It attempts
+  to map the digital and analog inputs exposed by firmata to their equivalents
+  from the original Circuit Playground Classic board.  This is to ensure
+  some users of Firmata like code.org can interchangeably use Circuit Playground
+  Classic and Express boards with the same functionality from connected devices,
+  code editors, etc.
+
+  The mapping from CP classic to express pins is as follows.  This is intended to
+  match the usage of the digital and analog pins.
+  - Digital inputs:
+    - Firmata D4 -> CP Classic D4/left button -> CP Express D4/button A (no change, direct mapping)
+    - Firmata D19 -> CP Classic D19/right button -> CP Express D5/button B
+    - Firmata D21 -> CP Classic D21/slide switch -> CP Express D7/slide switch
+    - Firmata D13 -> CP Classic D13/red LED -> CP Express D13/red LED (no change, direct mapping)
+  - Analog inputs:
+    - Firmata A5 -> CP Classic A5/light sensor -> CP Express A8/light sensor
+    - Firmata A0 -> CP Classic A0/temp sensor -> CP Express A9/temp sensor
+    - Firmata A4 -> CP Classic A4/microphone -> CP Expresss synthesized 10-bit PDM sample
+    - Firmata A11 -> CP Classic A11/D12 -> CP Express A0
+    - Firmata A7 -> CP Classic A7/D6 -> CP Express A1
+    - Firmata A9 -> CP Classic A9/D9 -> CP Express A2
+    - Firmata A10 -> CP Classic A10/D10 -> CP Express A3
+
+  In addition a few pins need to have special input mode shims.  Specifically the buttons on
+  express rely on internal SAMD21 pullup/down resistors vs. on classic they were externally provided
+  resistors.  To ensure that firmata users like code.org can interoperate we'll override the requested
+  pin mode for these shimmed pins and force them to be inputs with the appropriate resistors set.
+  - Firmata D4 -> CP classic D4/left button -> CP Expresss D4/button A is forced to INPUT_PULLDOWN
+  - Firmata D19 -> CP classic D19/right button -> CP Express D5/button B is forced to INPUT_PULLDOWN
+  - Firmata D21 -> CP classic D21/slide switch -> CP Express D7/slide switch is forced to INPUT_PULLUP
+
+  The other features of the board and Firmata firmware will behave exactly the same without
+  any change (this is possible because they're exposed with custom firmata extensions that
+  explicitly define the intent of the request, like lighting a specific NeoPixel to a specified
+  color):
+  - NeoPixels
+    - No change, each board position and color are specified the same between classsic and express.
+  - Speaker Tones
+    - No functional change, however internally the CP express board will use the DAC, speaker enable, etc. to
+      generate a tone vs. simple Arduino square wave tone function usage on classic.
+  - Accelerometer
+    - No change, each board will expose the LIS3DH data in the same way (express is connected over I2C vs.
+      SPI on classic but this difference is purely an internal implementation that's invisible to Firmata users).
+  - Color sensing (flash red, green, blue neopixel near light sensor and return reflected values)
+    - No change, each board will light the same pixel and sample the light sensor in the same way (using the
+      appropriate pin for the light sensor).
+
+  Explicit pins to enable for Firmata control too:
+  - 0: A6 / RX
+  - 1: A7 / TX
+  - 2: D2 / A5
+  - 3: D3 / A4
+  - 4: D4 / left button
+  - 5: D5 / right button
+  - 6: D6 / A1
+  - 7: D7 / slide switch
+  - 9: D9 / A2
+  - 10: D10 / A3
+  - 12: D12 / A0
+  - 13: D13 / LED
+  - 14: A0
+  - 15: A1
+  - 16: A2
+  - 17: A3
+  - 18: A4
+  - 19: A5
+  - 20: A6
+  - 21: A7
 
   Firmata is a generic protocol for communicating with microcontrollers
   from software on a host computer. It is intended to work with
@@ -43,7 +112,7 @@
 // These defines setup debug output if enabled above (otherwise it
 // turns into no-ops that compile out).
 #define DEBUG_OUTPUT Serial1
-#define DEBUG_BAUD   9600
+#define DEBUG_BAUD   115200
 
 #ifdef DEBUG_MODE
   #define DEBUG_PRINT(...) { DEBUG_OUTPUT.print(__VA_ARGS__); }
@@ -52,6 +121,20 @@
   #define DEBUG_PRINT(...) {}
   #define DEBUG_PRINTLN(...) {}
 #endif
+
+// Define a firmata board configuration for the Circuit Playground Classic
+// so this board is 100% consistent with its internal state tracking.
+#define classic_TOTAL_ANALOG_PINS       12
+#define classic_TOTAL_PINS              30 // 14 digital + 12 analog + 4 SPI (D14-D17 on ISP header)
+#define classic_IS_PIN_DIGITAL(p)       ((p) >= 0 && (p) < classic_TOTAL_PINS)
+#define classic_IS_PIN_ANALOG(p)        ((p) >= 18 && (p) < classic_TOTAL_PINS)
+#define classic_IS_PIN_PWM(p)           ((p) == 3 || (p) == 5 || (p) == 6 || (p) == 9 || (p) == 10 || (p) == 11 || (p) == 13)
+#define classic_IS_PIN_SERVO(p)         ((p) >= 0 && (p) < classic_MAX_SERVOS)
+#define classic_IS_PIN_I2C(p)           ((p) == 2 || (p) == 3)
+#define classic_PIN_TO_DIGITAL(p)       (p)
+#define classic_PIN_TO_ANALOG(p)        (p) - 18
+#define classic_PIN_TO_PWM(p)           classic_PIN_TO_DIGITAL(p)
+#define classic_TOTAL_PORTS             ((classic_TOTAL_PINS + 7) / 8)
 
 #define I2C_WRITE                   B00000000
 #define I2C_READ                    B00001000
@@ -62,16 +145,13 @@
 #define I2C_MAX_QUERIES             8
 #define I2C_REGISTER_NOT_SPECIFIED  -1
 
-// Circuit playground configuration:
-#define PIXEL_COUNT    10     // Number of NeoPixels on the board.
-#define PIXEL_PIN      17     // Digital pin connected to the NeoPixel signal line.
-#define PIXEL_TYPE     NEO_GRB + NEO_KHZ800  // NeoPixel type.
-#define SPEAKER_PIN    5      // Digital pin connected to the speaker.
-#define LIS3DH_ADDR    0x18   // LIS3DH I2C address (not used).
-#define LIS3DH_CS      8      // LIS3DH chip select line.
-#define CAP_COUNT      8      // Number of cap touch inputs.
-#define CAP_COMMON     30     // Digital input as the common cap touch pin.
-#define CAP_SAMPLES    30     // Number of samples to take for a cap touch input.
+// Circuit Playground Express configuration:
+#define CPLAY_SPEAKER           12  // Output connected to the speaker.
+#define CPLAY_SPEAKER_SHUTDOWN  11  // Pin connected to speaker amp shutdown.
+#define CAP_COUNT      8            // Number of cap touch inputs.
+#define CAP_SAMPLES    30           // Number of samples to take for a cap touch input.
+#define ANALOG_SAMPLES 5            // How many times to sample an ADC input and average its results.
+                                    // Smoothes out the noise from express's faster processing and ADC sampling.
 
 // Circuit playground-specific Firmata SysEx commands:
 #define CP_COMMAND              0x40  // Byte that identifies all Circuit Playground commands.
@@ -178,13 +258,13 @@ cap_state_type cap_state[CAP_COUNT] = {
 int analogInputsToReport = 0; // bitwise array to store pin reporting
 
 /* digital input ports */
-byte reportPINs[TOTAL_PORTS];       // 1 = report this port, 0 = silence
-byte previousPINs[TOTAL_PORTS];     // previous 8 bits sent
+byte reportPINs[classic_TOTAL_PORTS];       // 1 = report this port, 0 = silence
+byte previousPINs[classic_TOTAL_PORTS];     // previous 8 bits sent
 
 /* pins configuration */
-byte pinConfig[TOTAL_PINS];         // configuration of every pin
-byte portConfigInputs[TOTAL_PORTS]; // each bit: 1 = pin in INPUT, 0 = anything else
-int pinState[TOTAL_PINS];           // any value that has been written
+byte pinConfig[classic_TOTAL_PINS];         // configuration of every pin
+byte portConfigInputs[classic_TOTAL_PORTS]; // each bit: 1 = pin in INPUT, 0 = anything else
+int pinState[classic_TOTAL_PINS];           // any value that has been written
 
 /* timer variables */
 unsigned long currentMillis;        // store the current value from millis()
@@ -208,7 +288,7 @@ signed char queryIndex = -1;
 unsigned int i2cReadDelayTime = 0;
 
 Servo servos[MAX_SERVOS];
-byte servoPinMap[TOTAL_PINS];
+byte servoPinMap[classic_TOTAL_PINS];
 byte detachedServos[MAX_SERVOS];
 byte detachedServoCount = 0;
 byte servoCount = 0;
@@ -238,6 +318,176 @@ byte wireRead(void)
  * FUNCTIONS
  *============================================================================*/
 
+// Circuit Playground Express Mapping Functions
+// These map the digital, analog, and capacitive touch pins to different values so
+// that the same physical position/sensor on CP classic matches the same position/sensor
+// on CP expresss.  See the comment at the top for a discussion of this mapping.
+// This is necessary so CP firmata users like code.org can interchangeably use classic
+// and express boards without any change to their code.
+//
+// These functions should be the ONLY place in the code that this mapping lives!
+// This prevents the code from becoming unmaintainable.  If ANY change needs to be
+// made to the mapping please keep it contained to these functions or within this
+// area--do not litter the code with little hacks and changes that are hard to find.
+
+// Function to map a firmata / CP classic digital input number to CP express digital input number.
+// Given a digital pin number for CP classic this returns an appropriate pin in the same
+// physical position on express.  The mapping is:
+//  - Firmata D19 -> CP Classic D19/right button -> CP Express D5/button B
+//  - Firmata D21 -> CP Classic D21/slide switch -> CP Express D7/slide switch
+int shimDigitalClassicToExpress(int classic) {
+  switch (classic) {
+    case 19:           // CP classic D19 -> CP express D5
+      return 5;
+    case 21:           // CP classlic D21 -> CP expresss D7
+      return 7;
+    default:
+      return classic;  // All others are direct mapping of CP classic -> CP express.
+  }
+}
+
+// Function to map a firmata / CP classic analog input number to CP classic analog input number.
+// Given an analog pin number for CP classic this returns an appropriate pin in the same
+// physical position or sensor on express.  The mapping is:
+//  - Firmata A5 -> CP Classic A5/light sensor -> CP Express A8/light sensor
+//  - Firmata A0 -> CP Classic A0/temp sensor -> CP Express A9/temp sensor
+//  - Firmata A4 -> CP Classic A4/microphone -> CP Expresss synthesized 10-bit PDM sample
+//  - Firmata A11 -> CP Classic A11/D12 -> CP Express A0
+//  - Firmata A7 -> CP Classic A7/D6 -> CP Express A1
+//  - Firmata A9 -> CP Classic A9/D9 -> CP Express A2
+//  - Firmata A10 -> CP Classic A10/D10 -> CP Express A3
+int shimAnalogClassicToExpress(int classic) {
+  switch (classic) {
+    case 5:
+      return A8;
+    case 0:
+      return A9;
+    case 4:
+      return -1;  // Request for A4 is the microphone and handled through
+                  // synthesis of a 10-bit sample from the PDM microphone.
+    case 11:
+      return A0;
+    case 7:
+      return A1;
+    case 9:
+      return A2;
+    case 10:
+      return A3;
+    default:
+      // Weird case, request for pin outside of that normally used on CP.
+      // Just do a direct mapping.
+      return classic;
+  }
+}
+
+// Shim the readPort function to inject in any shimmed pin bits.
+uint8_t shimReadPort(uint8_t port, uint8_t bitmask) {
+  // Read the port value, check if any shimmed pins are in this port, then
+  // explicitly read and inject their value if so.
+  uint8_t portValue = readPort(port, bitmask);
+  for (int i=0; i<8; ++i) {
+    int classicPin = port*8 + i;
+    int expressPin = shimDigitalClassicToExpress(classicPin);
+    // Check if pin is shimmed, i.e. it differs between classic and express.
+    // If so then explicitly perform a digital read to inject its value into the shimmed port result.
+    if (classicPin != expressPin) {
+      if (digitalRead(expressPin) == HIGH) {
+        // Shimmed pin is high, set it in the shimmed port value.
+        portValue |= (1 << i);
+      }
+      else {
+        // Shimmed pin is low, unset it in the shimmed port value.
+        portValue &= ~(1 << i);
+      }
+    }
+  }
+  return portValue;
+}
+
+// Shim the pinMode function to apply a forced input mode for certain shimmed inputs (the buttons) following
+// this logic:
+//  - Firmata D4 -> CP classic D4/left button -> CP Expresss D4/button A is forced to INPUT_PULLDOWN
+//  - Firmata D19 -> CP classic D19/right button -> CP Express D5/button B is forced to INPUT_PULLDOWN
+//  - Firmata D21 -> CP classic D21/slide switch -> CP Express D7/slide switch is forced to INPUT_PULLUP
+void shimPinMode(int pin, int mode) {
+  // Ignore pins above 13 as they are internal to classic/express (but not 19 or 21 as those are classic buttons).
+  if ((pin != 19) && (pin != 21) && (pin > 13)) {
+    return;
+  }
+  // Handle any shimmed pins to override their input mode.
+  if ((mode == INPUT) || (mode == INPUT_PULLUP)) {
+    switch(pin) {
+      case 4:
+      case 19:
+        mode = INPUT_PULLDOWN;
+        break;
+      case 21:
+        mode = INPUT_PULLUP;
+        break;
+    }
+  }
+  // Execute shimmed pinmode call.
+  pinMode(shimDigitalClassicToExpress(pin), mode);
+}
+
+// Shim digital write to convert from classic to express and completely
+// ignore any pins which are internal to express.
+void shimDigitalWrite(uint8_t pin, uint8_t value) {
+  // Only write to pins below 13 as other pins are internal like chip selects, etc.
+  if (pin > 13) {
+    return;
+  }
+  digitalWrite(shimDigitalClassicToExpress(pin), value);
+}
+
+// Shim writePort function to detect and explicitly write shimmed pins.
+uint8_t shimWritePort(uint8_t port, uint8_t value, uint8_t bitmask) {
+  byte pin = port * 8;
+  if ((bitmask & 0x01)) shimDigitalWrite(classic_PIN_TO_DIGITAL(pin + 0), (value & 0x01));
+  if ((bitmask & 0x02)) shimDigitalWrite(classic_PIN_TO_DIGITAL(pin + 1), (value & 0x02));
+  if ((bitmask & 0x04)) shimDigitalWrite(classic_PIN_TO_DIGITAL(pin + 2), (value & 0x04));
+  if ((bitmask & 0x08)) shimDigitalWrite(classic_PIN_TO_DIGITAL(pin + 3), (value & 0x08));
+  if ((bitmask & 0x10)) shimDigitalWrite(classic_PIN_TO_DIGITAL(pin + 4), (value & 0x10));
+  if ((bitmask & 0x20)) shimDigitalWrite(classic_PIN_TO_DIGITAL(pin + 5), (value & 0x20));
+  if ((bitmask & 0x40)) shimDigitalWrite(classic_PIN_TO_DIGITAL(pin + 6), (value & 0x40));
+  if ((bitmask & 0x80)) shimDigitalWrite(classic_PIN_TO_DIGITAL(pin + 7), (value & 0x80));
+  return 1;
+}
+
+// Shim analog read to capture from a shimmed pin or the PDM mic if necessary.
+int shimAnalogRead(uint8_t pin) {
+  int express = shimAnalogClassicToExpress(pin);
+  if (express == -1) {
+    // Special case to read the microphone and scale to an unsigned 10-bit value.
+    // Note that we get _signed_ 10-bit values from the mic capture call below, so just add 512 to readjust to unsigned.
+    // Read a single sample from the mic.
+    int16_t sample;
+    CircuitPlayground.mic.capture(&sample, 1);
+    return sample + 512;
+  }
+  else {
+    // Just read the shimmed input.
+    // However we'll take a few samples and average them as the ADC on the SAMD21 is a lot faster
+    // and gets more noisey results.  Just one sample usually reads a really low value.
+    // Take 5 readings from the sensor and average them.
+    uint32_t total = 0;
+    for (int i=0; i<ANALOG_SAMPLES; ++i) {
+      total += analogRead(express);
+    }
+    total /= ANALOG_SAMPLES;
+    return total;
+  }
+}
+
+// Shim analogWrite to convert from classic to express pins.
+void shimAnalogWrite(uint8_t pin, uint8_t value) {
+  // Only write to pins below 13 as other pins are internal like chip selects, etc.
+  if (pin > 13) {
+    return;
+  }
+  analogWrite(shimDigitalClassicToExpress(pin), value);
+}
+
 void attachServo(byte pin, int minPulse, int maxPulse)
 {
   if (servoCount < MAX_SERVOS) {
@@ -250,9 +500,9 @@ void attachServo(byte pin, int minPulse, int maxPulse)
       servoCount++;
     }
     if (minPulse > 0 && maxPulse > 0) {
-      servos[servoPinMap[pin]].attach(PIN_TO_DIGITAL(pin), minPulse, maxPulse);
+      servos[servoPinMap[pin]].attach(shimDigitalClassicToExpress(classic_PIN_TO_DIGITAL(pin)), minPulse, maxPulse);
     } else {
-      servos[servoPinMap[pin]].attach(PIN_TO_DIGITAL(pin));
+      servos[servoPinMap[pin]].attach(shimDigitalClassicToExpress(classic_PIN_TO_DIGITAL(pin)));
     }
   } else {
     Firmata.sendString("Max servos attached");
@@ -332,22 +582,22 @@ void checkDigitalInputs(void)
   /* Using non-looping code allows constants to be given to readPort().
    * The compiler will apply substantial optimizations if the inputs
    * to readPort() are compile-time constants. */
-  if (TOTAL_PORTS > 0 && reportPINs[0]) outputPort(0, readPort(0, portConfigInputs[0]), false);
-  if (TOTAL_PORTS > 1 && reportPINs[1]) outputPort(1, readPort(1, portConfigInputs[1]), false);
-  if (TOTAL_PORTS > 2 && reportPINs[2]) outputPort(2, readPort(2, portConfigInputs[2]), false);
-  if (TOTAL_PORTS > 3 && reportPINs[3]) outputPort(3, readPort(3, portConfigInputs[3]), false);
-  if (TOTAL_PORTS > 4 && reportPINs[4]) outputPort(4, readPort(4, portConfigInputs[4]), false);
-  if (TOTAL_PORTS > 5 && reportPINs[5]) outputPort(5, readPort(5, portConfigInputs[5]), false);
-  if (TOTAL_PORTS > 6 && reportPINs[6]) outputPort(6, readPort(6, portConfigInputs[6]), false);
-  if (TOTAL_PORTS > 7 && reportPINs[7]) outputPort(7, readPort(7, portConfigInputs[7]), false);
-  if (TOTAL_PORTS > 8 && reportPINs[8]) outputPort(8, readPort(8, portConfigInputs[8]), false);
-  if (TOTAL_PORTS > 9 && reportPINs[9]) outputPort(9, readPort(9, portConfigInputs[9]), false);
-  if (TOTAL_PORTS > 10 && reportPINs[10]) outputPort(10, readPort(10, portConfigInputs[10]), false);
-  if (TOTAL_PORTS > 11 && reportPINs[11]) outputPort(11, readPort(11, portConfigInputs[11]), false);
-  if (TOTAL_PORTS > 12 && reportPINs[12]) outputPort(12, readPort(12, portConfigInputs[12]), false);
-  if (TOTAL_PORTS > 13 && reportPINs[13]) outputPort(13, readPort(13, portConfigInputs[13]), false);
-  if (TOTAL_PORTS > 14 && reportPINs[14]) outputPort(14, readPort(14, portConfigInputs[14]), false);
-  if (TOTAL_PORTS > 15 && reportPINs[15]) outputPort(15, readPort(15, portConfigInputs[15]), false);
+  if (classic_TOTAL_PORTS > 0 && reportPINs[0]) outputPort(0, shimReadPort(0, portConfigInputs[0]), false);
+  if (classic_TOTAL_PORTS > 1 && reportPINs[1]) outputPort(1, shimReadPort(1, portConfigInputs[1]), false);
+  if (classic_TOTAL_PORTS > 2 && reportPINs[2]) outputPort(2, shimReadPort(2, portConfigInputs[2]), false);
+  if (classic_TOTAL_PORTS > 3 && reportPINs[3]) outputPort(3, shimReadPort(3, portConfigInputs[3]), false);
+  if (classic_TOTAL_PORTS > 4 && reportPINs[4]) outputPort(4, shimReadPort(4, portConfigInputs[4]), false);
+  if (classic_TOTAL_PORTS > 5 && reportPINs[5]) outputPort(5, shimReadPort(5, portConfigInputs[5]), false);
+  if (classic_TOTAL_PORTS > 6 && reportPINs[6]) outputPort(6, shimReadPort(6, portConfigInputs[6]), false);
+  if (classic_TOTAL_PORTS > 7 && reportPINs[7]) outputPort(7, shimReadPort(7, portConfigInputs[7]), false);
+  if (classic_TOTAL_PORTS > 8 && reportPINs[8]) outputPort(8, shimReadPort(8, portConfigInputs[8]), false);
+  if (classic_TOTAL_PORTS > 9 && reportPINs[9]) outputPort(9, shimReadPort(9, portConfigInputs[9]), false);
+  if (classic_TOTAL_PORTS > 10 && reportPINs[10]) outputPort(10, shimReadPort(10, portConfigInputs[10]), false);
+  if (classic_TOTAL_PORTS > 11 && reportPINs[11]) outputPort(11, shimReadPort(11, portConfigInputs[11]), false);
+  if (classic_TOTAL_PORTS > 12 && reportPINs[12]) outputPort(12, shimReadPort(12, portConfigInputs[12]), false);
+  if (classic_TOTAL_PORTS > 13 && reportPINs[13]) outputPort(13, shimReadPort(13, portConfigInputs[13]), false);
+  if (classic_TOTAL_PORTS > 14 && reportPINs[14]) outputPort(14, shimReadPort(14, portConfigInputs[14]), false);
+  if (classic_TOTAL_PORTS > 15 && reportPINs[15]) outputPort(15, shimReadPort(15, portConfigInputs[15]), false);
 }
 
 // -----------------------------------------------------------------------------
@@ -364,15 +614,15 @@ void setPinModeCallback(byte pin, int mode)
     // the following if statements should reconfigure the pins properly
     disableI2CPins();
   }
-  if (IS_PIN_DIGITAL(pin) && mode != PIN_MODE_SERVO) {
+  if (classic_IS_PIN_DIGITAL(pin) && mode != PIN_MODE_SERVO) {
     if (servoPinMap[pin] < MAX_SERVOS && servos[servoPinMap[pin]].attached()) {
       detachServo(pin);
     }
   }
-  if (IS_PIN_ANALOG(pin)) {
-    reportAnalogCallback(PIN_TO_ANALOG(pin), mode == PIN_MODE_ANALOG ? 1 : 0); // turn on/off reporting
+  if (classic_IS_PIN_ANALOG(pin)) {
+    reportAnalogCallback(classic_PIN_TO_ANALOG(pin), mode == PIN_MODE_ANALOG ? 1 : 0); // turn on/off reporting
   }
-  if (IS_PIN_DIGITAL(pin)) {
+  if (classic_IS_PIN_DIGITAL(pin)) {
     if (mode == INPUT || mode == PIN_MODE_PULLUP) {
       portConfigInputs[pin / 8] |= (1 << (pin & 7));
     } else {
@@ -382,50 +632,50 @@ void setPinModeCallback(byte pin, int mode)
   pinState[pin] = 0;
   switch (mode) {
     case PIN_MODE_ANALOG:
-      if (IS_PIN_ANALOG(pin)) {
-        if (IS_PIN_DIGITAL(pin)) {
-          pinMode(PIN_TO_DIGITAL(pin), INPUT);    // disable output driver
+      if (classic_IS_PIN_ANALOG(pin)) {
+        if (classic_IS_PIN_DIGITAL(pin)) {
+          shimPinMode(classic_PIN_TO_DIGITAL(pin), INPUT);    // disable output driver
 #if ARDUINO <= 100
           // deprecated since Arduino 1.0.1 - TODO: drop support in Firmata 2.6
-          digitalWrite(PIN_TO_DIGITAL(pin), LOW); // disable internal pull-ups
+          shimDigitalWrite(classic_PIN_TO_DIGITAL(pin), LOW); // disable internal pull-ups
 #endif
         }
         pinConfig[pin] = PIN_MODE_ANALOG;
       }
       break;
     case INPUT:
-      if (IS_PIN_DIGITAL(pin)) {
-        pinMode(PIN_TO_DIGITAL(pin), INPUT);    // disable output driver
+      if (classic_IS_PIN_DIGITAL(pin)) {
+        shimPinMode(classic_PIN_TO_DIGITAL(pin), INPUT);    // disable output driver
 #if ARDUINO <= 100
         // deprecated since Arduino 1.0.1 - TODO: drop support in Firmata 2.6
-        digitalWrite(PIN_TO_DIGITAL(pin), LOW); // disable internal pull-ups
+        shimDigitalWrite(classic_PIN_TO_DIGITAL(pin), LOW); // disable internal pull-ups
 #endif
         pinConfig[pin] = INPUT;
       }
       break;
     case PIN_MODE_PULLUP:
-      if (IS_PIN_DIGITAL(pin)) {
-        pinMode(PIN_TO_DIGITAL(pin), INPUT_PULLUP);
+      if (classic_IS_PIN_DIGITAL(pin)) {
+        shimPinMode(classic_PIN_TO_DIGITAL(pin), INPUT_PULLUP);
         pinConfig[pin] = PIN_MODE_PULLUP;
         pinState[pin] = 1;
       }
       break;
     case OUTPUT:
-      if (IS_PIN_DIGITAL(pin)) {
-        digitalWrite(PIN_TO_DIGITAL(pin), LOW); // disable PWM
-        pinMode(PIN_TO_DIGITAL(pin), OUTPUT);
+      if (classic_IS_PIN_DIGITAL(pin)) {
+        shimDigitalWrite(classic_PIN_TO_DIGITAL(pin), LOW); // disable PWM
+        shimPinMode(classic_PIN_TO_DIGITAL(pin), OUTPUT);
         pinConfig[pin] = OUTPUT;
       }
       break;
     case PIN_MODE_PWM:
-      if (IS_PIN_PWM(pin)) {
-        pinMode(PIN_TO_PWM(pin), OUTPUT);
-        analogWrite(PIN_TO_PWM(pin), 0);
+      if (classic_IS_PIN_PWM(pin)) {
+        shimPinMode(classic_PIN_TO_PWM(pin), OUTPUT);
+        shimAnalogWrite(classic_PIN_TO_PWM(pin), 0);
         pinConfig[pin] = PIN_MODE_PWM;
       }
       break;
     case PIN_MODE_SERVO:
-      if (IS_PIN_DIGITAL(pin)) {
+      if (classic_IS_PIN_DIGITAL(pin)) {
         pinConfig[pin] = PIN_MODE_SERVO;
         if (servoPinMap[pin] == 255 || !servos[servoPinMap[pin]].attached()) {
           // pass -1 for min and max pulse values to use default values set
@@ -435,7 +685,7 @@ void setPinModeCallback(byte pin, int mode)
       }
       break;
     case PIN_MODE_I2C:
-      if (IS_PIN_I2C(pin)) {
+      if (classic_IS_PIN_I2C(pin)) {
         // mark the pin as i2c
         // the user must call I2C_CONFIG to enable I2C for a device
         pinConfig[pin] = PIN_MODE_I2C;
@@ -455,26 +705,26 @@ void setPinModeCallback(byte pin, int mode)
  */
 void setPinValueCallback(byte pin, int value)
 {
-  if (pin < TOTAL_PINS && IS_PIN_DIGITAL(pin)) {
+  if (pin < classic_TOTAL_PINS && classic_IS_PIN_DIGITAL(pin)) {
     if (pinConfig[pin] == OUTPUT) {
       pinState[pin] = value;
-      digitalWrite(PIN_TO_DIGITAL(pin), value);
+      shimDigitalWrite(classic_PIN_TO_DIGITAL(pin), value);
     }
   }
 }
 
 void analogWriteCallback(byte pin, int value)
 {
-  if (pin < TOTAL_PINS) {
+  if (pin < classic_TOTAL_PINS) {
     switch (pinConfig[pin]) {
       case PIN_MODE_SERVO:
-        if (IS_PIN_DIGITAL(pin))
+        if (classic_IS_PIN_DIGITAL(pin))
           servos[servoPinMap[pin]].write(value);
         pinState[pin] = value;
         break;
       case PIN_MODE_PWM:
-        if (IS_PIN_PWM(pin))
-          analogWrite(PIN_TO_PWM(pin), value);
+        if (classic_IS_PIN_PWM(pin))
+          shimAnalogWrite(classic_PIN_TO_PWM(pin), value);
         pinState[pin] = value;
         break;
     }
@@ -485,13 +735,13 @@ void digitalWriteCallback(byte port, int value)
 {
   byte pin, lastPin, pinValue, mask = 1, pinWriteMask = 0;
 
-  if (port < TOTAL_PORTS) {
+  if (port < classic_TOTAL_PORTS) {
     // create a mask of the pins on this port that are writable.
     lastPin = port * 8 + 8;
-    if (lastPin > TOTAL_PINS) lastPin = TOTAL_PINS;
+    if (lastPin > classic_TOTAL_PINS) lastPin = classic_TOTAL_PINS;
     for (pin = port * 8; pin < lastPin; pin++) {
       // do not disturb non-digital pins (eg, Rx & Tx)
-      if (IS_PIN_DIGITAL(pin)) {
+      if (classic_IS_PIN_DIGITAL(pin)) {
         // do not touch pins in PWM, ANALOG, SERVO or other modes
         if (pinConfig[pin] == OUTPUT || pinConfig[pin] == INPUT) {
           pinValue = ((byte)value & mask) ? 1 : 0;
@@ -500,7 +750,7 @@ void digitalWriteCallback(byte port, int value)
           } else if (pinConfig[pin] == INPUT && pinValue == 1 && pinState[pin] != 1) {
             // only handle INPUT here for backwards compatibility
 #if ARDUINO > 100
-            pinMode(pin, INPUT_PULLUP);
+            shimPinMode(pin, INPUT_PULLUP);
 #else
             // only write to the INPUT pin to enable pullups if Arduino v1.0.0 or earlier
             pinWriteMask |= mask;
@@ -511,7 +761,7 @@ void digitalWriteCallback(byte port, int value)
       }
       mask = mask << 1;
     }
-    writePort(port, (byte)value, pinWriteMask);
+    shimWritePort(port, (byte)value, pinWriteMask);
   }
 }
 
@@ -523,7 +773,7 @@ void digitalWriteCallback(byte port, int value)
 //}
 void reportAnalogCallback(byte analogPin, int value)
 {
-  if (analogPin < TOTAL_ANALOG_PINS) {
+  if (analogPin < classic_TOTAL_ANALOG_PINS) {
     if (value == 0) {
       analogInputsToReport = analogInputsToReport & ~ (1 << analogPin);
     } else {
@@ -534,7 +784,7 @@ void reportAnalogCallback(byte analogPin, int value)
         // Send pin value immediately. This is helpful when connected via
         // ethernet, wi-fi or bluetooth so pin states can be known upon
         // reconnecting.
-        Firmata.sendAnalog(analogPin, analogRead(analogPin));
+        Firmata.sendAnalog(analogPin, shimAnalogRead(analogPin));
       }
     }
   }
@@ -543,12 +793,12 @@ void reportAnalogCallback(byte analogPin, int value)
 
 void reportDigitalCallback(byte port, int value)
 {
-  if (port < TOTAL_PORTS) {
+  if (port < classic_TOTAL_PORTS) {
     reportPINs[port] = (byte)value;
     // Send port value immediately. This is helpful when connected via
     // ethernet, wi-fi or bluetooth so pin states can be known upon
     // reconnecting.
-    if (value) outputPort(port, readPort(port, portConfigInputs[port]), true);
+    if (value) outputPort(port, shimReadPort(port, portConfigInputs[port]), true);
   }
   // do not disable analog reporting on these 8 pins, to allow some
   // pins used for digital, others analog.  Instead, allow both types
@@ -602,17 +852,28 @@ void circuitPlaygroundCommand(byte command, byte argc, byte* argv) {
         uint16_t frequency = ((argv[1] & 0x7F) << 7) | (argv[0] & 0x7F);
         uint16_t duration = ((argv[3] & 0x7F) << 7) | (argv[2] & 0x7F);
         // If duration is zero then interpret that as continuous tone playback.
+        // Force output mode of speaker and speaker enable pin as it might have
+        // been clobbered by user code since A0 / D12 is also the speaker output.
+        pinMode(CPLAY_SPEAKER, OUTPUT);
+        pinMode(CPLAY_SPEAKER_SHUTDOWN, OUTPUT);
+        digitalWrite(CPLAY_SPEAKER_SHUTDOWN, HIGH);
         if (duration == 0) {
-          tone(SPEAKER_PIN, frequency);
+          tone(CPLAY_SPEAKER, frequency);
         }
         else {
-          tone(SPEAKER_PIN, frequency, duration);
+          tone(CPLAY_SPEAKER, frequency, duration);
         }
       }
       break;
     case CP_NO_TONE:
       // Stop tone playback.
-      noTone(SPEAKER_PIN);
+      // Force output mode of speaker and speaker enable pin as it might have
+      // been clobbered by user code since A0 / D12 is also the speaker output.
+      pinMode(CPLAY_SPEAKER, OUTPUT);
+      pinMode(CPLAY_SPEAKER_SHUTDOWN, OUTPUT);
+      digitalWrite(CPLAY_SPEAKER_SHUTDOWN, LOW);
+      tone(CPLAY_SPEAKER, 100, 1);  // Very short tone to stop playback as noTone locks the board.
+      //noTone(CPLAY_SPEAKER);  TODO: Notone broken! Locks up
       break;
     case CP_ACCEL_READ:
       sendAccelResponse();
@@ -902,7 +1163,7 @@ void sysexCallback(byte command, byte argc, byte *argv)
         int minPulse = argv[1] + (argv[2] << 7);
         int maxPulse = argv[3] + (argv[4] << 7);
 
-        if (IS_PIN_DIGITAL(pin)) {
+        if (classic_IS_PIN_DIGITAL(pin)) {
           if (servoPinMap[pin] < MAX_SERVOS && servos[servoPinMap[pin]].attached()) {
             detachServo(pin);
           }
@@ -930,44 +1191,74 @@ void sysexCallback(byte command, byte argc, byte *argv)
       }
       break;
     case CAPABILITY_QUERY:
-      Firmata.write(START_SYSEX);
-      Firmata.write(CAPABILITY_RESPONSE);
-      for (byte pin = 0; pin < TOTAL_PINS; pin++) {
-        if (IS_PIN_DIGITAL(pin)) {
-          Firmata.write((byte)INPUT);
-          Firmata.write(1);
-          Firmata.write((byte)PIN_MODE_PULLUP);
-          Firmata.write(1);
-          Firmata.write((byte)OUTPUT);
-          Firmata.write(1);
+      {
+        Firmata.write(START_SYSEX);
+        Firmata.write(CAPABILITY_RESPONSE);
+        // Again fake out the data here to exactly match circuit playground classic.  See the analog query
+        // below for more discussion of the need to do this.  This data was read by querying a classic board
+        // with the CAPABILITY_QUERY sysex command and recording the exact response to play back below.
+        const uint8_t shimmedCapabilitiesResponse[] {
+          0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e,
+          0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e, 0x06, 0x01, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01,
+          0x01, 0x03, 0x08, 0x04, 0x0e, 0x06, 0x01, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e, 0x7f,
+          0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x03, 0x08, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01,
+          0x03, 0x08, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b,
+          0x01, 0x01, 0x01, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x03, 0x08, 0x04, 0x0e, 0x7f,
+          0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x03, 0x08, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01,
+          0x03, 0x08, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b,
+          0x01, 0x01, 0x01, 0x03, 0x08, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e, 0x7f,
+          0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e,
+          0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x02,
+          0x0a, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x02, 0x0a, 0x04, 0x0e, 0x7f, 0x00, 0x01,
+          0x0b, 0x01, 0x01, 0x01, 0x02, 0x0a, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x02, 0x0a,
+          0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x02, 0x0a, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b,
+          0x01, 0x01, 0x01, 0x02, 0x0a, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x02, 0x0a, 0x04,
+          0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x02, 0x0a, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01,
+          0x01, 0x01, 0x02, 0x0a, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x02, 0x0a, 0x04, 0x0e,
+          0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01, 0x01, 0x02, 0x0a, 0x04, 0x0e, 0x7f, 0x00, 0x01, 0x0b, 0x01, 0x01,
+          0x01, 0x02, 0x0a, 0x04, 0x0e, 0x7f
+        };
+        for (int i=0; i<sizeof(shimmedCapabilitiesResponse); ++i) {
+          Firmata.write(shimmedCapabilitiesResponse[i]);
         }
-        if (IS_PIN_ANALOG(pin)) {
-          Firmata.write(PIN_MODE_ANALOG);
-          Firmata.write(10); // 10 = 10-bit resolution
-        }
-        if (IS_PIN_PWM(pin)) {
-          Firmata.write(PIN_MODE_PWM);
-          Firmata.write(8); // 8 = 8-bit resolution
-        }
-        if (IS_PIN_DIGITAL(pin)) {
-          Firmata.write(PIN_MODE_SERVO);
-          Firmata.write(14);
-        }
-        if (IS_PIN_I2C(pin)) {
-          Firmata.write(PIN_MODE_I2C);
-          Firmata.write(1);  // TODO: could assign a number to map to SCL or SDA
-        }
-        Firmata.write(127);
+        // Original code:
+        //for (byte pin = 0; pin < classic_TOTAL_PINS; pin++) {
+        //if (classic_IS_PIN_DIGITAL(pin)) {
+        //  Firmata.write((byte)INPUT);
+        //  Firmata.write(1);
+        //  Firmata.write((byte)PIN_MODE_PULLUP);
+        //  Firmata.write(1);
+        //  Firmata.write((byte)OUTPUT);
+        //  Firmata.write(1);
+        //}
+        //if (classic_IS_PIN_ANALOG(pin)) {
+        //  Firmata.write(PIN_MODE_ANALOG);
+        //  Firmata.write(10); // 10 = 10-bit resolution
+        //}
+        //if (classic_IS_PIN_PWM(pin)) {
+        //  Firmata.write(PIN_MODE_PWM);
+        //  Firmata.write(8); // 8 = 8-bit resolution
+        //}
+        //if (classic_IS_PIN_DIGITAL(pin)) {
+        //  Firmata.write(PIN_MODE_SERVO);
+        //  Firmata.write(14);
+        //}
+        //if (classic_IS_PIN_I2C(pin)) {
+        //  Firmata.write(PIN_MODE_I2C);
+        //  Firmata.write(1);  // TODO: could assign a number to map to SCL or SDA
+        //}
+        //Firmata.write(127);
+        //}
+        Firmata.write(END_SYSEX);
+        break;
       }
-      Firmata.write(END_SYSEX);
-      break;
     case PIN_STATE_QUERY:
       if (argc > 0) {
         byte pin = argv[0];
         Firmata.write(START_SYSEX);
         Firmata.write(PIN_STATE_RESPONSE);
         Firmata.write(pin);
-        if (pin < TOTAL_PINS) {
+        if (pin < classic_TOTAL_PINS) {
           Firmata.write((byte)pinConfig[pin]);
           Firmata.write((byte)pinState[pin] & 0x7F);
           if (pinState[pin] & 0xFF80) Firmata.write((byte)(pinState[pin] >> 7) & 0x7F);
@@ -979,9 +1270,23 @@ void sysexCallback(byte command, byte argc, byte *argv)
     case ANALOG_MAPPING_QUERY:
       Firmata.write(START_SYSEX);
       Firmata.write(ANALOG_MAPPING_RESPONSE);
-      for (byte pin = 0; pin < TOTAL_PINS; pin++) {
-        Firmata.write(IS_PIN_ANALOG(pin) ? PIN_TO_ANALOG(pin) : 127);
+      // Fake out the analog mapping query response to mimic exactly circuit playground classic.
+      // This is _really_ ugly but necessary for now as code.org editor validates the contents
+      // and how firmata generates this is very tightly coupled to the board config (attempting to
+      // shim it is very, very difficult and bug prone--avoid at all costs!).
+      // First send 18 responses with value 127 to indicate no analog channels on first 18 pins.
+      for (int i=0; i<18; ++i) {
+        Firmata.write(127); // 127 means no analog channel for this pin.
       }
+      // Then send 12 responses that increase by one for each ADC channel A0 to A11.
+      for (int i=0; i<12; ++i) {
+        Firmata.write(i);
+      }
+      // Old code that enumerated each pin and its state:
+      // Note the failed attempt to shim.
+      //for (byte pin = 0; pin < classic_TOTAL_PINS; pin++) {
+      //  Firmata.write(classic_IS_PIN_ANALOG(pin) ? classic_PIN_TO_ANALOG(pin) : 127);
+      //}
       Firmata.write(END_SYSEX);
       break;
   }
@@ -992,8 +1297,8 @@ void enableI2CPins()
   byte i;
   // is there a faster way to do this? would probaby require importing
   // Arduino.h to get SCL and SDA pins
-  for (i = 0; i < TOTAL_PINS; i++) {
-    if (IS_PIN_I2C(i)) {
+  for (i = 0; i < classic_TOTAL_PINS; i++) {
+    if (classic_IS_PIN_I2C(i)) {
       // mark pins as i2c so they are ignore in non i2c data requests
       setPinModeCallback(i, PIN_MODE_I2C);
     }
@@ -1030,19 +1335,19 @@ void systemResetCallback()
     disableI2CPins();
   }
 
-  for (byte i = 0; i < TOTAL_PORTS; i++) {
+  for (byte i = 0; i < classic_TOTAL_PORTS; i++) {
     reportPINs[i] = false;    // by default, reporting off
     portConfigInputs[i] = 0;  // until activated
     previousPINs[i] = 0;
   }
 
-  for (byte i = 0; i < TOTAL_PINS; i++) {
+  for (byte i = 0; i < classic_TOTAL_PINS; i++) {
     // pins with analog capability default to analog input
     // otherwise, pins default to digital output
-    if (IS_PIN_ANALOG(i)) {
+    if (classic_IS_PIN_ANALOG(i)) {
       // turns off pullup, configures everything
       setPinModeCallback(i, PIN_MODE_ANALOG);
-    } else if (IS_PIN_DIGITAL(i)) {
+    } else if (classic_IS_PIN_DIGITAL(i)) {
       // sets the output to 0, configures portConfigInputs
       setPinModeCallback(i, OUTPUT);
     }
@@ -1060,7 +1365,7 @@ void systemResetCallback()
   /*
   TODO: this can never execute, since no pins default to digital input
         but it will be needed when/if we support EEPROM stored config
-  for (byte i=0; i < TOTAL_PORTS; i++) {
+  for (byte i=0; i < classic_TOTAL_PORTS; i++) {
     outputPort(i, readPort(i, portConfigInputs[i]), true);
   }
   */
@@ -1071,6 +1376,11 @@ void circuitPlaygroundReset() {
   // Reset the circuit playground components into a default state
   // with none of the pixels lit, no tones playing, and no cap touch
   // or accelerometer data streaming back.
+
+  // Make speaker shutdown an output and turn off the speaker.
+  pinMode(CPLAY_SPEAKER_SHUTDOWN, OUTPUT);
+  digitalWrite(CPLAY_SPEAKER_SHUTDOWN, LOW);
+  //noTone(CPLAY_SPEAKER); //TODO: NOTONE BROKEN! LOCKS
 
   // Turn off all the NeoPixels.
   CircuitPlayground.strip.clear();
@@ -1088,23 +1398,13 @@ void circuitPlaygroundReset() {
   for (int i=0; i<CAP_COUNT; ++i) {
     cap_state[i].streaming = false;
   }
-
-  // Stop any tones on the speaker.
-  noTone(SPEAKER_PIN);
 }
 
 void setup()
 {
-  // Circuit playground debug setup
-  #ifdef DEBUG_MODE
-    DEBUG_OUTPUT.begin(DEBUG_BAUD);
-    DEBUG_PRINTLN("Circuit Playground Firmata starting up!");
-  #endif
-
   // Circuit playground setup:
   if (!CircuitPlayground.begin()) {
     // Failed to initialize circuit playground, fast blink the red LED on the board.
-    DEBUG_PRINTLN("Failed to initialize circuit playground!");
     pinMode(13, OUTPUT);
     while (1) {
       digitalWrite(13, LOW);
@@ -1113,6 +1413,14 @@ void setup()
       delay(100);
     }
   }
+
+  // Circuit playground debug setup.
+  // Do this AFTER the CircuitPlayground library initialization or else the cap touch
+  // configuration inside it will clobber the debug serial port pins and break debug output.
+  #ifdef DEBUG_MODE
+    DEBUG_OUTPUT.begin(DEBUG_BAUD);
+    DEBUG_PRINTLN("Circuit Playground Firmata starting up!");
+  #endif
 
   Firmata.setFirmwareVersion(FIRMATA_MAJOR_VERSION, FIRMATA_MINOR_VERSION);
 
@@ -1131,11 +1439,6 @@ void setup()
   // Firmata.begin(Serial1);
   // then comment out or remove lines 701 - 704 below
   Firmata.begin(57600);
-
-  // Tell Firmata to ignore pins that are used by the Circuit Playground hardware.
-  // This MUST be called or else Firmata will 'clobber' pins like the SPI CS!
-  pinConfig[28] = PIN_MODE_IGNORE;   // Pin 28 = D8 = LIS3DH CS
-  pinConfig[26] = PIN_MODE_IGNORE;   // Messes with CS too?
 
 #if defined(DEMO_MODE)
   while (!Serial) {
@@ -1159,8 +1462,9 @@ void loop()
 
   /* STREAMREAD - processing incoming messagse as soon as possible, while still
    * checking digital inputs.  */
-  while (Firmata.available())
+  while (Firmata.available()) {
     Firmata.processInput();
+  }
 
   // TODO - ensure that Stream buffer doesn't go over 60 bytes
 
@@ -1168,11 +1472,11 @@ void loop()
   if (currentMillis - previousMillis > samplingInterval) {
     previousMillis += samplingInterval;
     /* ANALOGREAD - do all analogReads() at the configured sampling interval */
-    for (pin = 0; pin < TOTAL_PINS; pin++) {
-      if (IS_PIN_ANALOG(pin) && pinConfig[pin] == PIN_MODE_ANALOG) {
-        analogPin = PIN_TO_ANALOG(pin);
+    for (pin = 0; pin < classic_TOTAL_PINS; pin++) {
+      if (classic_IS_PIN_ANALOG(pin) && pinConfig[pin] == PIN_MODE_ANALOG) {
+        analogPin = classic_PIN_TO_ANALOG(pin);
         if (analogInputsToReport & (1 << analogPin)) {
-          Firmata.sendAnalog(analogPin, analogRead(analogPin));
+          Firmata.sendAnalog(analogPin, shimAnalogRead(analogPin));
         }
       }
     }
