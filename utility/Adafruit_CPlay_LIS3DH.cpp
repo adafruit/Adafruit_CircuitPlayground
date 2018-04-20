@@ -26,6 +26,9 @@
 #include <Wire.h>
 #include <Adafruit_CPlay_LIS3DH.h>
 
+#ifdef __SAMD21G18A__
+ #define Wire Wire1 // CP Express has LIS on Wire1 bus
+#endif
 
 /**************************************************************************/
 /*!
@@ -55,7 +58,6 @@ Adafruit_CPlay_LIS3DH::Adafruit_CPlay_LIS3DH(int8_t cspin, int8_t mosipin, int8_
 /**************************************************************************/
 bool Adafruit_CPlay_LIS3DH::begin(uint8_t i2caddr) {
   _i2caddr = i2caddr;
-
 
   if (_cs == -1) {
     // i2c

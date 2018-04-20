@@ -17,6 +17,7 @@
 // disabled while this runs.
 
 int Adafruit_CPlay_Mic::peak(uint16_t ms) {
+#ifdef __AVR__
   uint8_t  admux_save, adcsra_save, adcsrb_save, timsk0_save, channel;
   uint16_t i, nSamples;
   int16_t  adc, adcMin, adcMax;
@@ -66,6 +67,9 @@ int Adafruit_CPlay_Mic::peak(uint16_t ms) {
   if(adcMin > adcMax)    adcMax = adcMin;
 
   return adcMax;
+#else
+  return 0;
+#endif
 }
 
 // -------------------------------------------------------------------------
@@ -78,6 +82,7 @@ int Adafruit_CPlay_Mic::peak(uint16_t ms) {
 // handling of millis() and micros()), this isn't likely to lose readings.
 
 void Adafruit_CPlay_Mic::capture(int16_t *buf, uint8_t nSamples) {
+#ifdef __AVR__
   uint8_t admux_save, adcsra_save, adcsrb_save, timsk0_save, channel;
   int16_t adc;
 
@@ -124,6 +129,8 @@ void Adafruit_CPlay_Mic::capture(int16_t *buf, uint8_t nSamples) {
   ADCSRB = adcsrb_save;
   ADCSRA = adcsra_save;
   (void)analogRead(A4);                // Purge residue from ADC register
+#else
+#endif
 }
 
 // -------------------------------------------------------------------------

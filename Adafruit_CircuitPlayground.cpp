@@ -1,22 +1,37 @@
-#include <Adafruit_CircuitPlayground.h>
-
+#include <Adafruit_Circuit_Playground.h>
 
 boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   pinMode(CPLAY_REDLED, OUTPUT);
-  pinMode(CPLAY_SLIDESWITCHPIN, INPUT);
+  pinMode(CPLAY_BUZZER, OUTPUT);
+#ifdef __AVR__
+  pinMode(CPLAY_CAPSENSE_SHARED, OUTPUT);
   pinMode(CPLAY_LEFTBUTTON, INPUT);
   pinMode(CPLAY_RIGHTBUTTON, INPUT);
-  pinMode(CPLAY_BUZZER, OUTPUT);
-  pinMode(CPLAY_CAPSENSE_SHARED, OUTPUT);
+  pinMode(CPLAY_SLIDESWITCHPIN, INPUT);
+#else // Circuit Playground Express
+  pinMode(CPLAY_LEFTBUTTON, INPUT_PULLDOWN);
+  pinMode(CPLAY_RIGHTBUTTON, INPUT_PULLDOWN);
+  pinMode(CPLAY_SLIDESWITCHPIN, INPUT_PULLUP);
+  irReceiver=IRrecvPCI(CPLAY_IR_RECEIVER);
+  irDecoder=IRdecode();
+#endif
 
-  strip = Adafruit_CPlay_NeoPixel(10, CPLAY_NEOPIXELPIN, NEO_GRB + NEO_KHZ800);
+
+  strip = Adafruit_CPlay_NeoPixel();
+  strip.updateType(NEO_GRB + NEO_KHZ800);
+  strip.updateLength(10);
+  strip.setPin(CPLAY_NEOPIXELPIN);
+
   lis = Adafruit_CPlay_LIS3DH(CPLAY_LIS3DH_CS);
   mic = Adafruit_CPlay_Mic();
+
+  speaker.begin();
 
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
   strip.setBrightness(brightness);
 
+#ifdef __AVR__
   cap[0] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 0);
   cap[1] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 1);
   cap[2] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 2);
@@ -25,36 +40,47 @@ boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   cap[5] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 9);
   cap[6] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 10);
   cap[7] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 12);
-
-  if (! lis.begin(0x18)) {   // change this to 0x19 for alternative i2c address
-    return false;
+#else // Circuit Playground Express // Circuit Playground Express
+  for(int i=0; i<7; i++) {
+    cap[i] = Adafruit_CPlay_FreeTouch(A1+i, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
+    if (! cap[i].begin()) return false;
   }
-  return true;
+#endif
+
+  return lis.begin(CPLAY_LIS3DH_ADDRESS);
 }
 
 uint16_t Adafruit_CircuitPlayground::readCap(uint8_t p, uint8_t samples) {
+#ifdef __AVR__  // Circuit Playground Classic
   switch (p) {
-  case 0:
-    return cap[0].capacitiveSensor(samples);
-  case 1:
-    return cap[1].capacitiveSensor(samples);
-  case 2:
-    return cap[2].capacitiveSensor(samples);
-  case 3:
-    return cap[3].capacitiveSensor(samples);
-  case 6:
-    return cap[4].capacitiveSensor(samples);
-  case 9:
-    return cap[5].capacitiveSensor(samples);
-  case 10:
-    return cap[6].capacitiveSensor(samples);
-  case 12:
-    return cap[7].capacitiveSensor(samples);
-  default:
-    return 0;
+    case 0:    return cap[0].capacitiveSensor(samples);
+    case 1:    return cap[1].capacitiveSensor(samples);
+    case 2:    return cap[2].capacitiveSensor(samples);
+    case 3:    return cap[3].capacitiveSensor(samples);
+    case 6:    return cap[4].capacitiveSensor(samples);
+    case 9:    return cap[5].capacitiveSensor(samples);
+    case 10:   return cap[6].capacitiveSensor(samples);
+    case 12:   return cap[7].capacitiveSensor(samples);
+    default:   return 0;
   }
+#else // Circuit Playground Express // Circuit Playground Express
+  // analog pins r ez!
+  if ((p >= A1) && (p <= A7)) {
+    return cap[p - A1].measure();
+  }
+  // oof digital pins
+  switch (p) {
+    case 0:    return cap[A6 - A1].measure();
+    case 1:    return cap[A7 - A1].measure();
+    case 2:    return cap[A5 - A1].measure();
+    case 3:    return cap[A4 - A1].measure();
+    case 6:    return cap[A1 - A1].measure();
+    case 9:    return cap[A2 - A1].measure();
+    case 10:   return cap[A3 - A1].measure();
+    default:   return 0;
+  }
+#endif
 }
-
 
 // just turn on/off the red #13 LED
 void Adafruit_CircuitPlayground::redLED(boolean v) {
@@ -76,8 +102,9 @@ boolean Adafruit_CircuitPlayground::rightButton(void) {
   return digitalRead(CPLAY_RIGHTBUTTON);
 }
 
-void Adafruit_CircuitPlayground::playTone(uint16_t freq, uint16_t time) {
+void Adafruit_CircuitPlayground::playTone(uint16_t freq, uint16_t time, boolean wait) {
   tone(CPLAY_BUZZER, freq, time);
+  if (wait) delay(time);
 }
 
 uint16_t Adafruit_CircuitPlayground::lightSensor(void) {
@@ -87,7 +114,6 @@ uint16_t Adafruit_CircuitPlayground::lightSensor(void) {
 uint16_t Adafruit_CircuitPlayground::soundSensor(void) {
   return analogRead(CPLAY_SOUNDSENSOR);
 }
-
 
 float Adafruit_CircuitPlayground::motionX(void) {
   sensors_event_t event;
@@ -138,7 +164,6 @@ float Adafruit_CircuitPlayground::temperatureF(void) {
   return tempF;
 }
 
-
 // Input a value 0 to 255 to get a color value.
 // The colours are a transition r - g - b - back to r.
 uint32_t Adafruit_CircuitPlayground::colorWheel(uint8_t WheelPos) {
@@ -185,6 +210,15 @@ void Adafruit_CircuitPlayground::senseColor(uint8_t& red, uint8_t& green, uint8_
   red = min(255, raw_red/4);
   green = min(255, raw_green/4);
   blue = min(255, raw_blue/4);
+}
+
+// Returns true if Circuit Playground Express, false if "classic"
+boolean Adafruit_CircuitPlayground::isExpress(void) {
+#ifdef __AVR__
+  return false;
+#else
+  return true;
+#endif
 }
 
 // instantiate static
