@@ -80,7 +80,7 @@ void Adafruit_CPlay_Speaker::end(void) {
 void Adafruit_CPlay_Speaker::set(uint8_t value) {
   if(!started) begin();
 #ifdef __AVR__
-  TCCR4A = value;
+  OCR4A = value;
 #else
   analogWrite(A0, value);
 #endif
