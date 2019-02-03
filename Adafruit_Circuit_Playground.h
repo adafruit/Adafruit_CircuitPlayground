@@ -1,31 +1,31 @@
 /*!
 
 * @file Adafruit_Circuit_Playground.h
- 
+
 *
 
 * This is part of Adafruit's CircuitPlayground driver for the Arduino platform.  It is
- 
+
 * designed specifically to work with the Adafruit CircuitPlayground boards.
- 
+
 *
- 
+
 * Adafruit invests time and resources providing this open source code,
- 
+
 * please support Adafruit and open-source hardware by purchasing
- 
+
 * products from Adafruit!
- 
+
 *
- 
+
 * Written by Ladyada and others for Adafruit Industries.
- 
+
 *
- 
+
 * BSD license, all text here must be included in any redistribution.
- 
+
 *
- 
+
 */
 
 
@@ -52,7 +52,7 @@
 
 
 #ifdef __AVR__ // Circuit Playground 'classic'
-  
+
   #include "utility/CPlay_CapacitiveSensor.h"
 
 #else
@@ -149,22 +149,22 @@
 
 
 
-/*! 
+/*!
   @brief Configuration to tune the color sensing logic:
 
    Amount of time (in milliseconds) to wait between
- 
+
    changing the pixel color and reading the light
     sensor.
 
 */
 
-#define LIGHT_SETTLE_MS 100  
+#define LIGHT_SETTLE_MS 100
 
 
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  Class that stores state and functions for interacting with CircuitPlayground hardware
 */
 
@@ -174,7 +174,7 @@
 class Adafruit_CircuitPlayground {
 
  public:
-  boolean begin(uint8_t brightness=20);
+  bool begin(uint8_t brightness=20);
 
 
 #ifndef __INC_FASTSPI_LED2_H
@@ -206,15 +206,15 @@ class Adafruit_CircuitPlayground {
 #endif
 
 
-  boolean slideSwitch(void);
+  bool slideSwitch(void);
 
-  void redLED(boolean v);
+  void redLED(bool v);
 
-  void playTone(uint16_t freq, uint16_t time, boolean wait=true);
+  void playTone(uint16_t freq, uint16_t time, bool wait=true);
 
-  boolean leftButton(void);
+  bool leftButton(void);
 
-  boolean rightButton(void);
+  bool rightButton(void);
 
   uint16_t lightSensor(void);
 
@@ -241,7 +241,7 @@ class Adafruit_CircuitPlayground {
 
 /**************************************************************************/
 
-/*! 
+/*!
   @brief set the range of the MEMS accelerometer.
 
   @param range the range to set the accelerometer to. LIS3DH_RANGE_2_G
@@ -259,12 +259,12 @@ class Adafruit_CircuitPlayground {
 
 /**************************************************************************/
 
-/*! 
+/*!
   @brief turn on tap detection. Tap detection can detect single taps or 'double taps'
- 
+
   (like a double-click).
   @param c If c is 1 you will only detect single taps, one at a time.
- 
+
             If c is 2, you will be able to detect both single taps and double taps.
 
   @param clickthresh the threshold over which to register a tap
@@ -273,18 +273,18 @@ class Adafruit_CircuitPlayground {
 
 /**************************************************************************/
 
-  void setAccelTap(uint8_t c, uint8_t clickthresh) 
+  void setAccelTap(uint8_t c, uint8_t clickthresh)
     { lis.setClick(c, clickthresh, 10, 20, 255); }
 
 
 
 /**************************************************************************/
 
-/*! 
+/*!
   @brief test whether or not a tap has been detected
 
   @return 0 if no tap is detected, 1 if a single tap is detected,
- and 2 or 3 if double tap is detected. 
+ and 2 or 3 if double tap is detected.
 
 */
 
@@ -299,7 +299,7 @@ class Adafruit_CircuitPlayground {
 
 /**************************************************************************/
 
-/*! 
+/*!
   @brief turn off all neopixels on the board
 */
 
@@ -311,7 +311,7 @@ class Adafruit_CircuitPlayground {
 
 /**************************************************************************/
 
-/*! 
+/*!
   @brief set the color of a neopixel on the board
 
   @param p the pixel to set. Pixel 0 is above the pad labeled 'GND' right next to the
@@ -332,7 +332,7 @@ class Adafruit_CircuitPlayground {
 /**************************************************************************/
 
 /*!
- 
+
   @brief set the color of a neopixel on the board
 
   @param p the pixel to set. Pixel 0 is above the pad labeled 'GND' right next to the
@@ -345,7 +345,7 @@ class Adafruit_CircuitPlayground {
 
   @param g a 0 to 255 value corresponding to the green component of the desired color.
 
-  @param b a 0 to 255 value corresponding to the blue component of the desired color.  
+  @param b a 0 to 255 value corresponding to the blue component of the desired color.
 
 */
 
@@ -401,7 +401,7 @@ class Adafruit_CircuitPlayground {
 
 /**************************************************************************/
 
-/*! 
+/*!
   @brief detect a color using the onboard light sensor
 
   @return a 24 bit color. The most significant byte is red, followed by green, and
@@ -430,7 +430,7 @@ class Adafruit_CircuitPlayground {
 
 #endif
 
-  boolean isExpress(void);
+  bool isExpress(void);
 
 
 
