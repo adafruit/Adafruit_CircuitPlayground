@@ -61,8 +61,6 @@ bool Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   lis = Adafruit_CPlay_LIS3DH(CPLAY_LIS3DH_CS);
   mic = Adafruit_CPlay_Mic();
 
-  speaker.begin();
-
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
   strip.setBrightness(brightness);
