@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['leftbutton',['leftButton',['../class_adafruit___circuit_playground.html#a6cdf15442604169e7fb94d152311782a',1,'Adafruit_CircuitPlayground']]],
+  ['leftbutton',['leftButton',['../class_adafruit___circuit_playground.html#a51a2f7383844218863d3fdd85ced2a03',1,'Adafruit_CircuitPlayground']]],
   ['light',['light',['../structsensors__event__t.html#adefd2ce2da44e4449ef7cadeaecc6cfd',1,'sensors_event_t']]],
   ['light_5fsettle_5fms',['LIGHT_SETTLE_MS',['../_adafruit___circuit___playground_8h.html#ab2b1599b10bc8601ce95e57280550e60',1,'Adafruit_Circuit_Playground.h']]],
   ['lightsensor',['lightSensor',['../class_adafruit___circuit_playground.html#a84d1e4f7d833cda6f4f67ff54263db0d',1,'Adafruit_CircuitPlayground']]],

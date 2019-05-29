@@ -21,7 +21,7 @@ var searchData=
   ['setrange',['setRange',['../class_adafruit___c_play___l_i_s3_d_h.html#ac238ef2b53b83a876fd5609c87cc8a64',1,'Adafruit_CPlay_LIS3DH']]],
   ['show',['show',['../class_adafruit___c_play___neo_pixel.html#a7b098a8b3719c3425bafef724672c80b',1,'Adafruit_CPlay_NeoPixel']]],
   ['sine8',['sine8',['../class_adafruit___circuit_playground.html#af9d42a0db0e608a78df856181816451a',1,'Adafruit_CircuitPlayground::sine8()'],['../class_adafruit___c_play___neo_pixel.html#a0982a58ad2739b67a3d9b693baa43564',1,'Adafruit_CPlay_NeoPixel::sine8()']]],
-  ['slideswitch',['slideSwitch',['../class_adafruit___circuit_playground.html#a49e41b3e566d1152daae1caf72d01a22',1,'Adafruit_CircuitPlayground']]],
+  ['slideswitch',['slideSwitch',['../class_adafruit___circuit_playground.html#aa65e8d13f9ff704c4c036c7cc89dc132',1,'Adafruit_CircuitPlayground']]],
   ['soundpressurelevel',['soundPressureLevel',['../class_adafruit___c_play___mic.html#ae4b3e81f1b048e0de39d0a4db6bb6517',1,'Adafruit_CPlay_Mic']]],
   ['soundsensor',['soundSensor',['../class_adafruit___circuit_playground.html#a400cbdaa9aa0cdd119b94e355e48b043',1,'Adafruit_CircuitPlayground']]],
   ['speaker',['speaker',['../class_adafruit___circuit_playground.html#adef3edb490a581e3174dc5ac2459a63d',1,'Adafruit_CircuitPlayground']]],
