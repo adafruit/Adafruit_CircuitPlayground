@@ -179,12 +179,11 @@ class Adafruit_CPlay_LIS3DH : public Adafruit_Sensor {
   void writeRegister8(uint8_t reg, uint8_t value);
   uint8_t spixfer(uint8_t x = 0xFF);
 
-
-  int32_t _sensorID;
-  int8_t  _i2caddr;
-
   // SPI
   int8_t _cs, _mosi, _miso, _sck;
+
+  int8_t  _i2caddr;
+  int32_t _sensorID;
 };
 
 #endif
