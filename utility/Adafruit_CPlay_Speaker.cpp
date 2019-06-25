@@ -12,16 +12,32 @@
 */
 /**************************************************************************/
 void Adafruit_CPlay_Speaker::begin(void) {
+  if(!started) {
 #ifdef __AVR__
-  pinMode(5, OUTPUT);                 // Enable output
+    // Set up Timer4 for fast PWM on !OC4A
+    PLLFRQ  = (PLLFRQ & 0xCF) | 0x30;   // Route PLL to async clk
+    TCCR4A  = _BV(COM4A0) | _BV(PWM4A); // Clear on match, PWMA on
+    TCCR4B  = _BV(PWM4X)  | _BV(CS40);  // PWM invert, 1:1 prescale
+    TCCR4D  = 0;                        // Fast PWM mode
+    TCCR4E  = 0;                        // Not enhanced mode
+    DT4     = 0;                        // No dead time
+    noInterrupts();                     // TC4H accesses must be atomic
+    TC4H    = 0;                        // Not 10-bit mode
+    OCR4C   = 255;                      // TOP
+    TC4H    = 0;
+    OCR4A   = 127;                      // 50% duty (idle position) to start
+    interrupts();
+    pinMode(5, OUTPUT);                 // Enable output
 #else
-  pinMode(CPLAY_SPEAKER_SHUTDOWN, OUTPUT);
-  digitalWrite(CPLAY_SPEAKER_SHUTDOWN, HIGH);
-  // PWM/timer not needed on CPlay Express, has true analog out.
-  // Set analogWrite resolution to 8 bits to match AVR calls.
-  analogWriteResolution(8);
-  pinMode(A0, OUTPUT);                // Enable output
+    pinMode(CPLAY_SPEAKER_SHUTDOWN, OUTPUT);
+    digitalWrite(CPLAY_SPEAKER_SHUTDOWN, HIGH);
+    // PWM/timer not needed on CPlay Express, has true analog out.
+    // Set analogWrite resolution to 8 bits to match AVR calls.
+    analogWriteResolution(8);
+    pinMode(A0, OUTPUT);                // Enable output
 #endif
+    started = true;
+  }
 }
 
 /**************************************************************************/
@@ -31,9 +47,8 @@ void Adafruit_CPlay_Speaker::begin(void) {
 */
 /**************************************************************************/
 
-void Adafruit_CPlay_Speaker::enable(boolean e)  { 
-#ifdef __AVR__
-#else             // circuit playground express has nicer amp w/shutdown
+void Adafruit_CPlay_Speaker::enable(bool e)  { 
+#if !defined(__AVR__) // circuit playground express has nicer amp w/shutdown
   digitalWrite(CPLAY_SPEAKER_SHUTDOWN, e);
 #endif 
 }
@@ -44,13 +59,16 @@ void Adafruit_CPlay_Speaker::enable(boolean e)  {
 */
 /**************************************************************************/
 void Adafruit_CPlay_Speaker::end(void) {
+  if(started) {
 #ifdef __AVR__
-  TCCR4A  = 0; // PWMA off
-  pinMode(5, INPUT);
+    TCCR4A  = 0; // PWMA off
+    pinMode(5, INPUT);
 #else
-  pinMode(A0, INPUT);
+    pinMode(A0, INPUT);
+    enable(false);
 #endif
-  started = false;
+    started = false;
+  }
 }
 
 /**************************************************************************/
@@ -62,7 +80,7 @@ void Adafruit_CPlay_Speaker::end(void) {
 void Adafruit_CPlay_Speaker::set(uint8_t value) {
   if(!started) begin();
 #ifdef __AVR__
-  TCCR4A = value;
+  OCR4A = value;
 #else
   analogWrite(A0, value);
 #endif
@@ -83,25 +101,11 @@ void Adafruit_CPlay_Speaker::set(uint8_t value) {
 */
 /**************************************************************************/
 void Adafruit_CPlay_Speaker::playSound(
-  const uint8_t *data, uint32_t len, uint16_t sampleRate, boolean tenBit) {
+  const uint8_t *data, uint32_t len, uint16_t sampleRate, bool tenBit) {
 
   uint32_t i;
 
-  if(!started) {
-#ifdef __AVR__
-    // Set up Timer4 for fast PWM on !OC4A
-    PLLFRQ  = (PLLFRQ & 0xCF) | 0x30;   // Route PLL to async clk
-    TCCR4A  = _BV(COM4A0) | _BV(PWM4A); // Clear on match, PWMA on
-    TCCR4B  = _BV(PWM4X)  |_BV(CS40);   // PWM invert, 1:1 prescale
-    TCCR4D  = 0;                        // Fast PWM mode
-    TCCR4E  = 0;                        // Not enhanced mode
-    TC4H    = 0;                        // Not 10-bit mode
-    DT4     = 0;                        // No dead time
-    OCR4C   = 255;                      // TOP
-    OCR4A   = 127;                      // 50% duty (idle position) to start
-    started = true;
-#endif
-  }
+  if(!started) begin();
 
 #ifdef __AVR__
   uint16_t interval = 1000000L / sampleRate;

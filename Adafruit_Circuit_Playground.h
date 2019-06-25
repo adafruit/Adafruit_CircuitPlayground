@@ -205,20 +205,15 @@ class Adafruit_CircuitPlayground {
 
 #endif
 
-
   bool slideSwitch(void);
-
   void redLED(bool v);
-
   void playTone(uint16_t freq, uint16_t time, bool wait=true);
-
   bool leftButton(void);
-
   bool rightButton(void);
-
   uint16_t lightSensor(void);
-
   int16_t soundSensor(void);
+  float temperature(void);
+  float temperatureF(void);
 
   float temperature(void);
 
@@ -433,6 +428,7 @@ class Adafruit_CircuitPlayground {
   bool isExpress(void);
 
 
+  bool isExpress(void);
 
  private:
 

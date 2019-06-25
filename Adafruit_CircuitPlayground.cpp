@@ -36,7 +36,7 @@
     @returns True if device is set up, false on any failure
 */
 /**************************************************************************/
-boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
+bool Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   pinMode(CPLAY_REDLED, OUTPUT);
   pinMode(CPLAY_BUZZER, OUTPUT);
 #ifdef __AVR__
@@ -60,8 +60,6 @@ boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
 
   lis = Adafruit_CPlay_LIS3DH(CPLAY_LIS3DH_CS);
   mic = Adafruit_CPlay_Mic();
-
-  speaker.begin();
 
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
@@ -132,7 +130,7 @@ uint16_t Adafruit_CircuitPlayground::readCap(uint8_t p, uint8_t samples) {
     @param  v pass true to turn LED on, false to turn LED off
 */
 /**************************************************************************/
-void Adafruit_CircuitPlayground::redLED(boolean v) {
+void Adafruit_CircuitPlayground::redLED(bool v) {
   digitalWrite(CPLAY_REDLED, v);
 }
 
@@ -142,7 +140,7 @@ void Adafruit_CircuitPlayground::redLED(boolean v) {
     @returns true if slide switch in set, false if not
 */
 /**************************************************************************/
-boolean Adafruit_CircuitPlayground::slideSwitch(void) {
+bool Adafruit_CircuitPlayground::slideSwitch(void) {
   return digitalRead(CPLAY_SLIDESWITCHPIN);
 }
 
@@ -152,7 +150,7 @@ boolean Adafruit_CircuitPlayground::slideSwitch(void) {
     @returns true if button is pressed, false if not
 */
 /**************************************************************************/
-boolean Adafruit_CircuitPlayground::leftButton(void) {
+bool Adafruit_CircuitPlayground::leftButton(void) {
   return digitalRead(CPLAY_LEFTBUTTON);
 }
 
@@ -162,7 +160,7 @@ boolean Adafruit_CircuitPlayground::leftButton(void) {
     @returns true if button is pressed, false if not
 */
 /**************************************************************************/
-boolean Adafruit_CircuitPlayground::rightButton(void) {
+bool Adafruit_CircuitPlayground::rightButton(void) {
   return digitalRead(CPLAY_RIGHTBUTTON);
 }
 
@@ -176,9 +174,53 @@ boolean Adafruit_CircuitPlayground::rightButton(void) {
     It is also not the same loudness over all frequencies but is designed to be the loudest at around 4 KHz
 */
 /**************************************************************************/
-void Adafruit_CircuitPlayground::playTone(uint16_t freq, uint16_t time, boolean wait) {
+void Adafruit_CircuitPlayground::playTone(
+  uint16_t freq, uint16_t time, bool wait) {
+#ifdef __AVR__
+#define F_PLL 48000000
+  if(!freq) return;
+  uint32_t ocr;
+  uint16_t prescale  = 1;
+  uint8_t  scalebits = 0;
+  uint8_t  hi1, lo1, hi2, lo2;
+
+  // Determine best prescaler setting for 10-bit timer
+  do {
+    scalebits++;
+    ocr       = F_PLL / freq / prescale - 1;
+    prescale *= 2;
+    if(prescale >= 16384) {
+      ocr       = 1023;
+      scalebits = 0b1111;
+    }
+  } while(ocr > 1023);
+
+  // Set up Timer4 for fast PWM on !OC4A
+  PLLFRQ  = (PLLFRQ & 0xCF) | 0x30;   // Route PLL to async clk
+  TCCR4A  = _BV(COM4A0) | _BV(PWM4A); // Clear on match, PWMA on
+  TCCR4B  = _BV(PWM4X)  | scalebits;  // PWM invert
+  TCCR4D  = 0;                        // Fast PWM mode
+  TCCR4E  = 0;                        // Not enhanced mode
+  DT4     = 0;                        // No dead time
+  hi1     = ocr >> 8;
+  lo1     = ocr & 0xFF;
+  hi2     = ocr >> 9;
+  lo2     = (ocr >> 1) & 0xFF;
+  noInterrupts();                     // TC4H accesses MUST be atomic
+  TC4H    = hi1;      
+  OCR4C   = lo1;                      // TOP
+  TC4H    = hi2;      
+  OCR4A   = lo2;                      // 50% duty
+  interrupts();
+  pinMode(5, OUTPUT);                 // Enable output
+  delay(time);
+  pinMode(5, INPUT);                  // Disable output
+  TCCR4A  = 0;                        // PWMA off
+#else
   tone(CPLAY_BUZZER, freq, time);
-  if (wait) delay(time);
+  delay(time); // time argument to tone() isn't working, so...
+#endif
+  if(wait) delay(time);
 }
 
 /**************************************************************************/
@@ -357,7 +399,7 @@ void Adafruit_CircuitPlayground::senseColor(uint8_t& red, uint8_t& green, uint8_
     @returns True if the device is a CircuitPlayground Express, false if it is a 'classic'.
 */
 /**************************************************************************/
-boolean Adafruit_CircuitPlayground::isExpress(void) {
+bool Adafruit_CircuitPlayground::isExpress(void) {
 #ifdef __AVR__
   return false;
 #else
