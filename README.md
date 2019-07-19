@@ -1,4 +1,4 @@
-# Adafruit CircuitPlayground Library [![Build Status](https://travis-ci.org/adafruit/Adafruit_CircuitPlayground.svg?branch=master)](https://travis-ci.org/adafruit/Adafruit_CircuitPlayground)
+# Adafruit CircuitPlayground Library [![Build Status](https://travis-ci.com/adafruit/Adafruit_CircuitPlayground.svg?branch=master)](https://travis-ci.com/adafruit/Adafruit_CircuitPlayground)
 
 <img src="https://cdn-shop.adafruit.com/970x728/3333-01.jpg" height="300"/>
 
