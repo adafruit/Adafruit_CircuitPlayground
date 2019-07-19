@@ -7,7 +7,7 @@
  *
  * This is the documentation for Adafruit's CircuitPlayground driver for the
  * Arduino platform.  It is designed specifically to work with the
- * Adafruit CircuitPlayground boards: 
+ * Adafruit CircuitPlayground boards:
  *  - https://www.adafruit.com/products/3000
  *  - https://www.adafruit.com/products/3333
  *
@@ -30,7 +30,7 @@
 #include <Adafruit_Circuit_Playground.h>
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  Set up the CircuitPlayground hardware
     @param  brightness Optional brightness to set the neopixels to
     @returns True if device is set up, false on any failure
@@ -50,6 +50,9 @@ bool Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   pinMode(CPLAY_SLIDESWITCHPIN, INPUT_PULLUP);
   irReceiver=IRrecvPCI(CPLAY_IR_RECEIVER);
   irDecoder=IRdecode();
+  // since we aren't calling speaker.begin() anymore, do this here
+  pinMode(CPLAY_SPEAKER_SHUTDOWN, OUTPUT);
+  digitalWrite(CPLAY_SPEAKER_SHUTDOWN, HIGH);
 #endif
 
 
@@ -85,7 +88,7 @@ bool Adafruit_CircuitPlayground::begin(uint8_t brightness) {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  read capacitive touch sensor
     @param  p the pin to read. Must be a captouch enabled pin.
     @param  samples Optional number of samples to take. Defaults to 10.
@@ -125,7 +128,7 @@ uint16_t Adafruit_CircuitPlayground::readCap(uint8_t p, uint8_t samples) {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief turn on or off the red LED on pin #13
     @param  v pass true to turn LED on, false to turn LED off
 */
@@ -135,7 +138,7 @@ void Adafruit_CircuitPlayground::redLED(bool v) {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief read the slide switch
     @returns true if slide switch in set, false if not
 */
@@ -145,8 +148,8 @@ bool Adafruit_CircuitPlayground::slideSwitch(void) {
 }
 
 /**************************************************************************/
-/*! 
-    @brief read the left button 
+/*!
+    @brief read the left button
     @returns true if button is pressed, false if not
 */
 /**************************************************************************/
@@ -155,7 +158,7 @@ bool Adafruit_CircuitPlayground::leftButton(void) {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief read the right button
     @returns true if button is pressed, false if not
 */
@@ -165,12 +168,12 @@ bool Adafruit_CircuitPlayground::rightButton(void) {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief play a tone on the onboard buzzer
     @param  freq the frequency to play
     @param  time the duration of the tone in milliseconds
     @param  wait Optional flag to wait for time milliseconds after playing the tone. Defaults to true.
-    @note The driver circuitry is an on/off transistor driver, so you will only be able to play square waves. 
+    @note The driver circuitry is an on/off transistor driver, so you will only be able to play square waves.
     It is also not the same loudness over all frequencies but is designed to be the loudest at around 4 KHz
 */
 /**************************************************************************/
@@ -207,9 +210,9 @@ void Adafruit_CircuitPlayground::playTone(
   hi2     = ocr >> 9;
   lo2     = (ocr >> 1) & 0xFF;
   noInterrupts();                     // TC4H accesses MUST be atomic
-  TC4H    = hi1;      
+  TC4H    = hi1;
   OCR4C   = lo1;                      // TOP
-  TC4H    = hi2;      
+  TC4H    = hi2;
   OCR4A   = lo2;                      // 50% duty
   interrupts();
   pinMode(5, OUTPUT);                 // Enable output
@@ -224,12 +227,12 @@ void Adafruit_CircuitPlayground::playTone(
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief read the onboard lightsensor
     @returns value between 0 and 1023 read from the light sensor
-    @note 1000 Lux will roughly read as 2 Volts (or about 680 as a raw analog reading). 
-      A reading of about 300 is common for most indoor light levels. 
-      Note that outdoor daylight is 10,000 Lux or even higher, so this sensor is best 
+    @note 1000 Lux will roughly read as 2 Volts (or about 680 as a raw analog reading).
+      A reading of about 300 is common for most indoor light levels.
+      Note that outdoor daylight is 10,000 Lux or even higher, so this sensor is best
       suited for indoor light levels!
 */
 /**************************************************************************/
@@ -238,7 +241,7 @@ uint16_t Adafruit_CircuitPlayground::lightSensor(void) {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief read the onboard sound sensor. A reading of ~0 is silent, and
     loud audio will result in a reading between -500 and 500 or so.
     @returns value of the sound sensor
@@ -251,7 +254,7 @@ int16_t Adafruit_CircuitPlayground::soundSensor(void) {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief read the X parameter of the onboard accelerometer. Value returned is
      defined by setAccelRange().
     @returns X value of the accelerometer
@@ -264,7 +267,7 @@ float Adafruit_CircuitPlayground::motionX(void) {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief read the Y parameter of the onboard accelerometer. Value returned is
      defined by setAccelRange().
     @returns Y value of the accelerometer
@@ -277,7 +280,7 @@ float Adafruit_CircuitPlayground::motionY(void) {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief read the Z parameter of the onboard accelerometer. Value returned is
      defined by setAccelRange().
     @returns the Z value of the onboard accelerometer
@@ -290,7 +293,7 @@ float Adafruit_CircuitPlayground::motionZ(void) {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief read the onboard thermistor.
     @returns temperature reading in Centigrade.
 */
@@ -321,7 +324,7 @@ float Adafruit_CircuitPlayground::temperature(void) {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief read the onboard thermistor.
     @returns temperature reading in Farenheight.
 */
@@ -332,7 +335,7 @@ float Adafruit_CircuitPlayground::temperatureF(void) {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief get a color value from the color wheel.
     @param WheelPos a value 0 to 255
     @returns a color value. The colours are a transition r - g - b - back to r.
@@ -352,11 +355,11 @@ uint32_t Adafruit_CircuitPlayground::colorWheel(uint8_t WheelPos) {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief detect a color value from the light sensor
     @param red the pointer to where the red component should be stored.
     @param green the pointer to where the green component should be stored.
-    @param blue the pointer to where the blue component should be stored.    
+    @param blue the pointer to where the blue component should be stored.
     @returns the components of the detected colors in the passed pointers.
 */
 /**************************************************************************/
@@ -394,7 +397,7 @@ void Adafruit_CircuitPlayground::senseColor(uint8_t& red, uint8_t& green, uint8_
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief check whether or not this device is a CircuitPlayground Express.
     @returns True if the device is a CircuitPlayground Express, false if it is a 'classic'.
 */
