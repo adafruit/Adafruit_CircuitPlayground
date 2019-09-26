@@ -148,6 +148,8 @@ for x in range(256):
     print("{:3},".format(int((math.sin(x/128.0*math.pi)+1.0)*127.5+0.5))),
     if x&15 == 15: print
 */
+
+#if !defined(ADAFRUIT_NEOPIXEL_H)
 static const uint8_t PROGMEM _NeoPixelSineTable[256] = {
   128,131,134,137,140,143,146,149,152,155,158,162,165,167,170,173,
   176,179,182,185,188,190,193,196,198,201,203,206,208,211,213,215,
@@ -191,6 +193,7 @@ static const uint8_t PROGMEM _NeoPixelGammaTable[256] = {
   150,152,154,156,158,160,162,164,166,168,170,172,174,176,178,180,
   182,184,186,188,191,193,195,197,199,202,204,206,209,211,213,215,
   218,220,223,225,227,230,232,235,237,240,242,245,247,250,252,255};
+#endif
 
 /*! 
     @brief  Class that stores state and functions for interacting with
