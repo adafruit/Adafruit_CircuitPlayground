@@ -44,7 +44,7 @@ bool Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   pinMode(CPLAY_LEFTBUTTON, INPUT);
   pinMode(CPLAY_RIGHTBUTTON, INPUT);
   pinMode(CPLAY_SLIDESWITCHPIN, INPUT);
-#elif defined(__NRF52__) // bluefruit
+#elif defined(ARDUINO_NRF52840_CIRCUITPLAY) // bluefruit
   pinMode(CPLAY_LEFTBUTTON, INPUT_PULLDOWN);
   pinMode(CPLAY_RIGHTBUTTON, INPUT_PULLDOWN);
   pinMode(CPLAY_SLIDESWITCHPIN, INPUT_PULLUP);
@@ -74,7 +74,7 @@ bool Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   strip.show(); // Initialize all pixels to 'off'
   strip.setBrightness(brightness);
 
-#if defined(__AVR__) || defined(__NRF52__) // bluefruit
+#if defined(__AVR__) || defined(ARDUINO_NRF52840_CIRCUITPLAY) // bluefruit
   cap[0] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 0);
   cap[1] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 1);
   cap[2] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 2);
@@ -102,7 +102,7 @@ bool Adafruit_CircuitPlayground::begin(uint8_t brightness) {
 */
 /**************************************************************************/
 uint16_t Adafruit_CircuitPlayground::readCap(uint8_t p, uint8_t samples) {
-#if defined(__AVR__) || defined(__NRF52__) // Circuit Playground Classic or bluefruit
+#if defined(__AVR__) || defined(ARDUINO_NRF52840_CIRCUITPLAY) // Circuit Playground Classic or bluefruit
   switch (p) {
     case 0:    return cap[0].capacitiveSensor(samples);
     case 1:    return cap[1].capacitiveSensor(samples);
