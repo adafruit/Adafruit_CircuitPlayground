@@ -22,6 +22,16 @@ uint16_t sincfilter[DECIMATION] = {0, 2, 9, 21, 39, 63, 94, 132, 179, 236, 302, 
 
 static bool pdmConfigured = false;
 
+#elif defined(ARDUINO_CIRCUITPLAY_NRF52840)
+
+#include <PDM.h>
+// The default Circuit Playground Bluefruit pins 
+// data pin, clock pin, power pin (-1 if not used)
+PDMClass PDM(33, 34, -1);
+#define SAMPLERATE_HZ 16000
+
+static bool pdmConfigured = false;
+
 #endif
 
 #define DC_OFFSET       (1023 / 3)
@@ -145,6 +155,12 @@ void Adafruit_CPlay_Mic::capture(int16_t *buf, uint16_t nSamples) {
 
     *ptr++ = runningsum;
   }
+#elif defined(ARDUINO_CIRCUITPLAY_NRF52840)
+  if(!pdmConfigured){
+    PDM.begin(1, SAMPLERATE_HZ);
+
+    pdmConfigured = true;
+  }
 #else
   #error "no compatible architecture defined."
 #endif
@@ -166,6 +182,9 @@ float Adafruit_CPlay_Mic::soundPressureLevel(uint16_t ms){
   gain = 1.3;
   len = 9.615 * ms;
 #elif defined(ARDUINO_ARCH_SAMD)
+  gain = 9;
+  len = (float)(SAMPLERATE_HZ/1000) * ms;
+#elif defined(ARDUINO_CIRCUITPLAY_NRF52840)
   gain = 9;
   len = (float)(SAMPLERATE_HZ/1000) * ms;
 #else
