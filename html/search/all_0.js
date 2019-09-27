@@ -8,7 +8,7 @@ var searchData=
   ['adafruit_5fcplay_5flis3dh_2ecpp',['Adafruit_CPlay_LIS3DH.cpp',['../_adafruit___c_play___l_i_s3_d_h_8cpp.html',1,'']]],
   ['adafruit_5fcplay_5flis3dh_2eh',['Adafruit_CPlay_LIS3DH.h',['../_adafruit___c_play___l_i_s3_d_h_8h.html',1,'']]],
   ['adafruit_5fcplay_5fmic',['Adafruit_CPlay_Mic',['../class_adafruit___c_play___mic.html',1,'']]],
-  ['adafruit_5fcplay_5fneopixel',['Adafruit_CPlay_NeoPixel',['../class_adafruit___c_play___neo_pixel.html',1,'Adafruit_CPlay_NeoPixel'],['../class_adafruit___c_play___neo_pixel.html#ab483ce813afede540a3574d346a7e04f',1,'Adafruit_CPlay_NeoPixel::Adafruit_CPlay_NeoPixel(uint16_t n, uint8_t p=17, neoPixelType t=NEO_GRB+NEO_KHZ800)'],['../class_adafruit___c_play___neo_pixel.html#a89b09725c3464297eb23e192660119fd',1,'Adafruit_CPlay_NeoPixel::Adafruit_CPlay_NeoPixel(void)']]],
+  ['adafruit_5fcplay_5fneopixel',['Adafruit_CPlay_NeoPixel',['../class_adafruit___c_play___neo_pixel.html',1,'Adafruit_CPlay_NeoPixel'],['../class_adafruit___c_play___neo_pixel.html#adc62d4a39d5ec2278223d25254c6b030',1,'Adafruit_CPlay_NeoPixel::Adafruit_CPlay_NeoPixel(uint16_t n, uint16_t pin=6, neoPixelType type=NEO_GRB+NEO_KHZ800)'],['../class_adafruit___c_play___neo_pixel.html#a89b09725c3464297eb23e192660119fd',1,'Adafruit_CPlay_NeoPixel::Adafruit_CPlay_NeoPixel(void)']]],
   ['adafruit_5fcplay_5fspeaker',['Adafruit_CPlay_Speaker',['../class_adafruit___c_play___speaker.html',1,'']]],
   ['adafruit_5fsensor',['Adafruit_Sensor',['../class_adafruit___sensor.html',1,'']]],
   ['adafruit_20circuitplayground_20library',['Adafruit CircuitPlayground Library',['../index.html',1,'']]]

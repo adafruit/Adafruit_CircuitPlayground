@@ -61,93 +61,161 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_adafruit___c_play___neo_pixel-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Adafruit_CPlay_NeoPixel Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Class that stores state and functions for neopixels on CircuitPlayground boards.  
+<p>Class that stores state and functions for interacting with Adafruit NeoPixels and compatible devices.  
  <a href="class_adafruit___c_play___neo_pixel.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_adafruit___c_play___neo_pixel_8h_source.html">Adafruit_CPlay_NeoPixel.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab483ce813afede540a3574d346a7e04f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#ab483ce813afede540a3574d346a7e04f">Adafruit_CPlay_NeoPixel</a> (uint16_t n, uint8_t p=17, neoPixelType t=NEO_GRB+NEO_KHZ800)</td></tr>
-<tr class="memdesc:ab483ce813afede540a3574d346a7e04f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor when length, pin and type are known at compile-time.  <a href="#ab483ce813afede540a3574d346a7e04f">More...</a><br /></td></tr>
-<tr class="separator:ab483ce813afede540a3574d346a7e04f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89b09725c3464297eb23e192660119fd"><td class="memItemLeft" align="right" valign="top"><a id="a89b09725c3464297eb23e192660119fd"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a89b09725c3464297eb23e192660119fd">Adafruit_CPlay_NeoPixel</a> (void)</td></tr>
-<tr class="memdesc:a89b09725c3464297eb23e192660119fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">via Michael Vogt/neophob: empty constructor is used when strand length isn't known at compile-time; situations where program config might be read from internal flash memory or an SD card, or arrive via serial command. If using this constructor, MUST follow up with <a class="el" href="class_adafruit___c_play___neo_pixel.html#a39f9e18ca15ca0a210a3e20a2dc5a374" title="set the type of neopixel we are using ">updateType()</a>, <a class="el" href="class_adafruit___c_play___neo_pixel.html#a6e51f11fb9e61059c805c0eb6e6f9d2e" title="Set the number of pixels in the strip. ">updateLength()</a>, etc. to establish the strand type, length and pin number! <br /></td></tr>
+<tr class="memitem:adc62d4a39d5ec2278223d25254c6b030"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#adc62d4a39d5ec2278223d25254c6b030">Adafruit_CPlay_NeoPixel</a> (uint16_t n, uint16_t <a class="el" href="class_adafruit___c_play___neo_pixel.html#a98b82da59dc5a6ad828d1fd70e9dd3ab">pin</a>=6, neoPixelType type=NEO_GRB+NEO_KHZ800)</td></tr>
+<tr class="memdesc:adc62d4a39d5ec2278223d25254c6b030"><td class="mdescLeft">&#160;</td><td class="mdescRight">NeoPixel constructor when length, pin and pixel type are known at compile-time.  <a href="#adc62d4a39d5ec2278223d25254c6b030">More...</a><br /></td></tr>
+<tr class="separator:adc62d4a39d5ec2278223d25254c6b030"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89b09725c3464297eb23e192660119fd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a89b09725c3464297eb23e192660119fd">Adafruit_CPlay_NeoPixel</a> (void)</td></tr>
+<tr class="memdesc:a89b09725c3464297eb23e192660119fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">"Empty" NeoPixel constructor when length, pin and/or pixel type are not known at compile-time, and must be initialized later with <a class="el" href="class_adafruit___c_play___neo_pixel.html#a39f9e18ca15ca0a210a3e20a2dc5a374" title="Change the pixel format of a previously-declared Adafruit_CPlay_NeoPixel strip object. If format changes from one of the RGB variants to an RGBW variant (or RGBW to RGB), the old data will be deallocated and new data is cleared. Otherwise, the old data will remain in RAM and is not reordered to the new format, so it&#39;s advisable to follow up with clear(). ">updateType()</a>, <a class="el" href="class_adafruit___c_play___neo_pixel.html#a6e51f11fb9e61059c805c0eb6e6f9d2e" title="Change the length of a previously-declared Adafruit_CPlay_NeoPixel strip object. Old data is dealloca...">updateLength()</a> and <a class="el" href="class_adafruit___c_play___neo_pixel.html#a0a050e36b2436048abe1cb4cdfbbb6fa" title="Set/change the NeoPixel output pin number. Previous pin, if any, is set to INPUT and the new pin is s...">setPin()</a>.  <a href="#a89b09725c3464297eb23e192660119fd">More...</a><br /></td></tr>
 <tr class="separator:a89b09725c3464297eb23e192660119fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87cc792c08eacec065d80af54fb30c7f"><td class="memItemLeft" align="right" valign="top"><a id="a87cc792c08eacec065d80af54fb30c7f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a87cc792c08eacec065d80af54fb30c7f">~Adafruit_CPlay_NeoPixel</a> ()</td></tr>
+<tr class="memdesc:a87cc792c08eacec065d80af54fb30c7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deallocate <a class="el" href="class_adafruit___c_play___neo_pixel.html" title="Class that stores state and functions for interacting with Adafruit NeoPixels and compatible devices...">Adafruit_CPlay_NeoPixel</a> object, set data pin back to INPUT. <br /></td></tr>
+<tr class="separator:a87cc792c08eacec065d80af54fb30c7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab13405df757b533ddb8a353ce600bb95"><td class="memItemLeft" align="right" valign="top"><a id="ab13405df757b533ddb8a353ce600bb95"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#ab13405df757b533ddb8a353ce600bb95">begin</a> (void)</td></tr>
-<tr class="memdesc:ab13405df757b533ddb8a353ce600bb95"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize necessary hardware to drive the pixels. <br /></td></tr>
+<tr class="memdesc:ab13405df757b533ddb8a353ce600bb95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure NeoPixel pin for output. <br /></td></tr>
 <tr class="separator:ab13405df757b533ddb8a353ce600bb95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b098a8b3719c3425bafef724672c80b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a7b098a8b3719c3425bafef724672c80b">show</a> (void)</td></tr>
-<tr class="memdesc:a7b098a8b3719c3425bafef724672c80b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to the neopixels.  <a href="#a7b098a8b3719c3425bafef724672c80b">More...</a><br /></td></tr>
+<tr class="memdesc:a7b098a8b3719c3425bafef724672c80b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit pixel data in RAM to NeoPixels.  <a href="#a7b098a8b3719c3425bafef724672c80b">More...</a><br /></td></tr>
 <tr class="separator:a7b098a8b3719c3425bafef724672c80b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1567714bba1055f407b6aabbdbccd07"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#aa1567714bba1055f407b6aabbdbccd07">setPin</a> (uint8_t p)</td></tr>
-<tr class="memdesc:aa1567714bba1055f407b6aabbdbccd07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the output pin number.  <a href="#aa1567714bba1055f407b6aabbdbccd07">More...</a><br /></td></tr>
-<tr class="separator:aa1567714bba1055f407b6aabbdbccd07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a050e36b2436048abe1cb4cdfbbb6fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a0a050e36b2436048abe1cb4cdfbbb6fa">setPin</a> (uint16_t p)</td></tr>
+<tr class="memdesc:a0a050e36b2436048abe1cb4cdfbbb6fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set/change the NeoPixel output pin number. Previous pin, if any, is set to INPUT and the new pin is set to OUTPUT.  <a href="#a0a050e36b2436048abe1cb4cdfbbb6fa">More...</a><br /></td></tr>
+<tr class="separator:a0a050e36b2436048abe1cb4cdfbbb6fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54d1a4a25d50447f542b232a1abe2709"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a54d1a4a25d50447f542b232a1abe2709">setPixelColor</a> (uint16_t n, uint8_t r, uint8_t g, uint8_t b)</td></tr>
-<tr class="memdesc:a54d1a4a25d50447f542b232a1abe2709"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set pixel color from separate R,G,B components:  <a href="#a54d1a4a25d50447f542b232a1abe2709">More...</a><br /></td></tr>
+<tr class="memdesc:a54d1a4a25d50447f542b232a1abe2709"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a pixel's color using separate red, green and blue components. If using RGBW pixels, white will be set to 0.  <a href="#a54d1a4a25d50447f542b232a1abe2709">More...</a><br /></td></tr>
 <tr class="separator:a54d1a4a25d50447f542b232a1abe2709"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a793f1d99d0a0613f284e9884135f4c00"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a793f1d99d0a0613f284e9884135f4c00">setPixelColor</a> (uint16_t n, uint8_t r, uint8_t g, uint8_t b, uint8_t w)</td></tr>
-<tr class="memdesc:a793f1d99d0a0613f284e9884135f4c00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set pixel color from separate R,G,B,W components:  <a href="#a793f1d99d0a0613f284e9884135f4c00">More...</a><br /></td></tr>
+<tr class="memdesc:a793f1d99d0a0613f284e9884135f4c00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a pixel's color using separate red, green, blue and white components (for RGBW NeoPixels only).  <a href="#a793f1d99d0a0613f284e9884135f4c00">More...</a><br /></td></tr>
 <tr class="separator:a793f1d99d0a0613f284e9884135f4c00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59cc0551960a2ec71fd21396529919d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a59cc0551960a2ec71fd21396529919d5">setPixelColor</a> (uint16_t n, uint32_t c)</td></tr>
-<tr class="memdesc:a59cc0551960a2ec71fd21396529919d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set pixel color from 'packed' 32-bit RGB color:  <a href="#a59cc0551960a2ec71fd21396529919d5">More...</a><br /></td></tr>
+<tr class="memdesc:a59cc0551960a2ec71fd21396529919d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a pixel's color using a 32-bit 'packed' RGB or RGBW value.  <a href="#a59cc0551960a2ec71fd21396529919d5">More...</a><br /></td></tr>
 <tr class="separator:a59cc0551960a2ec71fd21396529919d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70d0080b78a977cc7a8c4ee95f8e4200"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a70d0080b78a977cc7a8c4ee95f8e4200">fill</a> (uint32_t c=0, uint16_t first=0, uint16_t count=0)</td></tr>
+<tr class="memdesc:a70d0080b78a977cc7a8c4ee95f8e4200"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill all or part of the NeoPixel strip with a color.  <a href="#a70d0080b78a977cc7a8c4ee95f8e4200">More...</a><br /></td></tr>
+<tr class="separator:a70d0080b78a977cc7a8c4ee95f8e4200"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0738765ceaf218fc95fbfaf0aac08115"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a0738765ceaf218fc95fbfaf0aac08115">setBrightness</a> (uint8_t)</td></tr>
-<tr class="memdesc:a0738765ceaf218fc95fbfaf0aac08115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adjust output brightness; 0=darkest (off), 255=brightest.  <a href="#a0738765ceaf218fc95fbfaf0aac08115">More...</a><br /></td></tr>
+<tr class="memdesc:a0738765ceaf218fc95fbfaf0aac08115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adjust output brightness. Does not immediately affect what's currently displayed on the LEDs. The next call to <a class="el" href="class_adafruit___c_play___neo_pixel.html#a7b098a8b3719c3425bafef724672c80b" title="Transmit pixel data in RAM to NeoPixels. ">show()</a> will refresh the LEDs at this level.  <a href="#a0738765ceaf218fc95fbfaf0aac08115">More...</a><br /></td></tr>
 <tr class="separator:a0738765ceaf218fc95fbfaf0aac08115"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92f1db0c61e7a77346f39677f09da5d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a92f1db0c61e7a77346f39677f09da5d1">clear</a> ()</td></tr>
-<tr class="memdesc:a92f1db0c61e7a77346f39677f09da5d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">set all neopixel data to 'off' in internal memory.  <a href="#a92f1db0c61e7a77346f39677f09da5d1">More...</a><br /></td></tr>
-<tr class="separator:a92f1db0c61e7a77346f39677f09da5d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a110bfcd5374bd78bed53c7b7f95caa9b"><td class="memItemLeft" align="right" valign="top"><a id="a110bfcd5374bd78bed53c7b7f95caa9b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a110bfcd5374bd78bed53c7b7f95caa9b">clear</a> (void)</td></tr>
+<tr class="memdesc:a110bfcd5374bd78bed53c7b7f95caa9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill the whole NeoPixel strip with 0 / black / off. <br /></td></tr>
+<tr class="separator:a110bfcd5374bd78bed53c7b7f95caa9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e51f11fb9e61059c805c0eb6e6f9d2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a6e51f11fb9e61059c805c0eb6e6f9d2e">updateLength</a> (uint16_t n)</td></tr>
-<tr class="memdesc:a6e51f11fb9e61059c805c0eb6e6f9d2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the number of pixels in the strip.  <a href="#a6e51f11fb9e61059c805c0eb6e6f9d2e">More...</a><br /></td></tr>
+<tr class="memdesc:a6e51f11fb9e61059c805c0eb6e6f9d2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the length of a previously-declared <a class="el" href="class_adafruit___c_play___neo_pixel.html" title="Class that stores state and functions for interacting with Adafruit NeoPixels and compatible devices...">Adafruit_CPlay_NeoPixel</a> strip object. Old data is deallocated and new data is cleared. Pin number and pixel format are unchanged.  <a href="#a6e51f11fb9e61059c805c0eb6e6f9d2e">More...</a><br /></td></tr>
 <tr class="separator:a6e51f11fb9e61059c805c0eb6e6f9d2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39f9e18ca15ca0a210a3e20a2dc5a374"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a39f9e18ca15ca0a210a3e20a2dc5a374">updateType</a> (neoPixelType t)</td></tr>
-<tr class="memdesc:a39f9e18ca15ca0a210a3e20a2dc5a374"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the type of neopixel we are using  <a href="#a39f9e18ca15ca0a210a3e20a2dc5a374">More...</a><br /></td></tr>
+<tr class="memdesc:a39f9e18ca15ca0a210a3e20a2dc5a374"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the pixel format of a previously-declared <a class="el" href="class_adafruit___c_play___neo_pixel.html" title="Class that stores state and functions for interacting with Adafruit NeoPixels and compatible devices...">Adafruit_CPlay_NeoPixel</a> strip object. If format changes from one of the RGB variants to an RGBW variant (or RGBW to RGB), the old data will be deallocated and new data is cleared. Otherwise, the old data will remain in RAM and is not reordered to the new format, so it's advisable to follow up with <a class="el" href="class_adafruit___c_play___neo_pixel.html#a110bfcd5374bd78bed53c7b7f95caa9b" title="Fill the whole NeoPixel strip with 0 / black / off. ">clear()</a>.  <a href="#a39f9e18ca15ca0a210a3e20a2dc5a374">More...</a><br /></td></tr>
 <tr class="separator:a39f9e18ca15ca0a210a3e20a2dc5a374"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21dd123a7bcfddbaea88ff522876be83"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a21dd123a7bcfddbaea88ff522876be83">getPixels</a> (void) const</td></tr>
-<tr class="memdesc:a21dd123a7bcfddbaea88ff522876be83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns pointer to pixels[] array. Pixel data is stored in device- native format and is not translated here. Application will need to be aware of specific pixel data format and handle colors appropriately.  <a href="#a21dd123a7bcfddbaea88ff522876be83">More...</a><br /></td></tr>
-<tr class="separator:a21dd123a7bcfddbaea88ff522876be83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af549a2d7b2cc1e435911d479adb7790f"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#af549a2d7b2cc1e435911d479adb7790f">canShow</a> (void) const</td></tr>
+<tr class="memdesc:af549a2d7b2cc1e435911d479adb7790f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether a call to <a class="el" href="class_adafruit___c_play___neo_pixel.html#a7b098a8b3719c3425bafef724672c80b" title="Transmit pixel data in RAM to NeoPixels. ">show()</a> will start sending data immediately or will 'block' for a required interval. NeoPixels require a short quiet time (about 300 microseconds) after the last bit is received before the data 'latches' and new data can start being received. Usually one's sketch is implicitly using this time to generate a new frame of animation...but if it finishes very quickly, this function could be used to see if there's some idle time available for some low-priority concurrent task.  <a href="#af549a2d7b2cc1e435911d479adb7790f">More...</a><br /></td></tr>
+<tr class="separator:af549a2d7b2cc1e435911d479adb7790f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bcaec4d574c1311631c8ae168ec8057"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a9bcaec4d574c1311631c8ae168ec8057">getPixels</a> (void) const</td></tr>
+<tr class="memdesc:a9bcaec4d574c1311631c8ae168ec8057"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a pointer directly to the NeoPixel data buffer in RAM. Pixel data is stored in a device-native format (a la the NEO_* constants) and is not translated here. Applications that access this buffer will need to be aware of the specific data format and handle colors appropriately.  <a href="#a9bcaec4d574c1311631c8ae168ec8057">More...</a><br /></td></tr>
+<tr class="separator:a9bcaec4d574c1311631c8ae168ec8057"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a229ea25085dee4ff3fc7b290d0a60b13"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a229ea25085dee4ff3fc7b290d0a60b13">getBrightness</a> (void) const</td></tr>
-<tr class="memdesc:a229ea25085dee4ff3fc7b290d0a60b13"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the global brightness value  <a href="#a229ea25085dee4ff3fc7b290d0a60b13">More...</a><br /></td></tr>
+<tr class="memdesc:a229ea25085dee4ff3fc7b290d0a60b13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the last-set brightness value for the strip.  <a href="#a229ea25085dee4ff3fc7b290d0a60b13">More...</a><br /></td></tr>
 <tr class="separator:a229ea25085dee4ff3fc7b290d0a60b13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0982a58ad2739b67a3d9b693baa43564"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a0982a58ad2739b67a3d9b693baa43564">sine8</a> (uint8_t) const</td></tr>
-<tr class="memdesc:a0982a58ad2739b67a3d9b693baa43564"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a sinusoidal value from a sine table.  <a href="#a0982a58ad2739b67a3d9b693baa43564">More...</a><br /></td></tr>
-<tr class="separator:a0982a58ad2739b67a3d9b693baa43564"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae427cb412c699ab9b242559bb765353f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#ae427cb412c699ab9b242559bb765353f">gamma8</a> (uint8_t) const</td></tr>
-<tr class="memdesc:ae427cb412c699ab9b242559bb765353f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a gamma-corrected value from a gamma table.  <a href="#ae427cb412c699ab9b242559bb765353f">More...</a><br /></td></tr>
-<tr class="separator:ae427cb412c699ab9b242559bb765353f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8c952a421c320ebc1c0ee941122a22f"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#ab8c952a421c320ebc1c0ee941122a22f">getPin</a> (void) const</td></tr>
+<tr class="memdesc:ab8c952a421c320ebc1c0ee941122a22f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the pin number used for NeoPixel data output.  <a href="#ab8c952a421c320ebc1c0ee941122a22f">More...</a><br /></td></tr>
+<tr class="separator:ab8c952a421c320ebc1c0ee941122a22f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a74033e888679b4a4ae113d85c39cf876"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a74033e888679b4a4ae113d85c39cf876">numPixels</a> (void) const</td></tr>
-<tr class="memdesc:a74033e888679b4a4ae113d85c39cf876"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the number of pixels in the strip  <a href="#a74033e888679b4a4ae113d85c39cf876">More...</a><br /></td></tr>
+<tr class="memdesc:a74033e888679b4a4ae113d85c39cf876"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the number of pixels in an Adafruit_NeoPixel strip object.  <a href="#a74033e888679b4a4ae113d85c39cf876">More...</a><br /></td></tr>
 <tr class="separator:a74033e888679b4a4ae113d85c39cf876"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b6ffc821a972709efca48dff7d486d2"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a0b6ffc821a972709efca48dff7d486d2">Color</a> (uint8_t r, uint8_t g, uint8_t b, uint8_t w)</td></tr>
-<tr class="memdesc:a0b6ffc821a972709efca48dff7d486d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert separate R,G,B,W into packed 32-bit WRGB color.  <a href="#a0b6ffc821a972709efca48dff7d486d2">More...</a><br /></td></tr>
-<tr class="separator:a0b6ffc821a972709efca48dff7d486d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afcc2e82b2232c9321153d420816648ff"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#afcc2e82b2232c9321153d420816648ff">getPixelColor</a> (uint16_t n) const</td></tr>
-<tr class="memdesc:afcc2e82b2232c9321153d420816648ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Query color from previously-set pixel (returns packed 32-bit RGB value)  <a href="#afcc2e82b2232c9321153d420816648ff">More...</a><br /></td></tr>
+<tr class="memdesc:afcc2e82b2232c9321153d420816648ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Query the color of a previously-set pixel.  <a href="#afcc2e82b2232c9321153d420816648ff">More...</a><br /></td></tr>
 <tr class="separator:afcc2e82b2232c9321153d420816648ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a414888118a42a9b77b2bc05b21c3fad4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a414888118a42a9b77b2bc05b21c3fad4">canShow</a> (void)</td></tr>
-<tr class="memdesc:a414888118a42a9b77b2bc05b21c3fad4"><td class="mdescLeft">&#160;</td><td class="mdescRight">check if enough time has elapsed and the pixels are ready to refresh.  <a href="#a414888118a42a9b77b2bc05b21c3fad4">More...</a><br /></td></tr>
-<tr class="separator:a414888118a42a9b77b2bc05b21c3fad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a4dc97036b65771f86df31e1e63f30e25"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a4dc97036b65771f86df31e1e63f30e25">Color</a> (uint8_t r, uint8_t g, uint8_t b)</td></tr>
-<tr class="memdesc:a4dc97036b65771f86df31e1e63f30e25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert separate R,G,B into packed 32-bit RGB color.  <a href="#a4dc97036b65771f86df31e1e63f30e25">More...</a><br /></td></tr>
-<tr class="separator:a4dc97036b65771f86df31e1e63f30e25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3014631c7f71e14fed5c75f8e8c20be7"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a3014631c7f71e14fed5c75f8e8c20be7">sine8</a> (uint8_t x)</td></tr>
+<tr class="memdesc:a3014631c7f71e14fed5c75f8e8c20be7"><td class="mdescLeft">&#160;</td><td class="mdescRight">An 8-bit integer sine wave function, not directly compatible with standard trigonometric units like radians or degrees.  <a href="#a3014631c7f71e14fed5c75f8e8c20be7">More...</a><br /></td></tr>
+<tr class="separator:a3014631c7f71e14fed5c75f8e8c20be7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28ca5f661367ae4a791a45bf9026f9d2"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a28ca5f661367ae4a791a45bf9026f9d2">gamma8</a> (uint8_t x)</td></tr>
+<tr class="memdesc:a28ca5f661367ae4a791a45bf9026f9d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">An 8-bit gamma-correction function for basic pixel brightness adjustment. Makes color transitions appear more perceptially correct.  <a href="#a28ca5f661367ae4a791a45bf9026f9d2">More...</a><br /></td></tr>
+<tr class="separator:a28ca5f661367ae4a791a45bf9026f9d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab310902647a45860b79625a6ddbb04ec"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#ab310902647a45860b79625a6ddbb04ec">Color</a> (uint8_t r, uint8_t g, uint8_t b)</td></tr>
+<tr class="memdesc:ab310902647a45860b79625a6ddbb04ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert separate red, green and blue values into a single "packed" 32-bit RGB color.  <a href="#ab310902647a45860b79625a6ddbb04ec">More...</a><br /></td></tr>
+<tr class="separator:ab310902647a45860b79625a6ddbb04ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bc7c2ab132b25e3f65666b68c733db3"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a9bc7c2ab132b25e3f65666b68c733db3">Color</a> (uint8_t r, uint8_t g, uint8_t b, uint8_t w)</td></tr>
+<tr class="memdesc:a9bc7c2ab132b25e3f65666b68c733db3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert separate red, green, blue and white values into a single "packed" 32-bit WRGB color.  <a href="#a9bc7c2ab132b25e3f65666b68c733db3">More...</a><br /></td></tr>
+<tr class="separator:a9bc7c2ab132b25e3f65666b68c733db3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3feea05da7e31a951409d80a2a68464"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#aa3feea05da7e31a951409d80a2a68464">ColorHSV</a> (uint16_t hue, uint8_t sat=255, uint8_t val=255)</td></tr>
+<tr class="memdesc:aa3feea05da7e31a951409d80a2a68464"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert hue, saturation and value into a packed 32-bit RGB color that can be passed to <a class="el" href="class_adafruit___c_play___neo_pixel.html#a54d1a4a25d50447f542b232a1abe2709" title="Set a pixel&#39;s color using separate red, green and blue components. If using RGBW pixels, white will be set to 0. ">setPixelColor()</a> or other RGB-compatible functions.  <a href="#aa3feea05da7e31a951409d80a2a68464">More...</a><br /></td></tr>
+<tr class="separator:aa3feea05da7e31a951409d80a2a68464"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1eb6c283ce184b50dc0117bf4571dd0"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#af1eb6c283ce184b50dc0117bf4571dd0">gamma32</a> (uint32_t x)</td></tr>
+<tr class="memdesc:af1eb6c283ce184b50dc0117bf4571dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">A gamma-correction function for 32-bit packed RGB or WRGB colors. Makes color transitions appear more perceptially correct.  <a href="#af1eb6c283ce184b50dc0117bf4571dd0">More...</a><br /></td></tr>
+<tr class="separator:af1eb6c283ce184b50dc0117bf4571dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:ad3f780aa4d66ff5a88323a0c24e01066"><td class="memItemLeft" align="right" valign="top"><a id="ad3f780aa4d66ff5a88323a0c24e01066"></a>
+boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#ad3f780aa4d66ff5a88323a0c24e01066">is800KHz</a></td></tr>
+<tr class="memdesc:ad3f780aa4d66ff5a88323a0c24e01066"><td class="mdescLeft">&#160;</td><td class="mdescRight">true if 800 KHz pixels <br /></td></tr>
+<tr class="separator:ad3f780aa4d66ff5a88323a0c24e01066"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af292cf9c7250ccea8891734de944b005"><td class="memItemLeft" align="right" valign="top"><a id="af292cf9c7250ccea8891734de944b005"></a>
+boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#af292cf9c7250ccea8891734de944b005">begun</a></td></tr>
+<tr class="memdesc:af292cf9c7250ccea8891734de944b005"><td class="mdescLeft">&#160;</td><td class="mdescRight">true if <a class="el" href="class_adafruit___c_play___neo_pixel.html#ab13405df757b533ddb8a353ce600bb95" title="Configure NeoPixel pin for output. ">begin()</a> previously called <br /></td></tr>
+<tr class="separator:af292cf9c7250ccea8891734de944b005"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fb141b3c187d49db006a058067af2ac"><td class="memItemLeft" align="right" valign="top"><a id="a3fb141b3c187d49db006a058067af2ac"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a3fb141b3c187d49db006a058067af2ac">numLEDs</a></td></tr>
+<tr class="memdesc:a3fb141b3c187d49db006a058067af2ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of RGB LEDs in strip. <br /></td></tr>
+<tr class="separator:a3fb141b3c187d49db006a058067af2ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6898b64bd4106d648b68a17da0c1a34"><td class="memItemLeft" align="right" valign="top"><a id="ae6898b64bd4106d648b68a17da0c1a34"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#ae6898b64bd4106d648b68a17da0c1a34">numBytes</a></td></tr>
+<tr class="memdesc:ae6898b64bd4106d648b68a17da0c1a34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of 'pixels' buffer below. <br /></td></tr>
+<tr class="separator:ae6898b64bd4106d648b68a17da0c1a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98b82da59dc5a6ad828d1fd70e9dd3ab"><td class="memItemLeft" align="right" valign="top"><a id="a98b82da59dc5a6ad828d1fd70e9dd3ab"></a>
+int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a98b82da59dc5a6ad828d1fd70e9dd3ab">pin</a></td></tr>
+<tr class="memdesc:a98b82da59dc5a6ad828d1fd70e9dd3ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output pin number (-1 if not yet set) <br /></td></tr>
+<tr class="separator:a98b82da59dc5a6ad828d1fd70e9dd3ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3bf2a0315b2fd7e2f56f19d8c2eb6c8"><td class="memItemLeft" align="right" valign="top"><a id="ac3bf2a0315b2fd7e2f56f19d8c2eb6c8"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#ac3bf2a0315b2fd7e2f56f19d8c2eb6c8">brightness</a></td></tr>
+<tr class="memdesc:ac3bf2a0315b2fd7e2f56f19d8c2eb6c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Strip brightness 0-255 (stored as +1) <br /></td></tr>
+<tr class="separator:ac3bf2a0315b2fd7e2f56f19d8c2eb6c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab51facbe6e05a35987b6559583b4a0f6"><td class="memItemLeft" align="right" valign="top"><a id="ab51facbe6e05a35987b6559583b4a0f6"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#ab51facbe6e05a35987b6559583b4a0f6">pixels</a></td></tr>
+<tr class="memdesc:ab51facbe6e05a35987b6559583b4a0f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds LED color values (3 or 4 bytes each) <br /></td></tr>
+<tr class="separator:ab51facbe6e05a35987b6559583b4a0f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9a49e06fdf707ea7235c018f5361fed"><td class="memItemLeft" align="right" valign="top"><a id="aa9a49e06fdf707ea7235c018f5361fed"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#aa9a49e06fdf707ea7235c018f5361fed">rOffset</a></td></tr>
+<tr class="memdesc:aa9a49e06fdf707ea7235c018f5361fed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Red index within each 3- or 4-byte pixel. <br /></td></tr>
+<tr class="separator:aa9a49e06fdf707ea7235c018f5361fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4973166e1ce2242a4cb804e33827268c"><td class="memItemLeft" align="right" valign="top"><a id="a4973166e1ce2242a4cb804e33827268c"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a4973166e1ce2242a4cb804e33827268c">gOffset</a></td></tr>
+<tr class="memdesc:a4973166e1ce2242a4cb804e33827268c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of green byte. <br /></td></tr>
+<tr class="separator:a4973166e1ce2242a4cb804e33827268c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f04296727bcd6b4387e2ade18269e8a"><td class="memItemLeft" align="right" valign="top"><a id="a7f04296727bcd6b4387e2ade18269e8a"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a7f04296727bcd6b4387e2ade18269e8a">bOffset</a></td></tr>
+<tr class="memdesc:a7f04296727bcd6b4387e2ade18269e8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of blue byte. <br /></td></tr>
+<tr class="separator:a7f04296727bcd6b4387e2ade18269e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d3425e9a3a178996c4bc752ede79966"><td class="memItemLeft" align="right" valign="top"><a id="a9d3425e9a3a178996c4bc752ede79966"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#a9d3425e9a3a178996c4bc752ede79966">wOffset</a></td></tr>
+<tr class="memdesc:a9d3425e9a3a178996c4bc752ede79966"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of white (==rOffset if no white) <br /></td></tr>
+<tr class="separator:a9d3425e9a3a178996c4bc752ede79966"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade093d7c7e6cae43f6acd4b77d828103"><td class="memItemLeft" align="right" valign="top"><a id="ade093d7c7e6cae43f6acd4b77d828103"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___neo_pixel.html#ade093d7c7e6cae43f6acd4b77d828103">endTime</a></td></tr>
+<tr class="memdesc:ade093d7c7e6cae43f6acd4b77d828103"><td class="mdescLeft">&#160;</td><td class="mdescRight">Latch timing reference. <br /></td></tr>
+<tr class="separator:ade093d7c7e6cae43f6acd4b77d828103"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Class that stores state and functions for neopixels on CircuitPlayground boards. </p>
+<div class="textblock"><p>Class that stores state and functions for interacting with Adafruit NeoPixels and compatible devices. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ab483ce813afede540a3574d346a7e04f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab483ce813afede540a3574d346a7e04f">&#9670;&nbsp;</a></span>Adafruit_CPlay_NeoPixel()</h2>
+<a id="adc62d4a39d5ec2278223d25254c6b030"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc62d4a39d5ec2278223d25254c6b030">&#9670;&nbsp;</a></span>Adafruit_CPlay_NeoPixel() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -161,8 +229,8 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>p</em> = <code>17</code>, </td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>p</em> = <code>6</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -178,15 +246,45 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Constructor when length, pin and type are known at compile-time. </p>
+<p>NeoPixel constructor when length, pin and pixel type are known at compile-time. </p>
+<p>Arduino Library for driving Adafruit NeoPixel addressable LEDs, FLORA RGB Smart Pixels and compatible devicess &ndash; WS2811, WS2812, WS2812B, SK6812, etc.</p>
+<p>This is the documentation for Adafruit's NeoPixel library for the Arduino platform, allowing a broad range of microcontroller boards (most AVR boards, many ARM devices, ESP8266 and ESP32, among others) to control Adafruit NeoPixels, FLORA RGB Smart Pixels and compatible devices &ndash; WS2811, WS2812, WS2812B, SK6812, etc.</p>
+<p>Adafruit invests time and resources providing this open source code, please support Adafruit and open-source hardware by purchasing products from Adafruit!</p>
+<p>Written by Phil "Paint Your Dragon" Burgess for Adafruit Industries, with contributions by PJRC, Michael Miller and other members of the open source community. This file is part of the Adafruit_NeoPixel library.</p>
+<p>Adafruit_NeoPixel is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
+<p>Adafruit_NeoPixel is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.</p>
+<p>You should have received a copy of the GNU Lesser General Public License along with NeoPixel. If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">n</td><td>number of pixels </td></tr>
-    <tr><td class="paramname">p</td><td>pin the pixels are attached to </td></tr>
-    <tr><td class="paramname">t</td><td>the type of neopixel. can be NEO_KHZ800 or NEO_KHZ400 </td></tr>
+    <tr><td class="paramname">n</td><td>Number of NeoPixels in strand. </td></tr>
+    <tr><td class="paramname">p</td><td>Arduino pin number which will drive the NeoPixel data in. </td></tr>
+    <tr><td class="paramname">t</td><td>Pixel type &ndash; add together NEO_* constants defined in <a class="el" href="_adafruit___c_play___neo_pixel_8h_source.html">Adafruit_CPlay_NeoPixel.h</a>, for example NEO_GRB+NEO_KHZ800 for NeoPixels expecting an 800 KHz (vs 400 KHz) data stream with color bytes expressed in green, red, blue order per pixel. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_adafruit___c_play___neo_pixel.html" title="Class that stores state and functions for interacting with Adafruit NeoPixels and compatible devices...">Adafruit_CPlay_NeoPixel</a> object. Call the <a class="el" href="class_adafruit___c_play___neo_pixel.html#ab13405df757b533ddb8a353ce600bb95" title="Configure NeoPixel pin for output. ">begin()</a> function before use. </dd></dl>
+
+</div>
+</div>
+<a id="a89b09725c3464297eb23e192660119fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89b09725c3464297eb23e192660119fd">&#9670;&nbsp;</a></span>Adafruit_CPlay_NeoPixel() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Adafruit_CPlay_NeoPixel::Adafruit_CPlay_NeoPixel </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>"Empty" NeoPixel constructor when length, pin and/or pixel type are not known at compile-time, and must be initialized later with <a class="el" href="class_adafruit___c_play___neo_pixel.html#a39f9e18ca15ca0a210a3e20a2dc5a374" title="Change the pixel format of a previously-declared Adafruit_CPlay_NeoPixel strip object. If format changes from one of the RGB variants to an RGBW variant (or RGBW to RGB), the old data will be deallocated and new data is cleared. Otherwise, the old data will remain in RAM and is not reordered to the new format, so it&#39;s advisable to follow up with clear(). ">updateType()</a>, <a class="el" href="class_adafruit___c_play___neo_pixel.html#a6e51f11fb9e61059c805c0eb6e6f9d2e" title="Change the length of a previously-declared Adafruit_CPlay_NeoPixel strip object. Old data is dealloca...">updateLength()</a> and <a class="el" href="class_adafruit___c_play___neo_pixel.html#a0a050e36b2436048abe1cb4cdfbbb6fa" title="Set/change the NeoPixel output pin number. Previous pin, if any, is set to INPUT and the new pin is s...">setPin()</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_adafruit___c_play___neo_pixel.html" title="Class that stores state and functions for interacting with Adafruit NeoPixels and compatible devices...">Adafruit_CPlay_NeoPixel</a> object. Call the <a class="el" href="class_adafruit___c_play___neo_pixel.html#ab13405df757b533ddb8a353ce600bb95" title="Configure NeoPixel pin for output. ">begin()</a> function before use. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function is deprecated, here only for old projects that may still be calling it. New projects should instead use the 'new' keyword with the first constructor syntax (length, pin, type). </dd></dl>
 
 </div>
 </div>
@@ -207,13 +305,13 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Write data to the neopixels. </p>
-<dl class="section note"><dt>Note</dt><dd>this disables interrupts on the chip until the write is complete. </dd></dl>
+<p>Transmit pixel data in RAM to NeoPixels. </p>
+<dl class="section note"><dt>Note</dt><dd>On most architectures, interrupts are temporarily disabled in order to achieve the correct NeoPixel signal timing. This means that the Arduino millis() and micros() functions, which require interrupts, will lose small intervals of time whenever this function is called (about 30 microseconds per RGB pixel, 40 for RGBW pixels). There's no easy fix for this, but a few specialized alternative or companion libraries exist that use very device-specific peripherals to work around it. </dd></dl>
 
 </div>
 </div>
-<a id="aa1567714bba1055f407b6aabbdbccd07"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1567714bba1055f407b6aabbdbccd07">&#9670;&nbsp;</a></span>setPin()</h2>
+<a id="a0a050e36b2436048abe1cb4cdfbbb6fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a050e36b2436048abe1cb4cdfbbb6fa">&#9670;&nbsp;</a></span>setPin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -221,17 +319,17 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void Adafruit_CPlay_NeoPixel::setPin </td>
           <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>p</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set the output pin number. </p>
+<p>Set/change the NeoPixel output pin number. Previous pin, if any, is set to INPUT and the new pin is set to OUTPUT. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">p</td><td>the pin number </td></tr>
+    <tr><td class="paramname">p</td><td>Arduino pin number (-1 = no pin). </td></tr>
   </table>
   </dd>
 </dl>
@@ -276,13 +374,13 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set pixel color from separate R,G,B components: </p>
+<p>Set a pixel's color using separate red, green and blue components. If using RGBW pixels, white will be set to 0. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">n</td><td>the pixel number to set </td></tr>
-    <tr><td class="paramname">r</td><td>the red component </td></tr>
-    <tr><td class="paramname">g</td><td>the green component </td></tr>
-    <tr><td class="paramname">b</td><td>the blue component </td></tr>
+    <tr><td class="paramname">n</td><td>Pixel index, starting from 0. </td></tr>
+    <tr><td class="paramname">r</td><td>Red brightness, 0 = minimum (off), 255 = maximum. </td></tr>
+    <tr><td class="paramname">g</td><td>Green brightness, 0 = minimum (off), 255 = maximum. </td></tr>
+    <tr><td class="paramname">b</td><td>Blue brightness, 0 = minimum (off), 255 = maximum. </td></tr>
   </table>
   </dd>
 </dl>
@@ -333,14 +431,14 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set pixel color from separate R,G,B,W components: </p>
+<p>Set a pixel's color using separate red, green, blue and white components (for RGBW NeoPixels only). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">n</td><td>the pixel number to set </td></tr>
-    <tr><td class="paramname">r</td><td>the red component </td></tr>
-    <tr><td class="paramname">g</td><td>the green component </td></tr>
-    <tr><td class="paramname">b</td><td>the blue component </td></tr>
-    <tr><td class="paramname">w</td><td>the white component </td></tr>
+    <tr><td class="paramname">n</td><td>Pixel index, starting from 0. </td></tr>
+    <tr><td class="paramname">r</td><td>Red brightness, 0 = minimum (off), 255 = maximum. </td></tr>
+    <tr><td class="paramname">g</td><td>Green brightness, 0 = minimum (off), 255 = maximum. </td></tr>
+    <tr><td class="paramname">b</td><td>Blue brightness, 0 = minimum (off), 255 = maximum. </td></tr>
+    <tr><td class="paramname">w</td><td>White brightness, 0 = minimum (off), 255 = maximum, ignored if using RGB pixels. </td></tr>
   </table>
   </dd>
 </dl>
@@ -373,11 +471,55 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set pixel color from 'packed' 32-bit RGB color: </p>
+<p>Set a pixel's color using a 32-bit 'packed' RGB or RGBW value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">n</td><td>the pixel number to set </td></tr>
-    <tr><td class="paramname">c</td><td>the packed 32-bit color data </td></tr>
+    <tr><td class="paramname">n</td><td>Pixel index, starting from 0. </td></tr>
+    <tr><td class="paramname">c</td><td>32-bit color value. Most significant byte is white (for RGBW pixels) or ignored (for RGB pixels), next is red, then green, and least significant byte is blue. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a70d0080b78a977cc7a8c4ee95f8e4200"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70d0080b78a977cc7a8c4ee95f8e4200">&#9670;&nbsp;</a></span>fill()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Adafruit_CPlay_NeoPixel::fill </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>c</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>first</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>count</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fill all or part of the NeoPixel strip with a color. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>32-bit color value. Most significant byte is white (for RGBW pixels) or ignored (for RGB pixels), next is red, then green, and least significant byte is blue. If all arguments are unspecified, this will be 0 (off). </td></tr>
+    <tr><td class="paramname">first</td><td>Index of first pixel to fill, starting from 0. Must be in-bounds, no clipping is performed. 0 if unspecified. </td></tr>
+    <tr><td class="paramname">count</td><td>Number of pixels to fill, as a positive value. Passing 0 or leaving unspecified will fill to end of strip. </td></tr>
   </table>
   </dd>
 </dl>
@@ -400,35 +542,14 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Adjust output brightness; 0=darkest (off), 255=brightest. </p>
+<p>Adjust output brightness. Does not immediately affect what's currently displayed on the LEDs. The next call to <a class="el" href="class_adafruit___c_play___neo_pixel.html#a7b098a8b3719c3425bafef724672c80b" title="Transmit pixel data in RAM to NeoPixels. ">show()</a> will refresh the LEDs at this level. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">b</td><td>the brightness to set </td></tr>
+    <tr><td class="paramname">b</td><td>Brightness setting, 0=minimum (off), 255=brightest. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the number of pixels</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>This does NOT immediately affect what's currently displayed on the LEDs. The next call to <a class="el" href="class_adafruit___c_play___neo_pixel.html#a7b098a8b3719c3425bafef724672c80b" title="Write data to the neopixels. ">show()</a> will refresh the LEDs at this level. However, this process is potentially "lossy," especially when increasing brightness. The tight timing in the WS2811/WS2812 code means there aren't enough free cycles to perform this scaling on the fly as data is issued. So we make a pass through the existing color data in RAM and scale it (subsequent graphics commands also work at this brightness level). If there's a significant step up in brightness, the limited number of steps (quantization) in the old data will be quite visible in the re-scaled version. For a non-destructive change, you'll need to re-render the full strip data. C'est la vie. </dd></dl>
-
-</div>
-</div>
-<a id="a92f1db0c61e7a77346f39677f09da5d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a92f1db0c61e7a77346f39677f09da5d1">&#9670;&nbsp;</a></span>clear()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Adafruit_CPlay_NeoPixel::clear </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>set all neopixel data to 'off' in internal memory. </p>
-<dl class="section note"><dt>Note</dt><dd>this does not automatically update pixels. Update with <a class="el" href="class_adafruit___c_play___neo_pixel.html#a7b098a8b3719c3425bafef724672c80b" title="Write data to the neopixels. ">show()</a> after calling <a class="el" href="class_adafruit___c_play___neo_pixel.html#a92f1db0c61e7a77346f39677f09da5d1" title="set all neopixel data to &#39;off&#39; in internal memory. ">clear()</a> </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This was intended for one-time use in one's setup() function, not as an animation effect in itself. Because of the way this library "pre-multiplies" LED colors in RAM, changing the brightness is often a "lossy" operation &ndash; what you write to pixels isn't necessary the same as what you'll read back. Repeated brightness changes using this function exacerbate the problem. Smart programs therefore treat the strip as a write-only resource, maintaining their own state to render each frame of an animation, not relying on read-modify-write. </dd></dl>
 
 </div>
 </div>
@@ -448,13 +569,14 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set the number of pixels in the strip. </p>
+<p>Change the length of a previously-declared <a class="el" href="class_adafruit___c_play___neo_pixel.html" title="Class that stores state and functions for interacting with Adafruit NeoPixels and compatible devices...">Adafruit_CPlay_NeoPixel</a> strip object. Old data is deallocated and new data is cleared. Pin number and pixel format are unchanged. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">n</td><td>the number of pixels in the strip </td></tr>
+    <tr><td class="paramname">n</td><td>New length of strip, in pixels. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>This function is deprecated, here only for old projects that may still be calling it. New projects should instead use the 'new' keyword with the first constructor syntax (length, pin, type). </dd></dl>
 
 </div>
 </div>
@@ -474,34 +596,73 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>set the type of neopixel we are using </p>
+<p>Change the pixel format of a previously-declared <a class="el" href="class_adafruit___c_play___neo_pixel.html" title="Class that stores state and functions for interacting with Adafruit NeoPixels and compatible devices...">Adafruit_CPlay_NeoPixel</a> strip object. If format changes from one of the RGB variants to an RGBW variant (or RGBW to RGB), the old data will be deallocated and new data is cleared. Otherwise, the old data will remain in RAM and is not reordered to the new format, so it's advisable to follow up with <a class="el" href="class_adafruit___c_play___neo_pixel.html#a110bfcd5374bd78bed53c7b7f95caa9b" title="Fill the whole NeoPixel strip with 0 / black / off. ">clear()</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">t</td><td>the type of neopixel. Can be NEO_KHZ800 or NEO_KHZ400 </td></tr>
+    <tr><td class="paramname">t</td><td>Pixel type &ndash; add together NEO_* constants defined in <a class="el" href="_adafruit___c_play___neo_pixel_8h_source.html">Adafruit_CPlay_NeoPixel.h</a>, for example NEO_GRB+NEO_KHZ800 for NeoPixels expecting an 800 KHz (vs 400 KHz) data stream with color bytes expressed in green, red, blue order per pixel. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>This function is deprecated, here only for old projects that may still be calling it. New projects should instead use the 'new' keyword with the first constructor syntax (length, pin, type). </dd></dl>
 
 </div>
 </div>
-<a id="a21dd123a7bcfddbaea88ff522876be83"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21dd123a7bcfddbaea88ff522876be83">&#9670;&nbsp;</a></span>getPixels()</h2>
+<a id="af549a2d7b2cc1e435911d479adb7790f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af549a2d7b2cc1e435911d479adb7790f">&#9670;&nbsp;</a></span>canShow()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t * Adafruit_CPlay_NeoPixel::getPixels </td>
+          <td class="memname">boolean Adafruit_CPlay_NeoPixel::canShow </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Returns pointer to pixels[] array. Pixel data is stored in device- native format and is not translated here. Application will need to be aware of specific pixel data format and handle colors appropriately. </p>
-<dl class="section return"><dt>Returns</dt><dd>pointer to the pixel array. </dd></dl>
+<p>Check whether a call to <a class="el" href="class_adafruit___c_play___neo_pixel.html#a7b098a8b3719c3425bafef724672c80b" title="Transmit pixel data in RAM to NeoPixels. ">show()</a> will start sending data immediately or will 'block' for a required interval. NeoPixels require a short quiet time (about 300 microseconds) after the last bit is received before the data 'latches' and new data can start being received. Usually one's sketch is implicitly using this time to generate a new frame of animation...but if it finishes very quickly, this function could be used to see if there's some idle time available for some low-priority concurrent task. </p>
+<dl class="section return"><dt>Returns</dt><dd>1 or true if <a class="el" href="class_adafruit___c_play___neo_pixel.html#a7b098a8b3719c3425bafef724672c80b" title="Transmit pixel data in RAM to NeoPixels. ">show()</a> will start sending immediately, 0 or false if <a class="el" href="class_adafruit___c_play___neo_pixel.html#a7b098a8b3719c3425bafef724672c80b" title="Transmit pixel data in RAM to NeoPixels. ">show()</a> would block (meaning some idle time is available). </dd></dl>
+
+</div>
+</div>
+<a id="a9bcaec4d574c1311631c8ae168ec8057"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bcaec4d574c1311631c8ae168ec8057">&#9670;&nbsp;</a></span>getPixels()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* Adafruit_CPlay_NeoPixel::getPixels </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get a pointer directly to the NeoPixel data buffer in RAM. Pixel data is stored in a device-native format (a la the NEO_* constants) and is not translated here. Applications that access this buffer will need to be aware of the specific data format and handle colors appropriately. </p>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to NeoPixel buffer (uint8_t* array). </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This is for high-performance applications where calling <a class="el" href="class_adafruit___c_play___neo_pixel.html#a54d1a4a25d50447f542b232a1abe2709" title="Set a pixel&#39;s color using separate red, green and blue components. If using RGBW pixels, white will be set to 0. ">setPixelColor()</a> on every single pixel would be too slow (e.g. POV or light-painting projects). There is no bounds checking on the array, creating tremendous potential for mayhem if one writes past the ends of the buffer. Great power, great responsibility and all that. </dd></dl>
 
 </div>
 </div>
@@ -521,62 +682,37 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>get the global brightness value </p>
-<dl class="section return"><dt>Returns</dt><dd>the global brightness </dd></dl>
+<p>Retrieve the last-set brightness value for the strip. </p>
+<dl class="section return"><dt>Returns</dt><dd>Brightness value: 0 = minimum (off), 255 = maximum. </dd></dl>
 
 </div>
 </div>
-<a id="a0982a58ad2739b67a3d9b693baa43564"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0982a58ad2739b67a3d9b693baa43564">&#9670;&nbsp;</a></span>sine8()</h2>
+<a id="ab8c952a421c320ebc1c0ee941122a22f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8c952a421c320ebc1c0ee941122a22f">&#9670;&nbsp;</a></span>getPin()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t Adafruit_CPlay_NeoPixel::sine8 </td>
+          <td class="memname">int16_t Adafruit_CPlay_NeoPixel::getPin </td>
           <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>x</em></td><td>)</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Get a sinusoidal value from a sine table. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x</td><td>a 0 to 255 value corresponding to an index to the sine table </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>An 8-bit sinusoidal value back </dd></dl>
-
-</div>
-</div>
-<a id="ae427cb412c699ab9b242559bb765353f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae427cb412c699ab9b242559bb765353f">&#9670;&nbsp;</a></span>gamma8()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t Adafruit_CPlay_NeoPixel::gamma8 </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>x</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get a gamma-corrected value from a gamma table. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x</td><td>a 0 to 255 value corresponding to an index to the gamma table </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>An 8-bit gamma-corrected value back </dd></dl>
+<p>Retrieve the pin number used for NeoPixel data output. </p>
+<dl class="section return"><dt>Returns</dt><dd>Arduino pin number (-1 if not set). </dd></dl>
 
 </div>
 </div>
@@ -585,6 +721,9 @@ Static Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">uint16_t Adafruit_CPlay_NeoPixel::numPixels </td>
@@ -594,15 +733,48 @@ Static Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>get the number of pixels in the strip </p>
-<dl class="section return"><dt>Returns</dt><dd>the number of pixels </dd></dl>
+<p>Return the number of pixels in an Adafruit_NeoPixel strip object. </p>
+<dl class="section return"><dt>Returns</dt><dd>Pixel count (0 if not set). </dd></dl>
 
 </div>
 </div>
-<a id="a4dc97036b65771f86df31e1e63f30e25"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4dc97036b65771f86df31e1e63f30e25">&#9670;&nbsp;</a></span>Color() <span class="overload">[1/2]</span></h2>
+<a id="afcc2e82b2232c9321153d420816648ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afcc2e82b2232c9321153d420816648ff">&#9670;&nbsp;</a></span>getPixelColor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Adafruit_CPlay_NeoPixel::getPixelColor </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>n</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Query the color of a previously-set pixel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td>Index of pixel to read (0 = first). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>'Packed' 32-bit RGB or WRGB value. Most significant byte is white (for RGBW pixels) or 0 (for RGB pixels), next is red, then green, and least significant byte is blue. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If the strip brightness has been changed from the default value of 255, the color read from a pixel may not exactly match what was previously written with one of the <a class="el" href="class_adafruit___c_play___neo_pixel.html#a54d1a4a25d50447f542b232a1abe2709" title="Set a pixel&#39;s color using separate red, green and blue components. If using RGBW pixels, white will be set to 0. ">setPixelColor()</a> functions. This gets more pronounced at lower brightness levels. </dd></dl>
+
+</div>
+</div>
+<a id="a3014631c7f71e14fed5c75f8e8c20be7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3014631c7f71e14fed5c75f8e8c20be7">&#9670;&nbsp;</a></span>sine8()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -611,7 +783,77 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t Adafruit_CPlay_NeoPixel::Color </td>
+          <td class="memname">static uint8_t Adafruit_CPlay_NeoPixel::sine8 </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>An 8-bit integer sine wave function, not directly compatible with standard trigonometric units like radians or degrees. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>Input angle, 0-255; 256 would loop back to zero, completing the circle (equivalent to 360 degrees or 2 pi radians). One can therefore use an unsigned 8-bit variable and simply add or subtract, allowing it to overflow/underflow and it still does the expected contiguous thing. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Sine result, 0 to 255, or -128 to +127 if type-converted to a signed int8_t, but you'll most likely want unsigned as this output is often used for pixel brightness in animation effects. </dd></dl>
+
+</div>
+</div>
+<a id="a28ca5f661367ae4a791a45bf9026f9d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28ca5f661367ae4a791a45bf9026f9d2">&#9670;&nbsp;</a></span>gamma8()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint8_t Adafruit_CPlay_NeoPixel::gamma8 </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>An 8-bit gamma-correction function for basic pixel brightness adjustment. Makes color transitions appear more perceptially correct. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>Input brightness, 0 (minimum or off/black) to 255 (maximum). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Gamma-adjusted brightness, can then be passed to one of the <a class="el" href="class_adafruit___c_play___neo_pixel.html#a54d1a4a25d50447f542b232a1abe2709" title="Set a pixel&#39;s color using separate red, green and blue components. If using RGBW pixels, white will be set to 0. ">setPixelColor()</a> functions. This uses a fixed gamma correction exponent of 2.6, which seems reasonably okay for average NeoPixels in average tasks. If you need finer control you'll need to provide your own gamma-correction function instead. </dd></dl>
+
+</div>
+</div>
+<a id="ab310902647a45860b79625a6ddbb04ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab310902647a45860b79625a6ddbb04ec">&#9670;&nbsp;</a></span>Color() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t Adafruit_CPlay_NeoPixel::Color </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>r</em>, </td>
@@ -636,33 +878,35 @@ Static Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Convert separate R,G,B into packed 32-bit RGB color. </p>
+<p>Convert separate red, green and blue values into a single "packed" 32-bit RGB color. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">r</td><td>the red component </td></tr>
-    <tr><td class="paramname">g</td><td>the green component </td></tr>
-    <tr><td class="paramname">b</td><td>the blue component </td></tr>
+    <tr><td class="paramname">r</td><td>Red brightness, 0 to 255. </td></tr>
+    <tr><td class="paramname">g</td><td>Green brightness, 0 to 255. </td></tr>
+    <tr><td class="paramname">b</td><td>Blue brightness, 0 to 255. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the converted 32-bit color</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>Packed format is always RGB, regardless of LED strand color order. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>32-bit packed RGB value, which can then be assigned to a variable for later use or passed to the <a class="el" href="class_adafruit___c_play___neo_pixel.html#a54d1a4a25d50447f542b232a1abe2709" title="Set a pixel&#39;s color using separate red, green and blue components. If using RGBW pixels, white will be set to 0. ">setPixelColor()</a> function. Packed RGB format is predictable, regardless of LED strand color order. </dd></dl>
 
 </div>
 </div>
-<a id="a0b6ffc821a972709efca48dff7d486d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b6ffc821a972709efca48dff7d486d2">&#9670;&nbsp;</a></span>Color() <span class="overload">[2/2]</span></h2>
+<a id="a9bc7c2ab132b25e3f65666b68c733db3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bc7c2ab132b25e3f65666b68c733db3">&#9670;&nbsp;</a></span>Color() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t Adafruit_CPlay_NeoPixel::Color </td>
+          <td class="memname">static uint32_t Adafruit_CPlay_NeoPixel::Color </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>r</em>, </td>
@@ -691,53 +935,29 @@ Static Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Convert separate R,G,B,W into packed 32-bit WRGB color. </p>
+<p>Convert separate red, green, blue and white values into a single "packed" 32-bit WRGB color. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">r</td><td>the red component </td></tr>
-    <tr><td class="paramname">g</td><td>the green component </td></tr>
-    <tr><td class="paramname">b</td><td>the blue component </td></tr>
-    <tr><td class="paramname">w</td><td>the white component </td></tr>
+    <tr><td class="paramname">r</td><td>Red brightness, 0 to 255. </td></tr>
+    <tr><td class="paramname">g</td><td>Green brightness, 0 to 255. </td></tr>
+    <tr><td class="paramname">b</td><td>Blue brightness, 0 to 255. </td></tr>
+    <tr><td class="paramname">w</td><td>White brightness, 0 to 255. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the converted 32-bit color</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>Packed format is always WRGB, regardless of LED strand color order. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>32-bit packed WRGB value, which can then be assigned to a variable for later use or passed to the <a class="el" href="class_adafruit___c_play___neo_pixel.html#a54d1a4a25d50447f542b232a1abe2709" title="Set a pixel&#39;s color using separate red, green and blue components. If using RGBW pixels, white will be set to 0. ">setPixelColor()</a> function. Packed WRGB format is predictable, regardless of LED strand color order. </dd></dl>
 
 </div>
 </div>
-<a id="afcc2e82b2232c9321153d420816648ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afcc2e82b2232c9321153d420816648ff">&#9670;&nbsp;</a></span>getPixelColor()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t Adafruit_CPlay_NeoPixel::getPixelColor </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>n</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Query color from previously-set pixel (returns packed 32-bit RGB value) </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">n</td><td>the number of the pixel to check </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>the 32-bit color of the pixel</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>this does not read from the pixel itself. It just checks the value that was previously set. </dd></dl>
-
-</div>
-</div>
-<a id="a414888118a42a9b77b2bc05b21c3fad4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a414888118a42a9b77b2bc05b21c3fad4">&#9670;&nbsp;</a></span>canShow()</h2>
+<a id="aa3feea05da7e31a951409d80a2a68464"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3feea05da7e31a951409d80a2a68464">&#9670;&nbsp;</a></span>ColorHSV()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -746,22 +966,82 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool Adafruit_CPlay_NeoPixel::canShow </td>
+          <td class="memname">uint32_t Adafruit_CPlay_NeoPixel::ColorHSV </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>hue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>sat</em> = <code>255</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>val</em> = <code>255</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Convert hue, saturation and value into a packed 32-bit RGB color that can be passed to <a class="el" href="class_adafruit___c_play___neo_pixel.html#a54d1a4a25d50447f542b232a1abe2709" title="Set a pixel&#39;s color using separate red, green and blue components. If using RGBW pixels, white will be set to 0. ">setPixelColor()</a> or other RGB-compatible functions. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hue</td><td>An unsigned 16-bit value, 0 to 65535, representing one full loop of the color wheel, which allows 16-bit hues to "roll
+              over" while still doing the expected thing (and allowing more precision than the wheel() function that was common to prior NeoPixel examples). </td></tr>
+    <tr><td class="paramname">sat</td><td>Saturation, 8-bit value, 0 (min or pure grayscale) to 255 (max or pure hue). Default of 255 if unspecified. </td></tr>
+    <tr><td class="paramname">val</td><td>Value (brightness), 8-bit value, 0 (min / black / off) to 255 (max or full brightness). Default of 255 if unspecified. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Packed 32-bit RGB with the most significant byte set to 0 &ndash; the white element of WRGB pixels is NOT utilized. Result is linearly but not perceptually correct, so you may want to pass the result through the <a class="el" href="class_adafruit___c_play___neo_pixel.html#af1eb6c283ce184b50dc0117bf4571dd0" title="A gamma-correction function for 32-bit packed RGB or WRGB colors. Makes color transitions appear more...">gamma32()</a> function (or your own gamma-correction operation) else colors may appear washed out. This is not done automatically by this function because coders may desire a more refined gamma-correction function than the simplified one-size-fits-all operation of <a class="el" href="class_adafruit___c_play___neo_pixel.html#af1eb6c283ce184b50dc0117bf4571dd0" title="A gamma-correction function for 32-bit packed RGB or WRGB colors. Makes color transitions appear more...">gamma32()</a>. Diffusing the LEDs also really seems to help when using low-saturation colors. </dd></dl>
+
+</div>
+</div>
+<a id="af1eb6c283ce184b50dc0117bf4571dd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1eb6c283ce184b50dc0117bf4571dd0">&#9670;&nbsp;</a></span>gamma32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Adafruit_CPlay_NeoPixel::gamma32 </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>check if enough time has elapsed and the pixels are ready to refresh. </p>
-<dl class="section return"><dt>Returns</dt><dd>true if ready to show, false otherwise. </dd></dl>
+<p>A gamma-correction function for 32-bit packed RGB or WRGB colors. Makes color transitions appear more perceptially correct. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>32-bit packed RGB or WRGB color. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Gamma-adjusted packed color, can then be passed in one of the <a class="el" href="class_adafruit___c_play___neo_pixel.html#a54d1a4a25d50447f542b232a1abe2709" title="Set a pixel&#39;s color using separate red, green and blue components. If using RGBW pixels, white will be set to 0. ">setPixelColor()</a> functions. Like <a class="el" href="class_adafruit___c_play___neo_pixel.html#a28ca5f661367ae4a791a45bf9026f9d2" title="An 8-bit gamma-correction function for basic pixel brightness adjustment. Makes color transitions app...">gamma8()</a>, this uses a fixed gamma correction exponent of 2.6, which seems reasonably okay for average NeoPixels in average tasks. If you need finer control you'll need to provide your own gamma-correction function instead. </dd></dl>
 
 </div>
 </div>

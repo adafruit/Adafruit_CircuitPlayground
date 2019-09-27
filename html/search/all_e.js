@@ -12,5 +12,6 @@ var searchData=
   ['resolution',['resolution',['../structsensor__t.html#a926aba3216afd50e62c0a6cdbcc7433a',1,'sensor_t']]],
   ['rgba',['rgba',['../structsensors__color__t.html#a0afbff980c17fbacdab1666735f3d3e6',1,'sensors_color_t']]],
   ['rightbutton',['rightButton',['../class_adafruit___circuit_playground.html#ac4427acf94accc841903f0460a921063',1,'Adafruit_CircuitPlayground']]],
+  ['roffset',['rOffset',['../class_adafruit___c_play___neo_pixel.html#aa9a49e06fdf707ea7235c018f5361fed',1,'Adafruit_CPlay_NeoPixel']]],
   ['roll',['roll',['../structsensors__vec__t.html#a6d8c6e288de54942e1d2be4f42f96bb2',1,'sensors_vec_t']]]
 ];

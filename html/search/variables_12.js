@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['z',['z',['../class_adafruit___c_play___l_i_s3_d_h.html#affb36a54aa2422d23ce21bb122b67978',1,'Adafruit_CPlay_LIS3DH::z()'],['../structsensors__vec__t.html#af955e602ed046ad810f972fbbc5e0936',1,'sensors_vec_t::z()']]],
-  ['z_5fg',['z_g',['../class_adafruit___c_play___l_i_s3_d_h.html#a31554b38dd61ffd5fc2173d311400ea5',1,'Adafruit_CPlay_LIS3DH']]]
+  ['x',['x',['../class_adafruit___c_play___l_i_s3_d_h.html#ac7576f4c1cf6e43f22f121c5a69adb6b',1,'Adafruit_CPlay_LIS3DH::x()'],['../structsensors__vec__t.html#a9fb71ba50079915da244b839969da7d9',1,'sensors_vec_t::x()']]],
+  ['x_5fg',['x_g',['../class_adafruit___c_play___l_i_s3_d_h.html#a57e6c5d371bea3056c8e9e74b573c3a4',1,'Adafruit_CPlay_LIS3DH']]]
 ];
