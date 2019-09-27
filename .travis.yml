@@ -1,6 +1,15 @@
 language: c
 sudo: false
 
+cache:
+  directories:
+    - ~/arduino_ide
+    - ~/.arduino15/packages/
+
+git:
+  depth: false
+  quiet: true
+
 # Blacklist
 branches:
   except:
