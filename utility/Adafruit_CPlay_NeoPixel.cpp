@@ -1,12 +1,8 @@
 /*!
- * @file Adafruit_NeoPixel.cpp
- *
- * @mainpage Arduino Library for driving Adafruit NeoPixel addressable LEDs,
+ * Arduino Library for driving Adafruit NeoPixel addressable LEDs,
  * FLORA RGB Smart Pixels and compatible devicess -- WS2811, WS2812, WS2812B,
  * SK6812, etc.
- *
- * @section intro_sec Introduction
- *
+
  * This is the documentation for Adafruit's NeoPixel library for the
  * Arduino platform, allowing a broad range of microcontroller boards
  * (most AVR boards, many ARM devices, ESP8266 and ESP32, among others)
@@ -17,14 +13,9 @@
  * please support Adafruit and open-source hardware by purchasing products
  * from Adafruit!
  *
- * @section author Author
- *
  * Written by Phil "Paint Your Dragon" Burgess for Adafruit Industries,
  * with contributions by PJRC, Michael Miller and other members of the
  * open source community.
- *
- * @section license License
- *
  * This file is part of the Adafruit_NeoPixel library.
  *
  * Adafruit_NeoPixel is free software: you can redistribute it and/or

@@ -1,6 +1,4 @@
 /*!
- * @file Adafruit_NeoPixel.h
- *
  * This is part of Adafruit's NeoPixel library for the Arduino platform,
  * allowing a broad range of microcontroller boards (most AVR boards,
  * many ARM devices, ESP8266 and ESP32, among others) to control Adafruit
