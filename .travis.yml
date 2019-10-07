@@ -28,7 +28,9 @@ install:
    - rm -rf $HOME/arduino_ide/libraries/Adafruit_Circuit_Playground
 
 script:
-   - build_cplay_platforms
+   - build_platform cplayClassic
+   - build_platform cplayExpress
+
 
 # Generate and deploy documentation
 after_success:
