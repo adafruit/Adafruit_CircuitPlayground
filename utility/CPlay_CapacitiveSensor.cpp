@@ -218,10 +218,12 @@ int CPlay_CapacitiveSensor::SenseOneCycle(void)
 
   // set receive pin HIGH briefly to charge up fully - because the while loop above will exit when pin is ~ 2.5V
   noInterrupts();
+  *send_outport &= ~send_mask;           // sendPin Register low
   *recv_direction |= recv_mask;       // receivePin to OUTPUT
   *recv_outport |= recv_mask;    	// pin is now HIGH AND OUTPUT
   delayMicroseconds(10);
   *recv_direction &= ~recv_mask;	// receivePin to input (pullups are off)
+  *recv_outport &= ~recv_mask;
   if (send_mask != 0) {
     *send_outport &= ~send_mask;           // sendPin Register high
   }

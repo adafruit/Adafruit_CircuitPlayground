@@ -21,7 +21,10 @@
 
 #if defined(ARDUINO_CIRCUITPLAY_NRF52840)
 #define RwReg uint32_t
+#elif defined(__AVR__)
+#define RwReg uint8_t
 #endif
+
 
 /**************************************************************************/
 /*! 
