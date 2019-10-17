@@ -22,7 +22,7 @@ uint16_t sincfilter[DECIMATION] = {0, 2, 9, 21, 39, 63, 94, 132, 179, 236, 302, 
 
 static bool pdmConfigured = false;
 
-#elif defined(ARDUINO_CIRCUITPLAY_NRF52840)
+#elif defined(ARDUINO_NRF52840_CIRCUITPLAY)
 
 #include <PDM.h>
 // The default Circuit Playground Bluefruit pins 
@@ -171,7 +171,7 @@ void Adafruit_CPlay_Mic::capture(int16_t *buf, uint16_t nSamples) {
 
     *ptr++ = runningsum;
   }
-#elif defined(ARDUINO_CIRCUITPLAY_NRF52840)
+#elif defined(ARDUINO_NRF52840_CIRCUITPLAY)
   if(!pdmConfigured){
     PDM.onReceive(onPDMdata);
     PDM.begin(1, SAMPLERATE_HZ);
@@ -214,7 +214,7 @@ float Adafruit_CPlay_Mic::soundPressureLevel(uint16_t ms){
 #elif defined(ARDUINO_ARCH_SAMD)
   gain = 9;
   len = (float)(SAMPLERATE_HZ/1000) * ms;
-#elif defined(ARDUINO_CIRCUITPLAY_NRF52840)
+#elif defined(ARDUINO_NRF52840_CIRCUITPLAY)
   gain = 2;
   len = (float)(SAMPLERATE_HZ/1000) * ms;
 #else

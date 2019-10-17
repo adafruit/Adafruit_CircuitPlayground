@@ -19,7 +19,7 @@
 #include "WProgram.h"
 #endif
 
-#if defined(ARDUINO_CIRCUITPLAY_NRF52840)
+#if defined(ARDUINO_NRF52840_CIRCUITPLAY)
 #define RwReg uint32_t
 #elif defined(__AVR__)
 #define RwReg uint8_t

@@ -108,7 +108,7 @@ class Adafruit_CircuitPlayground {
   Adafruit_CPlay_Mic mic; ///< the microphone object
   Adafruit_CPlay_Speaker speaker; ///< the speaker object
 
-#if defined (__AVR__) || defined(ARDUINO_CIRCUITPLAY_NRF52840) // Circuit Playground 'classic' or bluefruit
+#if defined (__AVR__) || defined(ARDUINO_NRF52840_CIRCUITPLAY) // Circuit Playground 'classic' or bluefruit
   CPlay_CapacitiveSensor cap[8]; ///< the array of capacitive touch sensors
 #else
   Adafruit_CPlay_FreeTouch     cap[7]; ///< the array of capacitive touch sensors
