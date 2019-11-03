@@ -1,9 +1,6 @@
 /*!
  * @file Adafruit_CPlay_LIS3DH.cpp
  *
- *  @mainpage Adafruit LIS3DH breakout board
- *
- *  @section intro_sec Introduction
  *
  *  This is a library for the Adafruit LIS3DH Accel breakout board
  *
@@ -19,11 +16,7 @@
  *  please support Adafruit andopen-source hardware by purchasing products
  *  from Adafruit!
  *
- *  @section author Author
- *
  *  K. Townsend / Limor Fried (Adafruit Industries)
- *
- *  @section license License
  *
  *  BSD license, all text above must be included in any redistribution
  */

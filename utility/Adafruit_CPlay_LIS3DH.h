@@ -1,5 +1,5 @@
 /*!
- *  @file Adafruit_LIS3DH.h
+ *  @file Adafruit_CPlay_LIS3DH.h
  *
  *  This is a library for the Adafruit LIS3DH Accel breakout board
  *

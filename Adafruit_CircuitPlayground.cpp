@@ -372,7 +372,6 @@ uint32_t Adafruit_CircuitPlayground::colorWheel(uint8_t WheelPos) {
     @param red the pointer to where the red component should be stored.
     @param green the pointer to where the green component should be stored.
     @param blue the pointer to where the blue component should be stored.
-    @returns the components of the detected colors in the passed pointers.
 */
 /**************************************************************************/
 void Adafruit_CircuitPlayground::senseColor(uint8_t& red, uint8_t& green, uint8_t& blue) {
