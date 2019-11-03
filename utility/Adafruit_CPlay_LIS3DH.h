@@ -32,7 +32,7 @@
 #include <SPI.h>
 #include <Wire.h>
 
-#include <Adafruit_CPlay_Sensor.h>
+#include "Adafruit_CPlay_Sensor.h"
 
 /** I2C ADDRESS/BITS **/
 #define LIS3DH_DEFAULT_ADDRESS (0x18) // if SDO/SA0 is 3V, its 0x19
