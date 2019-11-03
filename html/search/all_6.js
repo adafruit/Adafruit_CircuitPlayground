@@ -7,6 +7,7 @@ var searchData=
   ['getbrightness',['getBrightness',['../class_adafruit___c_play___neo_pixel.html#a229ea25085dee4ff3fc7b290d0a60b13',1,'Adafruit_CPlay_NeoPixel']]],
   ['getclick',['getClick',['../class_adafruit___c_play___l_i_s3_d_h.html#aab75b8f18939e4c0124f46a50a8d6444',1,'Adafruit_CPlay_LIS3DH']]],
   ['getdatarate',['getDataRate',['../class_adafruit___c_play___l_i_s3_d_h.html#acd10734025f8d9783db638f7823a2936',1,'Adafruit_CPlay_LIS3DH']]],
+  ['getdeviceid',['getDeviceID',['../class_adafruit___c_play___l_i_s3_d_h.html#afa6cc5f42c2df61afa37e5987a4cf405',1,'Adafruit_CPlay_LIS3DH']]],
   ['getevent',['getEvent',['../class_adafruit___c_play___l_i_s3_d_h.html#ad36ca63acd34d4f752af578a2ecd6e26',1,'Adafruit_CPlay_LIS3DH::getEvent()'],['../class_adafruit___sensor.html#a0636562b9bc853b796ecc87b5d4b1bec',1,'Adafruit_Sensor::getEvent()']]],
   ['getpin',['getPin',['../class_adafruit___c_play___neo_pixel.html#ab8c952a421c320ebc1c0ee941122a22f',1,'Adafruit_CPlay_NeoPixel']]],
   ['getpixelcolor',['getPixelColor',['../class_adafruit___c_play___neo_pixel.html#afcc2e82b2232c9321153d420816648ff',1,'Adafruit_CPlay_NeoPixel']]],

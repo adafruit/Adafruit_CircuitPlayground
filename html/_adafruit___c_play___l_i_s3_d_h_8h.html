@@ -70,89 +70,108 @@ $(function() {
 <div class="title">Adafruit_CPlay_LIS3DH.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;WProgram.h&quot;</code><br />
-<code>#include &lt;Wire.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;Arduino.h&quot;</code><br />
 <code>#include &lt;SPI.h&gt;</code><br />
-<code>#include &quot;utility/Adafruit_CPlay_Sensor.h&quot;</code><br />
+<code>#include &lt;Wire.h&gt;</code><br />
+<code>#include &quot;Adafruit_CPlay_Sensor.h&quot;</code><br />
 </div>
 <p><a href="_adafruit___c_play___l_i_s3_d_h_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_play___l_i_s3_d_h.html">Adafruit_CPlay_LIS3DH</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class that stores state and functions for LIS3DH accelerometer on the circuitPlayground board.  <a href="class_adafruit___c_play___l_i_s3_d_h.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class that stores state and functions for interacting with Adafruit_LIS3DH.  <a href="class_adafruit___c_play___l_i_s3_d_h.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:acd71cca6695e86b56b3be85eee01b7d6"><td class="memItemLeft" align="right" valign="top"><a id="acd71cca6695e86b56b3be85eee01b7d6"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#acd71cca6695e86b56b3be85eee01b7d6">LIS3DH_DEFAULT_ADDRESS</a>&#160;&#160;&#160;(0x18)</td></tr>
-<tr class="memdesc:acd71cca6695e86b56b3be85eee01b7d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">default I2C address. if SDO/SA0 is 3V, its 0x19. <br /></td></tr>
+<tr class="memitem:acd71cca6695e86b56b3be85eee01b7d6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#acd71cca6695e86b56b3be85eee01b7d6">LIS3DH_DEFAULT_ADDRESS</a>&#160;&#160;&#160;(0x18)</td></tr>
 <tr class="separator:acd71cca6695e86b56b3be85eee01b7d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aece7b47c39151b5549cfe55e3b348a5e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#aece7b47c39151b5549cfe55e3b348a5e">LIS3DH_REG_STATUS1</a>&#160;&#160;&#160;0x07</td></tr>
+<tr class="separator:aece7b47c39151b5549cfe55e3b348a5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc221e34cb1c273b61784e4414287ebb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#acc221e34cb1c273b61784e4414287ebb">LIS3DH_REG_OUTADC1_L</a>&#160;&#160;&#160;0x08</td></tr>
+<tr class="separator:acc221e34cb1c273b61784e4414287ebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11a58351129b8982a976935c91d39b77"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a11a58351129b8982a976935c91d39b77">LIS3DH_REG_OUTADC1_H</a>&#160;&#160;&#160;0x09</td></tr>
+<tr class="separator:a11a58351129b8982a976935c91d39b77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ae3015679a9c0b7ad11737cdffc0d8e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a7ae3015679a9c0b7ad11737cdffc0d8e">LIS3DH_REG_OUTADC2_L</a>&#160;&#160;&#160;0x0A</td></tr>
+<tr class="separator:a7ae3015679a9c0b7ad11737cdffc0d8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e8e2f71aa8bba3a3e6f83896134f642"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a1e8e2f71aa8bba3a3e6f83896134f642">LIS3DH_REG_OUTADC2_H</a>&#160;&#160;&#160;0x0B</td></tr>
+<tr class="separator:a1e8e2f71aa8bba3a3e6f83896134f642"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53081c9b4db3308e0d63adaca79a53c8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a53081c9b4db3308e0d63adaca79a53c8">LIS3DH_REG_OUTADC3_L</a>&#160;&#160;&#160;0x0C</td></tr>
+<tr class="separator:a53081c9b4db3308e0d63adaca79a53c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a249323a2f20ed40be5641eb843325c33"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a249323a2f20ed40be5641eb843325c33">LIS3DH_REG_OUTADC3_H</a>&#160;&#160;&#160;0x0D</td></tr>
+<tr class="separator:a249323a2f20ed40be5641eb843325c33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb6e65b034fd4baa2c4d574b8f31282e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#aeb6e65b034fd4baa2c4d574b8f31282e">LIS3DH_REG_INTCOUNT</a>&#160;&#160;&#160;0x0E</td></tr>
+<tr class="separator:aeb6e65b034fd4baa2c4d574b8f31282e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0eb7d95865e565aa32412b7896c3d39f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a0eb7d95865e565aa32412b7896c3d39f">LIS3DH_REG_WHOAMI</a>&#160;&#160;&#160;0x0F</td></tr>
+<tr class="separator:a0eb7d95865e565aa32412b7896c3d39f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28390971923b5bb758267143afde139d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a28390971923b5bb758267143afde139d">LIS3DH_REG_TEMPCFG</a>&#160;&#160;&#160;0x1F</td></tr>
+<tr class="separator:a28390971923b5bb758267143afde139d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5df0acbe7694657d807171c88283349"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#ab5df0acbe7694657d807171c88283349">LIS3DH_REG_CTRL1</a>&#160;&#160;&#160;0x20</td></tr>
+<tr class="separator:ab5df0acbe7694657d807171c88283349"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa280a6cc3cd1441a98552c7bb06b9b19"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#aa280a6cc3cd1441a98552c7bb06b9b19">LIS3DH_REG_CTRL2</a>&#160;&#160;&#160;0x21</td></tr>
+<tr class="separator:aa280a6cc3cd1441a98552c7bb06b9b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a153accf74bc55989b71a5b43ce4afa22"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a153accf74bc55989b71a5b43ce4afa22">LIS3DH_REG_CTRL3</a>&#160;&#160;&#160;0x22</td></tr>
+<tr class="separator:a153accf74bc55989b71a5b43ce4afa22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af89ffc8e99c50a5933872e0569e1f6c6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#af89ffc8e99c50a5933872e0569e1f6c6">LIS3DH_REG_CTRL4</a>&#160;&#160;&#160;0x23</td></tr>
+<tr class="separator:af89ffc8e99c50a5933872e0569e1f6c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1b20b01a00b2e035ffe5a1c12da4a47"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#ac1b20b01a00b2e035ffe5a1c12da4a47">LIS3DH_REG_CTRL5</a>&#160;&#160;&#160;0x24</td></tr>
+<tr class="separator:ac1b20b01a00b2e035ffe5a1c12da4a47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05ffbd16d1ed3d92339a0954d968227b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a05ffbd16d1ed3d92339a0954d968227b">LIS3DH_REG_CTRL6</a>&#160;&#160;&#160;0x25</td></tr>
+<tr class="separator:a05ffbd16d1ed3d92339a0954d968227b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7713cbf94770482ae9c78e1cb1530f9e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a7713cbf94770482ae9c78e1cb1530f9e">LIS3DH_REG_REFERENCE</a>&#160;&#160;&#160;0x26</td></tr>
+<tr class="separator:a7713cbf94770482ae9c78e1cb1530f9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c2c8ab4f820317e12565b41cf806eec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a7c2c8ab4f820317e12565b41cf806eec">LIS3DH_REG_STATUS2</a>&#160;&#160;&#160;0x27</td></tr>
+<tr class="separator:a7c2c8ab4f820317e12565b41cf806eec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a336476f35b13e9edd396e2de096410ea"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a336476f35b13e9edd396e2de096410ea">LIS3DH_REG_OUT_X_L</a>&#160;&#160;&#160;0x28</td></tr>
+<tr class="separator:a336476f35b13e9edd396e2de096410ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47710f264d53e09c4692b9d987a6701e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a47710f264d53e09c4692b9d987a6701e">LIS3DH_REG_OUT_X_H</a>&#160;&#160;&#160;0x29</td></tr>
+<tr class="separator:a47710f264d53e09c4692b9d987a6701e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0b9623b57109426165f77e1372be042"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#ac0b9623b57109426165f77e1372be042">LIS3DH_REG_OUT_Y_L</a>&#160;&#160;&#160;0x2A</td></tr>
+<tr class="separator:ac0b9623b57109426165f77e1372be042"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2419a277ffdadb4f94952e8737de3edc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a2419a277ffdadb4f94952e8737de3edc">LIS3DH_REG_OUT_Y_H</a>&#160;&#160;&#160;0x2B</td></tr>
+<tr class="separator:a2419a277ffdadb4f94952e8737de3edc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36e97e40b99a6aeff4935cef24c9a872"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a36e97e40b99a6aeff4935cef24c9a872">LIS3DH_REG_OUT_Z_L</a>&#160;&#160;&#160;0x2C</td></tr>
+<tr class="separator:a36e97e40b99a6aeff4935cef24c9a872"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a164c417973d9aa4fbc5959b0ccf1cdcf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a164c417973d9aa4fbc5959b0ccf1cdcf">LIS3DH_REG_OUT_Z_H</a>&#160;&#160;&#160;0x2D</td></tr>
+<tr class="separator:a164c417973d9aa4fbc5959b0ccf1cdcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a019d7f93edcf650fb903efe3b39c956c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a019d7f93edcf650fb903efe3b39c956c">LIS3DH_REG_FIFOCTRL</a>&#160;&#160;&#160;0x2E</td></tr>
+<tr class="separator:a019d7f93edcf650fb903efe3b39c956c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1989eda6715b85a59788896bfdc0d17f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a1989eda6715b85a59788896bfdc0d17f">LIS3DH_REG_FIFOSRC</a>&#160;&#160;&#160;0x2F</td></tr>
+<tr class="separator:a1989eda6715b85a59788896bfdc0d17f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afec8b0d6a1bc4c7735d324200f38f135"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#afec8b0d6a1bc4c7735d324200f38f135">LIS3DH_REG_INT1CFG</a>&#160;&#160;&#160;0x30</td></tr>
+<tr class="separator:afec8b0d6a1bc4c7735d324200f38f135"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf4236e1e468b1970fdfbe1f7d46a7d0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#acf4236e1e468b1970fdfbe1f7d46a7d0">LIS3DH_REG_INT1SRC</a>&#160;&#160;&#160;0x31</td></tr>
+<tr class="separator:acf4236e1e468b1970fdfbe1f7d46a7d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65513c74c82d978133ec4238c28d9d34"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a65513c74c82d978133ec4238c28d9d34">LIS3DH_REG_INT1THS</a>&#160;&#160;&#160;0x32</td></tr>
+<tr class="separator:a65513c74c82d978133ec4238c28d9d34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0814a12a656f09ac201137ac55b460eb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a0814a12a656f09ac201137ac55b460eb">LIS3DH_REG_INT1DUR</a>&#160;&#160;&#160;0x33</td></tr>
+<tr class="separator:a0814a12a656f09ac201137ac55b460eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62d98822c7a3c1cc4c8ff4ea4f107092"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a62d98822c7a3c1cc4c8ff4ea4f107092">LIS3DH_REG_CLICKCFG</a>&#160;&#160;&#160;0x38</td></tr>
+<tr class="separator:a62d98822c7a3c1cc4c8ff4ea4f107092"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a781b6c5ad811ec998b53067ef03f9014"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a781b6c5ad811ec998b53067ef03f9014">LIS3DH_REG_CLICKSRC</a>&#160;&#160;&#160;0x39</td></tr>
+<tr class="separator:a781b6c5ad811ec998b53067ef03f9014"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73c50156e26285f8d86f9d3cb8a78b61"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a73c50156e26285f8d86f9d3cb8a78b61">LIS3DH_REG_CLICKTHS</a>&#160;&#160;&#160;0x3A</td></tr>
+<tr class="separator:a73c50156e26285f8d86f9d3cb8a78b61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab764720bb5e592b3fc6494b5a95a565"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#aab764720bb5e592b3fc6494b5a95a565">LIS3DH_REG_TIMELIMIT</a>&#160;&#160;&#160;0x3B</td></tr>
+<tr class="separator:aab764720bb5e592b3fc6494b5a95a565"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbc80ac1f3aaad2f50a63654036446a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#abbc80ac1f3aaad2f50a63654036446a0">LIS3DH_REG_TIMELATENCY</a>&#160;&#160;&#160;0x3C</td></tr>
+<tr class="separator:abbc80ac1f3aaad2f50a63654036446a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7d728cbeae4fe13d1a2da2b68757286"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#ae7d728cbeae4fe13d1a2da2b68757286">LIS3DH_REG_TIMEWINDOW</a>&#160;&#160;&#160;0x3D</td></tr>
+<tr class="separator:ae7d728cbeae4fe13d1a2da2b68757286"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a06fc87d81c62e9abb8790b6e5713c55b"><td class="memItemLeft" align="right" valign="top"><a id="a06fc87d81c62e9abb8790b6e5713c55b"></a>enum &#160;</td><td class="memItemRight" valign="bottom">{ <br />
-&#160;&#160;<b>LIS3DH_REG_STATUS1</b> = 0x07, 
-<b>LIS3DH_REG_OUTADC1_L</b> = 0x08, 
-<b>LIS3DH_REG_OUTADC1_H</b> = 0x09, 
-<b>LIS3DH_REG_OUTADC2_L</b> = 0x0A, 
-<br />
-&#160;&#160;<b>LIS3DH_REG_OUTADC2_H</b> = 0x0B, 
-<b>LIS3DH_REG_OUTADC3_L</b> = 0x0C, 
-<b>LIS3DH_REG_OUTADC3_H</b> = 0x0D, 
-<b>LIS3DH_REG_INTCOUNT</b> = 0x0E, 
-<br />
-&#160;&#160;<b>LIS3DH_REG_WHOAMI</b> = 0x0F, 
-<b>LIS3DH_REG_TEMPCFG</b> = 0x1F, 
-<b>LIS3DH_REG_CTRL1</b> = 0x20, 
-<b>LIS3DH_REG_CTRL2</b> = 0x21, 
-<br />
-&#160;&#160;<b>LIS3DH_REG_CTRL3</b> = 0x22, 
-<b>LIS3DH_REG_CTRL4</b> = 0x23, 
-<b>LIS3DH_REG_CTRL5</b> = 0x24, 
-<b>LIS3DH_REG_CTRL6</b> = 0x25, 
-<br />
-&#160;&#160;<b>LIS3DH_REG_REFERENCE</b> = 0x26, 
-<b>LIS3DH_REG_STATUS2</b> = 0x27, 
-<b>LIS3DH_REG_OUT_X_L</b> = 0x28, 
-<b>LIS3DH_REG_OUT_X_H</b> = 0x29, 
-<br />
-&#160;&#160;<b>LIS3DH_REG_OUT_Y_L</b> = 0x2A, 
-<b>LIS3DH_REG_OUT_Y_H</b> = 0x2B, 
-<b>LIS3DH_REG_OUT_Z_L</b> = 0x2C, 
-<b>LIS3DH_REG_OUT_Z_H</b> = 0x2D, 
-<br />
-&#160;&#160;<b>LIS3DH_REG_FIFOCTRL</b> = 0x2E, 
-<b>LIS3DH_REG_FIFOSRC</b> = 0x2F, 
-<b>LIS3DH_REG_INT1CFG</b> = 0x30, 
-<b>LIS3DH_REG_INT1SRC</b> = 0x31, 
-<br />
-&#160;&#160;<b>LIS3DH_REG_INT1THS</b> = 0x32, 
-<b>LIS3DH_REG_INT1DUR</b> = 0x33, 
-<b>LIS3DH_REG_CLICKCFG</b> = 0x38, 
-<b>LIS3DH_REG_CLICKSRC</b> = 0x39, 
-<br />
-&#160;&#160;<b>LIS3DH_REG_CLICKTHS</b> = 0x3A, 
-<b>LIS3DH_REG_TIMELIMIT</b> = 0x3B, 
-<b>LIS3DH_REG_TIMELATENCY</b> = 0x3C, 
-<b>LIS3DH_REG_TIMEWINDOW</b> = 0x3D
-<br />
- }<tr class="memdesc:a06fc87d81c62e9abb8790b6e5713c55b"><td class="mdescLeft">&#160;</td><td class="mdescRight">LIS3DH register definitions. <br /></td></tr>
-</td></tr>
-<tr class="separator:a06fc87d81c62e9abb8790b6e5713c55b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a095ff5661264010298f504731a9b0a18"><td class="memItemLeft" align="right" valign="top"><a id="a095ff5661264010298f504731a9b0a18"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a095ff5661264010298f504731a9b0a18">lis3dh_range_t</a> { <b>LIS3DH_RANGE_16_G</b> = 0b11, 
+<tr class="memitem:a095ff5661264010298f504731a9b0a18"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a095ff5661264010298f504731a9b0a18">lis3dh_range_t</a> { <b>LIS3DH_RANGE_16_G</b> = 0b11, 
 <b>LIS3DH_RANGE_8_G</b> = 0b10, 
 <b>LIS3DH_RANGE_4_G</b> = 0b01, 
 <b>LIS3DH_RANGE_2_G</b> = 0b00
- }<tr class="memdesc:a095ff5661264010298f504731a9b0a18"><td class="mdescLeft">&#160;</td><td class="mdescRight">LIS3DH measurement ranges. <br /></td></tr>
-</td></tr>
+ }</td></tr>
 <tr class="separator:a095ff5661264010298f504731a9b0a18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa155fce3ef980ddc2ff94497efc47178"><td class="memItemLeft" align="right" valign="top"><a id="aa155fce3ef980ddc2ff94497efc47178"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#aa155fce3ef980ddc2ff94497efc47178">lis3dh_axis_t</a> { <b>LIS3DH_AXIS_X</b> = 0x0, 
+<tr class="memitem:aa155fce3ef980ddc2ff94497efc47178"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#aa155fce3ef980ddc2ff94497efc47178">lis3dh_axis_t</a> { <b>LIS3DH_AXIS_X</b> = 0x0, 
 <b>LIS3DH_AXIS_Y</b> = 0x1, 
 <b>LIS3DH_AXIS_Z</b> = 0x2
- }<tr class="memdesc:aa155fce3ef980ddc2ff94497efc47178"><td class="mdescLeft">&#160;</td><td class="mdescRight">LIS3DH axis numbers. <br /></td></tr>
-</td></tr>
+ }</td></tr>
 <tr class="separator:aa155fce3ef980ddc2ff94497efc47178"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3dd70603bb60c3662a7e6a32c11be561"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a3dd70603bb60c3662a7e6a32c11be561">lis3dh_dataRate_t</a> { <br />
 &#160;&#160;<b>LIS3DH_DATARATE_400_HZ</b> = 0b0111, 
@@ -168,16 +187,606 @@ Enumerations</h2></td></tr>
 &#160;&#160;<b>LIS3DH_DATARATE_LOWPOWER_1K6HZ</b> = 0b1000, 
 <b>LIS3DH_DATARATE_LOWPOWER_5KHZ</b> = 0b1001
 <br />
- }<tr class="memdesc:a3dd70603bb60c3662a7e6a32c11be561"><td class="mdescLeft">&#160;</td><td class="mdescRight">LIS3DH datarates.  <a href="_adafruit___c_play___l_i_s3_d_h_8h.html#a3dd70603bb60c3662a7e6a32c11be561">More...</a><br /></td></tr>
-</td></tr>
+ }</td></tr>
 <tr class="separator:a3dd70603bb60c3662a7e6a32c11be561"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section author"><dt>Author</dt><dd>K. Townsend / Limor Fried (Adafruit Industries) license BSD (see license.txt)</dd></dl>
-<p>This is a library for the Adafruit LIS3DH Accel breakout board -&mdash;&gt; <a href="https://www.adafruit.com/products/2809">https://www.adafruit.com/products/2809</a></p>
-<p>Adafruit invests time and resources providing this open source code, please support Adafruit and open-source hardware by purchasing products from Adafruit!</p>
-<p>v1.0 - First release </p>
-</div><h2 class="groupheader">Enumeration Type Documentation</h2>
+<div class="textblock"><p>This is a library for the Adafruit LIS3DH Accel breakout board</p>
+<p>Designed specifically to work with the Adafruit LIS3DH Triple-Axis Accelerometer (+-2g/4g/8g/16g)</p>
+<p>Pick one up today in the adafruit shop! ---&mdash;&gt; <a href="https://www.adafruit.com/product/2809">https://www.adafruit.com/product/2809</a></p>
+<p>This sensor communicates over I2C or SPI (our library code supports both) so you can share it with a bunch of other sensors on the same I2C bus. There's an address selection pin so you can have two accelerometers share an I2C bus.</p>
+<p>Adafruit invests time and resources providing this open source code, please support Adafruit andopen-source hardware by purchasing products from Adafruit!</p>
+<p>K. Townsend / Limor Fried (Ladyada) - (Adafruit Industries).</p>
+<p>BSD license, all text above must be included in any redistribution </p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="acd71cca6695e86b56b3be85eee01b7d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd71cca6695e86b56b3be85eee01b7d6">&#9670;&nbsp;</a></span>LIS3DH_DEFAULT_ADDRESS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_DEFAULT_ADDRESS&#160;&#160;&#160;(0x18)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>I2C ADDRESS/BITS </p>
+
+</div>
+</div>
+<a id="aece7b47c39151b5549cfe55e3b348a5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aece7b47c39151b5549cfe55e3b348a5e">&#9670;&nbsp;</a></span>LIS3DH_REG_STATUS1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_STATUS1&#160;&#160;&#160;0x07</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>STATUS_REG_AUX register 321OR 1, 2 and 3 axis data overrun. Default value: 0 (0: no overrun has occurred; 1: a new set of data has overwritten the previous ones) 3OR 3 axis data overrun. Default value: 0 (0: no overrun has occurred; 1: a new data for the 3-axis has overwritten the previous one) 2OR 2 axis data overrun. Default value: 0 (0: no overrun has occurred; 1: a new data for the 4-axis has overwritten the previous one) 1OR 1 axis data overrun. Default value: 0 (0: no overrun has occurred; 1: a new data for the 1-axis has overwritten the previous one) 321DA 1, 2 and 3 axis new data available. Default value: 0 (0: a new set of data is not yet available; 1: a new set of data is available) 3DA: 3 axis new data available. Default value: 0 (0: a new data for the 3-axis is not yet available; 1: a new data for the 3-axis is available) 2DA: 2 axis new data available. Default value: 0 (0: a new data for the 2-axis is not yet available; 1: a new data for the 2-axis is available) 1DA 1 axis new data available. Default value: 0 (0: a new data for the 1-axis is not yet available; 1: a new data for the 1-axis is available) </p>
+
+</div>
+</div>
+<a id="acc221e34cb1c273b61784e4414287ebb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc221e34cb1c273b61784e4414287ebb">&#9670;&nbsp;</a></span>LIS3DH_REG_OUTADC1_L</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_OUTADC1_L&#160;&#160;&#160;0x08</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>1-axis acceleration data. Low value </p>
+
+</div>
+</div>
+<a id="a11a58351129b8982a976935c91d39b77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11a58351129b8982a976935c91d39b77">&#9670;&nbsp;</a></span>LIS3DH_REG_OUTADC1_H</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_OUTADC1_H&#160;&#160;&#160;0x09</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>1-axis acceleration data. High value </p>
+
+</div>
+</div>
+<a id="a7ae3015679a9c0b7ad11737cdffc0d8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ae3015679a9c0b7ad11737cdffc0d8e">&#9670;&nbsp;</a></span>LIS3DH_REG_OUTADC2_L</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_OUTADC2_L&#160;&#160;&#160;0x0A</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>2-axis acceleration data. Low value </p>
+
+</div>
+</div>
+<a id="a1e8e2f71aa8bba3a3e6f83896134f642"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e8e2f71aa8bba3a3e6f83896134f642">&#9670;&nbsp;</a></span>LIS3DH_REG_OUTADC2_H</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_OUTADC2_H&#160;&#160;&#160;0x0B</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>2-axis acceleration data. High value </p>
+
+</div>
+</div>
+<a id="a53081c9b4db3308e0d63adaca79a53c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53081c9b4db3308e0d63adaca79a53c8">&#9670;&nbsp;</a></span>LIS3DH_REG_OUTADC3_L</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_OUTADC3_L&#160;&#160;&#160;0x0C</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>3-axis acceleration data. Low value </p>
+
+</div>
+</div>
+<a id="a249323a2f20ed40be5641eb843325c33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a249323a2f20ed40be5641eb843325c33">&#9670;&nbsp;</a></span>LIS3DH_REG_OUTADC3_H</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_OUTADC3_H&#160;&#160;&#160;0x0D</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>3-axis acceleration data. High value </p>
+
+</div>
+</div>
+<a id="aeb6e65b034fd4baa2c4d574b8f31282e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb6e65b034fd4baa2c4d574b8f31282e">&#9670;&nbsp;</a></span>LIS3DH_REG_INTCOUNT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_INTCOUNT&#160;&#160;&#160;0x0E</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>INT_COUNTER register [IC7, IC6, IC5, IC4, IC3, IC2, IC1, IC0] </p>
+
+</div>
+</div>
+<a id="a0eb7d95865e565aa32412b7896c3d39f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0eb7d95865e565aa32412b7896c3d39f">&#9670;&nbsp;</a></span>LIS3DH_REG_WHOAMI</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_WHOAMI&#160;&#160;&#160;0x0F</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Device identification register. [0, 0, 1, 1, 0, 0, 1, 1] </p>
+
+</div>
+</div>
+<a id="a28390971923b5bb758267143afde139d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28390971923b5bb758267143afde139d">&#9670;&nbsp;</a></span>LIS3DH_REG_TEMPCFG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_TEMPCFG&#160;&#160;&#160;0x1F</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TEMP_CFG_REG Temperature configuration register. ADC_PD ADC enable. Default value: 0 (0: ADC disabled; 1: ADC enabled) TEMP_EN Temperature sensor (T) enable. Default value: 0 (0: T disabled; 1: T enabled) </p>
+
+</div>
+</div>
+<a id="ab5df0acbe7694657d807171c88283349"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5df0acbe7694657d807171c88283349">&#9670;&nbsp;</a></span>LIS3DH_REG_CTRL1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_CTRL1&#160;&#160;&#160;0x20</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CTRL_REG1 [ODR3, ODR2, ODR1, ODR0, LPen, Zen, Yen, Xen] ODR3-0 Data rate selection. Default value: 00 (0000:50 Hz; Others: Refer to Datasheet Table 26, “Data rate configuration”) LPen Low power mode enable. Default value: 0 (0: normal mode, 1: low power mode) Zen Z axis enable. Default value: 1 (0: Z axis disabled; 1: Z axis enabled) Yen Y axis enable. Default value: 1 (0: Y axis disabled; 1: Y axis enabled) Xen X axis enable. Default value: 1 (0: X axis disabled; 1: X axis enabled) </p>
+
+</div>
+</div>
+<a id="aa280a6cc3cd1441a98552c7bb06b9b19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa280a6cc3cd1441a98552c7bb06b9b19">&#9670;&nbsp;</a></span>LIS3DH_REG_CTRL2</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_CTRL2&#160;&#160;&#160;0x21</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CTRL_REG2 [HPM1, HPM0, HPCF2, HPCF1, FDS, HPCLICK, HPIS2, HPIS1] HPM1-0 High pass filter mode selection. Default value: 00 Refer to Table 29, "High pass filter mode configuration" HPCF2-1 High pass filter cut off frequency selection FDS Filtered data selection. Default value: 0 (0: internal filter bypassed; 1: data from internal filter sent to output register and FIFO) HPCLICK High pass filter enabled for CLICK function. (0: filter bypassed; 1: filter enabled) HPIS2 X axis enable. Default value: 1 (0: X axis disabled; 1: X axis enabled) HPIS1 High pass filter enabled for AOI function on interrupt 1, (0: filter bypassed; 1: filter enabled) </p>
+
+</div>
+</div>
+<a id="a153accf74bc55989b71a5b43ce4afa22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a153accf74bc55989b71a5b43ce4afa22">&#9670;&nbsp;</a></span>LIS3DH_REG_CTRL3</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_CTRL3&#160;&#160;&#160;0x22</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CTRL_REG3 [I1_CLICK, I1_AOI1, I1_AOI2, I1_DRDY1, I1_DRDY2, I1_WTM, I1_OVERRUN, &ndash;] I1_CLICK CLICK interrupt on INT1. Default value 0. (0: Disable; 1: Enable) I1_AOI1 AOI1 interrupt on INT1. Default value 0. (0: Disable; 1: Enable) I1_AOI2 AOI2 interrupt on INT1. Default value 0. (0: Disable; 1: Enable) I1_DRDY1 DRDY1 interrupt on INT1. Default value 0. (0: Disable; 1: Enable) I1_DRDY2 DRDY2 interrupt on INT1. Default value 0. (0: Disable; 1: Enable) I1_WTM FIFO Watermark interrupt on INT1. Default value 0. (0: Disable; 1: Enable) I1_OVERRUN FIFO Overrun interrupt on INT1. Default value 0. (0: Disable; 1: Enable) </p>
+
+</div>
+</div>
+<a id="af89ffc8e99c50a5933872e0569e1f6c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af89ffc8e99c50a5933872e0569e1f6c6">&#9670;&nbsp;</a></span>LIS3DH_REG_CTRL4</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_CTRL4&#160;&#160;&#160;0x23</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CTRL_REG4 [BDU, BLE, FS1, FS0, HR, ST1, ST0, SIM] BDU Block data update. Default value: 0 (0: continuos update; 1: output registers not updated until MSB and LSB reading) BLE Big/little endian data selection. Default value 0. (0: Data LSB @ lower address; 1: Data MSB @ lower address) FS1-FS0 Full scale selection. default value: 00 (00: +/- 2G; 01: +/- 4G; 10: +/- 8G; 11: +/- 16G) HR High resolution output mode: Default value: 0 (0: High resolution disable; 1: High resolution Enable) ST1-ST0 Self test enable. Default value: 00 (00: Self test disabled; Other: See Table 34) SIM SPI serial interface mode selection. Default value: 0 (0: 4-wire interface; 1: 3-wire interface). </p>
+
+</div>
+</div>
+<a id="ac1b20b01a00b2e035ffe5a1c12da4a47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1b20b01a00b2e035ffe5a1c12da4a47">&#9670;&nbsp;</a></span>LIS3DH_REG_CTRL5</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_CTRL5&#160;&#160;&#160;0x24</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CTRL_REG5 [BOOT, FIFO_EN, &ndash;, &ndash;, LIR_INT1, D4D_INT1, 0, 0] BOOT Reboot memory content. Default value: 0 (0: normal mode; 1: reboot memory content) FIFO_EN FIFO enable. Default value: 0 (0: FIFO disable; 1: FIFO Enable) LIR_INT1 Latch interrupt request on INT1_SRC register, with INT1_SRC register cleared by reading INT1_SRC itself. Default value: 0. (0: interrupt request not latched; 1: interrupt request latched) D4D_INT1 4D enable: 4D detection is enabled on INT1 when 6D bit on INT1_CFG is set to 1. </p>
+
+</div>
+</div>
+<a id="a05ffbd16d1ed3d92339a0954d968227b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05ffbd16d1ed3d92339a0954d968227b">&#9670;&nbsp;</a></span>LIS3DH_REG_CTRL6</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_CTRL6&#160;&#160;&#160;0x25</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CTRL_REG6 [I2_CLICKen, I2_INT1, 0, BOOT_I1, 0, &ndash;, H_L, -] </p>
+
+</div>
+</div>
+<a id="a7713cbf94770482ae9c78e1cb1530f9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7713cbf94770482ae9c78e1cb1530f9e">&#9670;&nbsp;</a></span>LIS3DH_REG_REFERENCE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_REFERENCE&#160;&#160;&#160;0x26</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>REFERENCE/DATACAPTURE </p>
+
+</div>
+</div>
+<a id="a7c2c8ab4f820317e12565b41cf806eec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c2c8ab4f820317e12565b41cf806eec">&#9670;&nbsp;</a></span>LIS3DH_REG_STATUS2</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_STATUS2&#160;&#160;&#160;0x27</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>STATUS_REG [ZYXOR, ZOR, YOR, XOR, ZYXDA, ZDA, YDA, XDA] ZYXOR X, Y and Z axis data overrun. Default value: 0 (0: no overrun has occurred; 1: a new set of data has overwritten the previous ones) ZOR Z axis data overrun. Default value: 0 (0: no overrun has occurred; 1: a new data for the Z-axis has overwritten the previous one) YOR Y axis data overrun. Default value: 0 (0: no overrun has occurred; 1: a new data for the Y-axis has overwritten the previous one) XOR X axis data overrun. Default value: 0 (0: no overrun has occurred; 1: a new data for the X-axis has overwritten the previous one) ZYXDA X, Y and Z axis new data available. Default value: 0 (0: a new set of data is not yet available; 1: a new set of data is available) ZDA Z axis new data available. Default value: 0 (0: a new data for the Z-axis is not yet available; 1: a new data for the Z-axis is available) YDA Y axis new data available. Default value: 0 (0: a new data for the Y-axis is not yet available; 1: a new data for the Y-axis is available) </p>
+
+</div>
+</div>
+<a id="a336476f35b13e9edd396e2de096410ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a336476f35b13e9edd396e2de096410ea">&#9670;&nbsp;</a></span>LIS3DH_REG_OUT_X_L</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_OUT_X_L&#160;&#160;&#160;0x28</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>X-axis acceleration data. Low value </p>
+
+</div>
+</div>
+<a id="a47710f264d53e09c4692b9d987a6701e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47710f264d53e09c4692b9d987a6701e">&#9670;&nbsp;</a></span>LIS3DH_REG_OUT_X_H</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_OUT_X_H&#160;&#160;&#160;0x29</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>X-axis acceleration data. High value </p>
+
+</div>
+</div>
+<a id="ac0b9623b57109426165f77e1372be042"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0b9623b57109426165f77e1372be042">&#9670;&nbsp;</a></span>LIS3DH_REG_OUT_Y_L</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_OUT_Y_L&#160;&#160;&#160;0x2A</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Y-axis acceleration data. Low value </p>
+
+</div>
+</div>
+<a id="a2419a277ffdadb4f94952e8737de3edc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2419a277ffdadb4f94952e8737de3edc">&#9670;&nbsp;</a></span>LIS3DH_REG_OUT_Y_H</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_OUT_Y_H&#160;&#160;&#160;0x2B</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Y-axis acceleration data. High value </p>
+
+</div>
+</div>
+<a id="a36e97e40b99a6aeff4935cef24c9a872"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36e97e40b99a6aeff4935cef24c9a872">&#9670;&nbsp;</a></span>LIS3DH_REG_OUT_Z_L</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_OUT_Z_L&#160;&#160;&#160;0x2C</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Z-axis acceleration data. Low value </p>
+
+</div>
+</div>
+<a id="a164c417973d9aa4fbc5959b0ccf1cdcf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a164c417973d9aa4fbc5959b0ccf1cdcf">&#9670;&nbsp;</a></span>LIS3DH_REG_OUT_Z_H</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_OUT_Z_H&#160;&#160;&#160;0x2D</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Z-axis acceleration data. High value </p>
+
+</div>
+</div>
+<a id="a019d7f93edcf650fb903efe3b39c956c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a019d7f93edcf650fb903efe3b39c956c">&#9670;&nbsp;</a></span>LIS3DH_REG_FIFOCTRL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_FIFOCTRL&#160;&#160;&#160;0x2E</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>FIFO_CTRL_REG [FM1, FM0, TR, FTH4, FTH3, FTH2, FTH1, FTH0] FM1-FM0 FIFO mode selection. Default value: 00 (see Table 44) TR Trigger selection. Default value: 0 0: Trigger event liked to trigger signal on INT1 1: Trigger event liked to trigger signal on INT2 FTH4:0 Default value: 0 </p>
+
+</div>
+</div>
+<a id="a1989eda6715b85a59788896bfdc0d17f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1989eda6715b85a59788896bfdc0d17f">&#9670;&nbsp;</a></span>LIS3DH_REG_FIFOSRC</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_FIFOSRC&#160;&#160;&#160;0x2F</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>FIFO_SRC_REG [WTM, OVRN_FIFO, EMPTY, FSS4, FSS3, FSS2, FSS1, FSS0] \ </p>
+
+</div>
+</div>
+<a id="afec8b0d6a1bc4c7735d324200f38f135"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afec8b0d6a1bc4c7735d324200f38f135">&#9670;&nbsp;</a></span>LIS3DH_REG_INT1CFG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_INT1CFG&#160;&#160;&#160;0x30</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>INT1_CFG [AOI, 6D, ZHIE/ZUPE, ZLIE/ZDOWNE, YHIE/YUPE, XHIE/XUPE, XLIE/XDOWNE] AOI And/Or combination of Interrupt events. Default value: 0. Refer to Datasheet Table 48, "Interrupt mode" 6D 6 direction detection function enabled. Default value: 0. Refer to Datasheet Table 48, "Interrupt
+mode" ZHIE/ZUPE Enable interrupt generation on Z high event or on Direction recognition. Default value: 0. (0: disable interrupt request; 1: enable interrupt request) ZLIE/ZDOWNE Enable interrupt generation on Z low event or on Direction recognition. Default value: 0. YHIE/YUPE Enable interrupt generation on Y high event or on Direction recognition. Default value: 0. (0: disable interrupt request; 1: enable interrupt request.) YLIE/YDOWNE Enable interrupt generation on Y low event or on Direction recognition. Default value: 0. (0: disable interrupt request; 1: enable interrupt request.) XHIE/XUPE Enable interrupt generation on X high event or on Direction recognition. Default value: 0. (0: disable interrupt request; 1: enable interrupt request.) XLIE/XDOWNE Enable interrupt generation on X low event or on Direction recognition. Default value: 0. (0: disable interrupt request; 1: enable interrupt request.) </p>
+
+</div>
+</div>
+<a id="acf4236e1e468b1970fdfbe1f7d46a7d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf4236e1e468b1970fdfbe1f7d46a7d0">&#9670;&nbsp;</a></span>LIS3DH_REG_INT1SRC</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_INT1SRC&#160;&#160;&#160;0x31</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>INT1_SRC [0, IA, ZH, ZL, YH, YL, XH, XL] IA Interrupt active. Default value: 0 (0: no interrupt has been generated; 1: one or more interrupts have been generated) ZH Z high. Default value: 0 (0: no interrupt, 1: Z High event has occurred) ZL Z low. Default value: 0 (0: no interrupt; 1: Z Low event has occurred) YH Y high. Default value: 0 (0: no interrupt, 1: Y High event has occurred) YL Y low. Default value: 0 (0: no interrupt, 1: Y Low event has occurred) XH X high. Default value: 0 (0: no interrupt, 1: X High event has occurred) XL X low. Default value: 0 (0: no interrupt, 1: X Low event has occurred)</p>
+<p>Interrupt 1 source register. Read only register. Reading at this address clears INT1_SRC IA bit (and the interrupt signal on INT 1 pin) and allows the refreshment of data in the INT1_SRC register if the latched option was chosen. </p>
+
+</div>
+</div>
+<a id="a65513c74c82d978133ec4238c28d9d34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65513c74c82d978133ec4238c28d9d34">&#9670;&nbsp;</a></span>LIS3DH_REG_INT1THS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_INT1THS&#160;&#160;&#160;0x32</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>INT1_THS register [0, THS6, THS5, THS4, THS3, THS1, THS0] </p>
+
+</div>
+</div>
+<a id="a0814a12a656f09ac201137ac55b460eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0814a12a656f09ac201137ac55b460eb">&#9670;&nbsp;</a></span>LIS3DH_REG_INT1DUR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_INT1DUR&#160;&#160;&#160;0x33</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>INT1_DURATION [0, D6, D5, D4, D3, D2, D1, D0] </p>
+
+</div>
+</div>
+<a id="a62d98822c7a3c1cc4c8ff4ea4f107092"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62d98822c7a3c1cc4c8ff4ea4f107092">&#9670;&nbsp;</a></span>LIS3DH_REG_CLICKCFG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_CLICKCFG&#160;&#160;&#160;0x38</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CLICK_CFG [&ndash;, &ndash;, ZD, ZS, YD, YS, XD, XS] ZD Enable interrupt double CLICK-CLICK on Z axis. Default value: 0 (0: disable interrupt request; 1: enable interrupt request on measured accel. value higher than preset threshold) ZS Enable interrupt single CLICK-CLICK on Z axis. Default value: 0 (0: disable interrupt request; 1: enable interrupt request on measured accel. value higher than preset threshold) YD Enable interrupt double CLICK-CLICK on Y axis. Default value: 0 (0: disable interrupt request; 1: enable interrupt request on measured accel. value higher than preset threshold) YS Enable interrupt single CLICK-CLICK on Y axis. Default value: 0 (0: disable interrupt request; 1: enable interrupt request on measured accel. value higher than preset threshold) XD Enable interrupt double CLICK-CLICK on X axis. Default value: 0 (0: disable interrupt request; 1: enable interrupt request on measured accel. value higher than preset threshold) XS Enable interrupt single CLICK-CLICK on X axis. Default value: 0 (0: disable interrupt request; 1: enable interrupt request on measured accel. value higher than preset threshold) </p>
+
+</div>
+</div>
+<a id="a781b6c5ad811ec998b53067ef03f9014"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a781b6c5ad811ec998b53067ef03f9014">&#9670;&nbsp;</a></span>LIS3DH_REG_CLICKSRC</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_CLICKSRC&#160;&#160;&#160;0x39</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CLICK_SRC [-, IA, DCLICK, SCLICK, Sign, Z, Y, X] IA Interrupt active. Default value: 0 (0: no interrupt has been generated; 1: one or more interrupts have been generated) DCLICK Double CLICK-CLICK enable. Default value: 0 (0:double CLICK-CLICK detection disable, 1: double CLICK-CLICK detection enable) SCLICK Single CLICK-CLICK enable. Default value: 0 (0:Single CLICK-CLICK detection disable, 1: single CLICK-CLICK detection enable) Sign CLICK-CLICK Sign. (0: positive detection, 1: negative detection) Z Z CLICK-CLICK detection. Default value: 0 (0: no interrupt, 1: Z High event has occurred) Y Y CLICK-CLICK detection. Default value: 0 (0: no interrupt, 1: Y High event has occurred) X X CLICK-CLICK detection. Default value: 0 (0: no interrupt, 1: X High event has occurred) </p>
+
+</div>
+</div>
+<a id="a73c50156e26285f8d86f9d3cb8a78b61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73c50156e26285f8d86f9d3cb8a78b61">&#9670;&nbsp;</a></span>LIS3DH_REG_CLICKTHS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_CLICKTHS&#160;&#160;&#160;0x3A</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CLICK_THS [-, Ths6, Ths5, Ths4, Ths3, Ths2, Ths1, Ths0] Ths6-Ths0 CLICK-CLICK threshold. Default value: 000 0000 </p>
+
+</div>
+</div>
+<a id="aab764720bb5e592b3fc6494b5a95a565"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab764720bb5e592b3fc6494b5a95a565">&#9670;&nbsp;</a></span>LIS3DH_REG_TIMELIMIT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_TIMELIMIT&#160;&#160;&#160;0x3B</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TIME_LIMIT [-, TLI6, TLI5, TLI4, TLI3, TLI2, TLI1, TLI0] TLI7-TLI0 CLICK-CLICK Time Limit. Default value: 000 0000 </p>
+
+</div>
+</div>
+<a id="abbc80ac1f3aaad2f50a63654036446a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbc80ac1f3aaad2f50a63654036446a0">&#9670;&nbsp;</a></span>LIS3DH_REG_TIMELATENCY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_TIMELATENCY&#160;&#160;&#160;0x3C</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TIME_LATANCY [-, TLA6, TLIA5, TLA4, TLA3, TLA2, TLA1, TLA0] TLA7-TLA0 CLICK-CLICK Time Latency. Default value: 000 0000 </p>
+
+</div>
+</div>
+<a id="ae7d728cbeae4fe13d1a2da2b68757286"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7d728cbeae4fe13d1a2da2b68757286">&#9670;&nbsp;</a></span>LIS3DH_REG_TIMEWINDOW</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIS3DH_REG_TIMEWINDOW&#160;&#160;&#160;0x3D</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TIME_WINDOW [TW7, TW6, TW5, TW4, TW3, TW2, TW1, TW0] TW7-TW0 CLICK-CLICK Time window </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a095ff5661264010298f504731a9b0a18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a095ff5661264010298f504731a9b0a18">&#9670;&nbsp;</a></span>lis3dh_range_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#a095ff5661264010298f504731a9b0a18">lis3dh_range_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>A structure to represent scales </p>
+
+</div>
+</div>
+<a id="aa155fce3ef980ddc2ff94497efc47178"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa155fce3ef980ddc2ff94497efc47178">&#9670;&nbsp;</a></span>lis3dh_axis_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="_adafruit___c_play___l_i_s3_d_h_8h.html#aa155fce3ef980ddc2ff94497efc47178">lis3dh_axis_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>A structure to represent axes </p>
+
+</div>
+</div>
 <a id="a3dd70603bb60c3662a7e6a32c11be561"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3dd70603bb60c3662a7e6a32c11be561">&#9670;&nbsp;</a></span>lis3dh_dataRate_t</h2>
 
@@ -189,9 +798,7 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>LIS3DH datarates. </p>
-<dl class="section note"><dt>Note</dt><dd>Used with register 0x2A (LIS3DH_REG_CTRL_REG1) to set bandwidth </dd></dl>
+<p>Used with register 0x2A (LIS3DH_REG_CTRL_REG1) to set bandwidth </p>
 
 </div>
 </div>
