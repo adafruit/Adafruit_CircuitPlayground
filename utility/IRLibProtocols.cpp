@@ -7,6 +7,9 @@
  * string used by the dump routines or your sketches to display the name of a protocol.
  * It is used by both Send and Decode sections of the code but not Receive.
  */
+
+#if !defined(ARDUINO_NRF52840_CIRCUITPLAY)
+
 #include "IRLibProtocols.h"
 
 /*
@@ -24,3 +27,4 @@ const __FlashStringHelper *Pnames(uint8_t type) {
   return Names[type];
 };
 
+#endif

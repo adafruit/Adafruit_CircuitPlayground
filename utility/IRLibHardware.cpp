@@ -27,5 +27,10 @@
  * call enableIRIn or the "resume" method. There is no more "resume". You always do
  * enableIRIn after every decode and the system handles it.
  */
+
+#if !defined(ARDUINO_NRF52840_CIRCUITPLAY)
+
 #include "IRLibHardware.h"
 uint8_t IRLib_didIROut=false;
+
+#endif

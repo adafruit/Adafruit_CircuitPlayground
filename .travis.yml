@@ -1,6 +1,15 @@
 language: c
 sudo: false
 
+cache:
+  directories:
+    - ~/arduino_ide
+    - ~/.arduino15/packages/
+
+git:
+  depth: false
+  quiet: true
+
 # Blacklist
 branches:
   except:
@@ -19,7 +28,9 @@ install:
    - rm -rf $HOME/arduino_ide/libraries/Adafruit_Circuit_Playground
 
 script:
-   - build_cplay_platforms
+   - build_platform cplayClassic
+   - build_platform cplayExpress
+
 
 # Generate and deploy documentation
 after_success:

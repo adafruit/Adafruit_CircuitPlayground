@@ -49,12 +49,8 @@
 
 #include "utility/CP_Firmata.h"
 
-
-
-#ifdef __AVR__ // Circuit Playground 'classic'
-
+#if defined(__AVR__) || defined(ARDUINO_NRF52840_CIRCUITPLAY) // Circuit Playground 'classic'
   #include "utility/CPlay_CapacitiveSensor.h"
-
 #else
 
   #include "utility/Adafruit_CPlay_FreeTouch.h"
@@ -101,9 +97,21 @@
  #define CPLAY_LIS3DH_INTERRUPT  7 ///< LIS3DH interrupt pin
 
  #define CPLAY_LIS3DH_ADDRESS    0x18 ///< LIS3DH I2C address
-
+#elif defined(ARDUINO_NRF52840_CIRCUITPLAY)
+ #include <math.h>
+ #define CPLAY_CAPSENSE_SHARED  255 ///< we use ground instead of capacitive sense pin
+ #define CPLAY_LEFTBUTTON        4 ///< left button pin
+ #define CPLAY_RIGHTBUTTON       5 ///< right button pin
+ #define CPLAY_SLIDESWITCHPIN    7 ///< slide switch pin
+ #define CPLAY_NEOPIXELPIN       8 ///< neopixel pin
+ #define CPLAY_REDLED           13 ///< red led pin
+ #define CPLAY_BUZZER           A0 ///< buzzer pin
+ #define CPLAY_LIGHTSENSOR      A8 ///< light sensor pin
+ #define CPLAY_THERMISTORPIN    A9 ///< thermistor pin
+ #define CPLAY_LIS3DH_CS        -1 ///< LIS3DH chip select pin
+ #define CPLAY_LIS3DH_INTERRUPT 27 ///< LIS3DH interrupt pin
+ #define CPLAY_LIS3DH_ADDRESS   0x19 ///< LIS3DH I2C address
 #else // Circuit Playground Express
-
  #define CPLAY_LEFTBUTTON        4  ///< left button pin
 
  #define CPLAY_RIGHTBUTTON       5 ///< right button pin
@@ -190,8 +198,7 @@ class Adafruit_CircuitPlayground {
 
 
 
-#ifdef __AVR__ // Circuit Playground 'classic'
-
+#if defined (__AVR__) || defined(ARDUINO_NRF52840_CIRCUITPLAY) // Circuit Playground 'classic' or bluefruit
   CPlay_CapacitiveSensor cap[8]; ///< the array of capacitive touch sensors
 
 #else

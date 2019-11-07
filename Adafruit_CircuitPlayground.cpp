@@ -39,12 +39,18 @@
 bool Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   pinMode(CPLAY_REDLED, OUTPUT);
   pinMode(CPLAY_BUZZER, OUTPUT);
-#ifdef __AVR__
+#if defined(__AVR__)
   pinMode(CPLAY_CAPSENSE_SHARED, OUTPUT);
   pinMode(CPLAY_LEFTBUTTON, INPUT);
   pinMode(CPLAY_RIGHTBUTTON, INPUT);
   pinMode(CPLAY_SLIDESWITCHPIN, INPUT);
-#else // Circuit Playground Express
+#elif defined(ARDUINO_NRF52840_CIRCUITPLAY) // bluefruit
+  pinMode(CPLAY_LEFTBUTTON, INPUT_PULLDOWN);
+  pinMode(CPLAY_RIGHTBUTTON, INPUT_PULLDOWN);
+  pinMode(CPLAY_SLIDESWITCHPIN, INPUT_PULLUP);
+  pinMode(CPLAY_SPEAKER_SHUTDOWN, OUTPUT);
+  digitalWrite(CPLAY_SPEAKER_SHUTDOWN, HIGH);
+#elif defined(__SAMD21G18A__) // Circuit Playground Express
   pinMode(CPLAY_LEFTBUTTON, INPUT_PULLDOWN);
   pinMode(CPLAY_RIGHTBUTTON, INPUT_PULLDOWN);
   pinMode(CPLAY_SLIDESWITCHPIN, INPUT_PULLUP);
@@ -61,14 +67,21 @@ bool Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   strip.updateLength(10);
   strip.setPin(CPLAY_NEOPIXELPIN);
 
-  lis = Adafruit_CPlay_LIS3DH(CPLAY_LIS3DH_CS);
+#ifdef __AVR__ // Circuit Playground 'classic'
+  lis = Adafruit_CPlay_LIS3DH(CPLAY_LIS3DH_CS, &SPI); // SPI
+#elif defined(ARDUINO_NRF52840_CIRCUITPLAY)
+  lis = Adafruit_CPlay_LIS3DH(&Wire1); // i2c on wire1
+#else // samd21
+  lis = Adafruit_CPlay_LIS3DH(&Wire1); // i2c on wire1
+#endif
+
   mic = Adafruit_CPlay_Mic();
 
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
   strip.setBrightness(brightness);
 
-#ifdef __AVR__
+#if defined(__AVR__) || defined(ARDUINO_NRF52840_CIRCUITPLAY) // bluefruit
   cap[0] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 0);
   cap[1] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 1);
   cap[2] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 2);
@@ -77,7 +90,7 @@ bool Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   cap[5] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 9);
   cap[6] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 10);
   cap[7] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 12);
-#else // Circuit Playground Express // Circuit Playground Express
+#elif defined(__SAMD21G18A__) // Circuit Playground Express
   for(int i=0; i<7; i++) {
     cap[i] = Adafruit_CPlay_FreeTouch(A1+i, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
     if (! cap[i].begin()) return false;
@@ -96,7 +109,7 @@ bool Adafruit_CircuitPlayground::begin(uint8_t brightness) {
 */
 /**************************************************************************/
 uint16_t Adafruit_CircuitPlayground::readCap(uint8_t p, uint8_t samples) {
-#ifdef __AVR__  // Circuit Playground Classic
+#if defined(__AVR__) || defined(ARDUINO_NRF52840_CIRCUITPLAY) // Circuit Playground Classic or bluefruit
   switch (p) {
     case 0:    return cap[0].capacitiveSensor(samples);
     case 1:    return cap[1].capacitiveSensor(samples);
@@ -108,7 +121,7 @@ uint16_t Adafruit_CircuitPlayground::readCap(uint8_t p, uint8_t samples) {
     case 12:   return cap[7].capacitiveSensor(samples);
     default:   return 0;
   }
-#else // Circuit Playground Express // Circuit Playground Express
+#elif defined(__SAMD21G18A__) // Circuit Playground Express
   // analog pins r ez!
   if ((p >= A1) && (p <= A7)) {
     return cap[p - A1].measure();
@@ -300,8 +313,7 @@ float Adafruit_CircuitPlayground::motionZ(void) {
 /**************************************************************************/
 float Adafruit_CircuitPlayground::temperature(void) {
    // Thermistor test
-  float reading;
-
+  double reading;
   reading = analogRead(CPLAY_THERMISTORPIN);
 
   //Serial.print("Thermistor reading: "); Serial.println(reading);
@@ -312,7 +324,7 @@ float Adafruit_CircuitPlayground::temperature(void) {
 
   //Serial.print("Thermistor resistance: "); Serial.println(reading);
 
-  float steinhart;
+  double steinhart;
   steinhart = reading / THERMISTORNOMINAL;     // (R/Ro)
   steinhart = log(steinhart);                  // ln(R/Ro)
   steinhart /= BCOEFFICIENT;                   // 1/B * ln(R/Ro)
@@ -360,7 +372,6 @@ uint32_t Adafruit_CircuitPlayground::colorWheel(uint8_t WheelPos) {
     @param red the pointer to where the red component should be stored.
     @param green the pointer to where the green component should be stored.
     @param blue the pointer to where the blue component should be stored.
-    @returns the components of the detected colors in the passed pointers.
 */
 /**************************************************************************/
 void Adafruit_CircuitPlayground::senseColor(uint8_t& red, uint8_t& green, uint8_t& blue) {

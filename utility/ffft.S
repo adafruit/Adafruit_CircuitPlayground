@@ -436,3 +436,7 @@ fmuls_f:
 .cpu cortex-m0plus
 .fpu softvfp
 #endif
+
+#ifdef NRF52840_XXAA
+.cpu cortex-m4
+#endif

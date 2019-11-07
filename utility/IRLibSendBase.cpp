@@ -10,6 +10,9 @@
  * It then calls mark(int usec) and space(inc usec) to transmit marks and
  * spaces of varying length of microseconds in the manner which the protocol defines.
  */
+
+#if !defined(ARDUINO_NRF52840_CIRCUITPLAY) 
+
 #include "IRLibSendBase.h"
 #include "IRLibHardware.h"
 
@@ -103,3 +106,5 @@ void IRsendBase::space(uint16_t time) {
  extent+=time;
 }
 
+
+#endif //!defined(__NRF52__) 
