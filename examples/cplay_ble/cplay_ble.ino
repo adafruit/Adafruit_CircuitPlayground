@@ -28,118 +28,80 @@ BLEAdafruitAccel        bleAccel;
 BLEAdafruitLightSensor  bleLight;
 BLEAdafruitButton       bleButton;
 
-// Each for a service
-SoftwareTimer timerTemp;
-SoftwareTimer timerAccel;
-SoftwareTimer timerLight;
-SoftwareTimer timerButton;
-
-// meaure function
-void measure_callback(TimerHandle_t xTimerID)
+void measure_button(void)
 {
-  digitalWrite(PIN_LED1, HIGH);
-  if ( xTimerID == timerTemp.getHandle() )
-  {
-    float temp = CircuitPlayground.temperature();
-    bleTemp.Temperature.notify(&temp, sizeof(temp));  
-  }
+  uint32_t button = 0;
 
-  if ( xTimerID == timerAccel.getHandle() )
-  {
-    float accel[3];
-    accel[0] = CircuitPlayground.motionX();
-    accel[1] = CircuitPlayground.motionY();
-    accel[2] = CircuitPlayground.motionZ();
+  button |= ( CircuitPlayground.slideSwitch() ? 0x01 : 0x00 );
+  button |= ( CircuitPlayground.leftButton()  ? 0x02 : 0x00 );
+  button |= ( CircuitPlayground.rightButton() ? 0x04 : 0x00 );
 
-    bleAccel.Accel.notify(accel, sizeof(accel));
-  }
-
-  if ( xTimerID == timerLight.getHandle() )
-  {
-    float lux = CircuitPlayground.lightSensor();
-
-    bleLight.Lux.notify(&lux, sizeof(lux));
-  }
-
-  if ( xTimerID == timerButton.getHandle() )
-  {
-    uint32_t button = 0;
-
-    button |= ( CircuitPlayground.slideSwitch() ? 0x01 : 0x00 );
-    button |= ( CircuitPlayground.leftButton()  ? 0x02 : 0x00 );
-    button |= ( CircuitPlayground.rightButton() ? 0x04 : 0x00 );
-
-    bleButton.Button.notify(&button, sizeof(button));
-  }
-
-  digitalWrite(PIN_LED1, LOW);
+  bleButton.Button.notify(&button, sizeof(button));  
 }
 
-void temp_period_write_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint8_t* data, uint16_t len)
+void measure_temperature(void)
 {
-  timerTemp.setPeriod( bleTemp.Period.read32() );
+  float temp = CircuitPlayground.temperature();
+  bleTemp.Temperature.notify(&temp, sizeof(temp));
+}
+
+void measure_light_sensor(void)
+{ 
+  float lux = CircuitPlayground.lightSensor();
+  bleLight.Lux.notify(&lux, sizeof(lux));  
+}
+
+void measure_accel(void)
+{  
+  float accel[3];
+  accel[0] = CircuitPlayground.motionX();
+  accel[1] = CircuitPlayground.motionY();
+  accel[2] = CircuitPlayground.motionZ();
+
+  bleAccel.Accel.notify(accel, sizeof(accel));
 }
 
 void temp_notify_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint16_t value)
 {
   if (value == 0x0001)
   {
-    timerTemp.setPeriod( bleTemp.Period.read32() );
-    timerTemp.start();
+    bleTemp.startMeasuring();
   }else
   {
-    timerTemp.stop();
+    bleTemp.stopMeasuring();
   }
-}
-
-void accel_period_write_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint8_t* data, uint16_t len)
-{
-  timerAccel.setPeriod( bleAccel.Period.read32() );
 }
 
 void accel_notify_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint16_t value)
 {
   if (value == 0x0001)
   {
-    timerAccel.setPeriod( bleAccel.Period.read32() );
-    timerAccel.start();
+    bleAccel.startMeasuring();
   }else
   {
-    timerAccel.stop();
+    bleAccel.stopMeasuring();
   }
-}
-
-void light_period_write_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint8_t* data, uint16_t len)
-{
-  timerLight.setPeriod( bleLight.Period.read32() );
 }
 
 void light_notify_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint16_t value)
 {
   if (value == 0x0001)
   {
-    timerLight.setPeriod( bleLight.Period.read32() );
-    timerLight.start();
+    bleLight.startMeasuring();
   }else
   {
-    timerLight.stop();
+    bleLight.stopMeasuring();
   }
-}
-
-void button_period_write_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint8_t* data, uint16_t len)
-{
-  timerButton.setPeriod( bleButton.Period.read32() );
 }
 
 void button_notify_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint16_t value)
 {
   if (value == 0x0001)
   {
-    timerButton.setPeriod( bleButton.Period.read32() );
-    timerButton.start();
+    bleButton.startMeasuring();
   }else
   {
-    timerButton.stop();
+    bleButton.stopMeasuring();
   }
 }
 
@@ -188,27 +150,19 @@ void setup()
   // Adafruit Service
   bleTemp.begin();
   bleTemp.Temperature.setCccdWriteCallback(temp_notify_callback);
-  bleTemp.Period.setWriteCallback(temp_period_write_callback);
-  bleTemp.Period.write32(5000);
-  timerTemp.begin(5000, measure_callback);
+  bleTemp.setMeasureCallback(measure_temperature);
   
   bleAccel.begin();
   bleAccel.Accel.setCccdWriteCallback(accel_notify_callback);
-  bleAccel.Period.setWriteCallback(accel_period_write_callback);
-  bleAccel.Period.write32(1000);
-  timerAccel.begin(1000, measure_callback);
+  bleAccel.setMeasureCallback(measure_accel);
   
   bleLight.begin();
   bleLight.Lux.setCccdWriteCallback(light_notify_callback);
-  bleLight.Period.setWriteCallback(light_period_write_callback);
-  bleLight.Period.write32(3000);
-  timerLight.begin(3000, measure_callback);
+  bleLight.setMeasureCallback(measure_light_sensor);
     
   bleButton.begin();
   bleButton.Button.setCccdWriteCallback(button_notify_callback);
-  bleButton.Period.setWriteCallback(button_period_write_callback);
-  bleButton.Period.write32(200);
-  timerButton.begin(200, measure_callback);
+  bleButton.setMeasureCallback(measure_button);
 
   // Set up and start advertising
   startAdv();
