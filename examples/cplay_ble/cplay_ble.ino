@@ -28,7 +28,7 @@ BLEAdafruitAccel        bleAccel;
 BLEAdafruitLightSensor  bleLight;
 BLEAdafruitButton       bleButton;
 
-void measure_button(void)
+uint16_t measure_button(uint8_t* buf, uint16_t bufsize)
 {
   uint32_t button = 0;
 
@@ -36,73 +36,33 @@ void measure_button(void)
   button |= ( CircuitPlayground.leftButton()  ? 0x02 : 0x00 );
   button |= ( CircuitPlayground.rightButton() ? 0x04 : 0x00 );
 
-  bleButton.Button.notify(&button, sizeof(button));  
+  memcpy(buf, &button, 4);
+  return 4;
 }
 
-void measure_temperature(void)
+uint16_t measure_temperature(uint8_t* buf, uint16_t bufsize)
 {
   float temp = CircuitPlayground.temperature();
-  bleTemp.Temperature.notify(&temp, sizeof(temp));
+  memcpy(buf, &temp, 4);
+  return 4;
 }
 
-void measure_light_sensor(void)
+uint16_t measure_light_sensor(uint8_t* buf, uint16_t bufsize)
 { 
   float lux = CircuitPlayground.lightSensor();
-  bleLight.Lux.notify(&lux, sizeof(lux));  
+  memcpy(buf, &lux, 4);
+  return 4;
 }
 
-void measure_accel(void)
+uint16_t measure_accel(uint8_t* buf, uint16_t bufsize)
 {  
   float accel[3];
   accel[0] = CircuitPlayground.motionX();
   accel[1] = CircuitPlayground.motionY();
   accel[2] = CircuitPlayground.motionZ();
 
-  bleAccel.Accel.notify(accel, sizeof(accel));
-}
-
-void temp_notify_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint16_t value)
-{
-  if (value == 0x0001)
-  {
-    bleTemp.startMeasuring();
-  }else
-  {
-    bleTemp.stopMeasuring();
-  }
-}
-
-void accel_notify_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint16_t value)
-{
-  if (value == 0x0001)
-  {
-    bleAccel.startMeasuring();
-  }else
-  {
-    bleAccel.stopMeasuring();
-  }
-}
-
-void light_notify_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint16_t value)
-{
-  if (value == 0x0001)
-  {
-    bleLight.startMeasuring();
-  }else
-  {
-    bleLight.stopMeasuring();
-  }
-}
-
-void button_notify_callback(uint16_t conn_hdl, BLECharacteristic* chr, uint16_t value)
-{
-  if (value == 0x0001)
-  {
-    bleButton.startMeasuring();
-  }else
-  {
-    bleButton.stopMeasuring();
-  }
+  memcpy(buf, accel, sizeof(accel));
+  return sizeof(accel);
 }
 
 void setup()
@@ -149,19 +109,15 @@ void setup()
 
   // Adafruit Service
   bleTemp.begin();
-  bleTemp.Temperature.setCccdWriteCallback(temp_notify_callback);
   bleTemp.setMeasureCallback(measure_temperature);
   
   bleAccel.begin();
-  bleAccel.Accel.setCccdWriteCallback(accel_notify_callback);
   bleAccel.setMeasureCallback(measure_accel);
   
   bleLight.begin();
-  bleLight.Lux.setCccdWriteCallback(light_notify_callback);
   bleLight.setMeasureCallback(measure_light_sensor);
     
   bleButton.begin();
-  bleButton.Button.setCccdWriteCallback(button_notify_callback);
   bleButton.setMeasureCallback(measure_button);
 
   // Set up and start advertising
