@@ -119,6 +119,7 @@ void setup()
     
   bleButton.begin();
   bleButton.setMeasureCallback(measure_button);
+  bleButton.setPeriod(0); // only notify if there is changes with buttons
 
   // Set up and start advertising
   startAdv();
