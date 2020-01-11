@@ -50,17 +50,16 @@ bool Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   pinMode(CPLAY_SLIDESWITCHPIN, INPUT_PULLUP);
   pinMode(CPLAY_SPEAKER_SHUTDOWN, OUTPUT);
   digitalWrite(CPLAY_SPEAKER_SHUTDOWN, HIGH);
-#elif defined(__SAMD21G18A__) // Circuit Playground Express
+#elif defined(__SAMD21G18A__)               // Circuit Playground Express
   pinMode(CPLAY_LEFTBUTTON, INPUT_PULLDOWN);
   pinMode(CPLAY_RIGHTBUTTON, INPUT_PULLDOWN);
   pinMode(CPLAY_SLIDESWITCHPIN, INPUT_PULLUP);
-  irReceiver=IRrecvPCI(CPLAY_IR_RECEIVER);
-  irDecoder=IRdecode();
+  irReceiver = IRrecvPCI(CPLAY_IR_RECEIVER);
+  irDecoder = IRdecode();
   // since we aren't calling speaker.begin() anymore, do this here
   pinMode(CPLAY_SPEAKER_SHUTDOWN, OUTPUT);
   digitalWrite(CPLAY_SPEAKER_SHUTDOWN, HIGH);
 #endif
-
 
   strip = Adafruit_CPlay_NeoPixel();
   strip.updateType(NEO_GRB + NEO_KHZ800);
@@ -91,9 +90,11 @@ bool Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   cap[6] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 10);
   cap[7] = CPlay_CapacitiveSensor(CPLAY_CAPSENSE_SHARED, 12);
 #elif defined(__SAMD21G18A__) // Circuit Playground Express
-  for(int i=0; i<7; i++) {
-    cap[i] = Adafruit_CPlay_FreeTouch(A1+i, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
-    if (! cap[i].begin()) return false;
+  for (int i = 0; i < 7; i++) {
+    cap[i] = Adafruit_CPlay_FreeTouch(A1 + i, OVERSAMPLE_4, RESISTOR_50K,
+                                      FREQ_MODE_NONE);
+    if (!cap[i].begin())
+      return false;
   }
 #endif
 
@@ -109,17 +110,28 @@ bool Adafruit_CircuitPlayground::begin(uint8_t brightness) {
 */
 /**************************************************************************/
 uint16_t Adafruit_CircuitPlayground::readCap(uint8_t p, uint8_t samples) {
-#if defined(__AVR__) || defined(ARDUINO_NRF52840_CIRCUITPLAY) // Circuit Playground Classic or bluefruit
+#if defined(__AVR__) ||                                                        \
+    defined(ARDUINO_NRF52840_CIRCUITPLAY) // Circuit Playground Classic or
+                                          // bluefruit
   switch (p) {
-    case 0:    return cap[0].capacitiveSensor(samples);
-    case 1:    return cap[1].capacitiveSensor(samples);
-    case 2:    return cap[2].capacitiveSensor(samples);
-    case 3:    return cap[3].capacitiveSensor(samples);
-    case 6:    return cap[4].capacitiveSensor(samples);
-    case 9:    return cap[5].capacitiveSensor(samples);
-    case 10:   return cap[6].capacitiveSensor(samples);
-    case 12:   return cap[7].capacitiveSensor(samples);
-    default:   return 0;
+  case 0:
+    return cap[0].capacitiveSensor(samples);
+  case 1:
+    return cap[1].capacitiveSensor(samples);
+  case 2:
+    return cap[2].capacitiveSensor(samples);
+  case 3:
+    return cap[3].capacitiveSensor(samples);
+  case 6:
+    return cap[4].capacitiveSensor(samples);
+  case 9:
+    return cap[5].capacitiveSensor(samples);
+  case 10:
+    return cap[6].capacitiveSensor(samples);
+  case 12:
+    return cap[7].capacitiveSensor(samples);
+  default:
+    return 0;
   }
 #elif defined(__SAMD21G18A__) // Circuit Playground Express
   // analog pins r ez!
@@ -128,14 +140,22 @@ uint16_t Adafruit_CircuitPlayground::readCap(uint8_t p, uint8_t samples) {
   }
   // oof digital pins
   switch (p) {
-    case 0:    return cap[A6 - A1].measure();
-    case 1:    return cap[A7 - A1].measure();
-    case 2:    return cap[A5 - A1].measure();
-    case 3:    return cap[A4 - A1].measure();
-    case 6:    return cap[A1 - A1].measure();
-    case 9:    return cap[A2 - A1].measure();
-    case 10:   return cap[A3 - A1].measure();
-    default:   return 0;
+  case 0:
+    return cap[A6 - A1].measure();
+  case 1:
+    return cap[A7 - A1].measure();
+  case 2:
+    return cap[A5 - A1].measure();
+  case 3:
+    return cap[A4 - A1].measure();
+  case 6:
+    return cap[A1 - A1].measure();
+  case 9:
+    return cap[A2 - A1].measure();
+  case 10:
+    return cap[A3 - A1].measure();
+  default:
+    return 0;
   }
 #endif
 }
@@ -185,67 +205,71 @@ bool Adafruit_CircuitPlayground::rightButton(void) {
     @brief play a tone on the onboard buzzer
     @param  freq the frequency to play
     @param  time the duration of the tone in milliseconds
-    @param  wait Optional flag to wait for time milliseconds after playing the tone. Defaults to true.
-    @note The driver circuitry is an on/off transistor driver, so you will only be able to play square waves.
-    It is also not the same loudness over all frequencies but is designed to be the loudest at around 4 KHz
+    @param  wait Optional flag to wait for time milliseconds after playing the
+   tone. Defaults to true.
+    @note The driver circuitry is an on/off transistor driver, so you will only
+   be able to play square waves. It is also not the same loudness over all
+   frequencies but is designed to be the loudest at around 4 KHz
 */
 /**************************************************************************/
-void Adafruit_CircuitPlayground::playTone(
-  uint16_t freq, uint16_t time, bool wait) {
+void Adafruit_CircuitPlayground::playTone(uint16_t freq, uint16_t time,
+                                          bool wait) {
 #ifdef __AVR__
 #define F_PLL 48000000
-  if(!freq) return;
+  if (!freq)
+    return;
   uint32_t ocr;
-  uint16_t prescale  = 1;
-  uint8_t  scalebits = 0;
-  uint8_t  hi1, lo1, hi2, lo2;
+  uint16_t prescale = 1;
+  uint8_t scalebits = 0;
+  uint8_t hi1, lo1, hi2, lo2;
 
   // Determine best prescaler setting for 10-bit timer
   do {
     scalebits++;
-    ocr       = F_PLL / freq / prescale - 1;
+    ocr = F_PLL / freq / prescale - 1;
     prescale *= 2;
-    if(prescale >= 16384) {
-      ocr       = 1023;
+    if (prescale >= 16384) {
+      ocr = 1023;
       scalebits = 0b1111;
     }
-  } while(ocr > 1023);
+  } while (ocr > 1023);
 
   // Set up Timer4 for fast PWM on !OC4A
-  PLLFRQ  = (PLLFRQ & 0xCF) | 0x30;   // Route PLL to async clk
-  TCCR4A  = _BV(COM4A0) | _BV(PWM4A); // Clear on match, PWMA on
-  TCCR4B  = _BV(PWM4X)  | scalebits;  // PWM invert
-  TCCR4D  = 0;                        // Fast PWM mode
-  TCCR4E  = 0;                        // Not enhanced mode
-  DT4     = 0;                        // No dead time
-  hi1     = ocr >> 8;
-  lo1     = ocr & 0xFF;
-  hi2     = ocr >> 9;
-  lo2     = (ocr >> 1) & 0xFF;
-  noInterrupts();                     // TC4H accesses MUST be atomic
-  TC4H    = hi1;
-  OCR4C   = lo1;                      // TOP
-  TC4H    = hi2;
-  OCR4A   = lo2;                      // 50% duty
+  PLLFRQ = (PLLFRQ & 0xCF) | 0x30;   // Route PLL to async clk
+  TCCR4A = _BV(COM4A0) | _BV(PWM4A); // Clear on match, PWMA on
+  TCCR4B = _BV(PWM4X) | scalebits;   // PWM invert
+  TCCR4D = 0;                        // Fast PWM mode
+  TCCR4E = 0;                        // Not enhanced mode
+  DT4 = 0;                           // No dead time
+  hi1 = ocr >> 8;
+  lo1 = ocr & 0xFF;
+  hi2 = ocr >> 9;
+  lo2 = (ocr >> 1) & 0xFF;
+  noInterrupts(); // TC4H accesses MUST be atomic
+  TC4H = hi1;
+  OCR4C = lo1; // TOP
+  TC4H = hi2;
+  OCR4A = lo2; // 50% duty
   interrupts();
-  pinMode(5, OUTPUT);                 // Enable output
+  pinMode(5, OUTPUT); // Enable output
   delay(time);
-  pinMode(5, INPUT);                  // Disable output
-  TCCR4A  = 0;                        // PWMA off
+  pinMode(5, INPUT); // Disable output
+  TCCR4A = 0;        // PWMA off
 #else
   tone(CPLAY_BUZZER, freq, time);
   delay(time); // time argument to tone() isn't working, so...
 #endif
-  if(wait) delay(time);
+  if (wait)
+    delay(time);
 }
 
 /**************************************************************************/
 /*!
     @brief read the onboard lightsensor
     @returns value between 0 and 1023 read from the light sensor
-    @note 1000 Lux will roughly read as 2 Volts (or about 680 as a raw analog reading).
-      A reading of about 300 is common for most indoor light levels.
-      Note that outdoor daylight is 10,000 Lux or even higher, so this sensor is best
+    @note 1000 Lux will roughly read as 2 Volts (or about 680 as a raw analog
+   reading). A reading of about 300 is common for most indoor light levels. Note
+   that outdoor daylight is 10,000 Lux or even higher, so this sensor is best
       suited for indoor light levels!
 */
 /**************************************************************************/
@@ -312,25 +336,25 @@ float Adafruit_CircuitPlayground::motionZ(void) {
 */
 /**************************************************************************/
 float Adafruit_CircuitPlayground::temperature(void) {
-   // Thermistor test
+  // Thermistor test
   double reading;
   reading = analogRead(CPLAY_THERMISTORPIN);
 
-  //Serial.print("Thermistor reading: "); Serial.println(reading);
+  // Serial.print("Thermistor reading: "); Serial.println(reading);
 
   // convert the value to resistance
   reading = ((1023.0 * SERIESRESISTOR) / reading);
   reading -= SERIESRESISTOR;
 
-  //Serial.print("Thermistor resistance: "); Serial.println(reading);
+  // Serial.print("Thermistor resistance: "); Serial.println(reading);
 
   double steinhart;
-  steinhart = reading / THERMISTORNOMINAL;     // (R/Ro)
-  steinhart = log(steinhart);                  // ln(R/Ro)
-  steinhart /= BCOEFFICIENT;                   // 1/B * ln(R/Ro)
+  steinhart = reading / THERMISTORNOMINAL;          // (R/Ro)
+  steinhart = log(steinhart);                       // ln(R/Ro)
+  steinhart /= BCOEFFICIENT;                        // 1/B * ln(R/Ro)
   steinhart += 1.0 / (TEMPERATURENOMINAL + 273.15); // + (1/To)
-  steinhart = 1.0 / steinhart;                 // Invert
-  steinhart -= 273.15;                         // convert to C
+  steinhart = 1.0 / steinhart;                      // Invert
+  steinhart -= 273.15;                              // convert to C
 
   return steinhart;
 }
@@ -374,7 +398,8 @@ uint32_t Adafruit_CircuitPlayground::colorWheel(uint8_t WheelPos) {
     @param blue the pointer to where the blue component should be stored.
 */
 /**************************************************************************/
-void Adafruit_CircuitPlayground::senseColor(uint8_t& red, uint8_t& green, uint8_t& blue) {
+void Adafruit_CircuitPlayground::senseColor(uint8_t &red, uint8_t &green,
+                                            uint8_t &blue) {
   // Save the current pixel brightness so it can later be restored.  Then bump
   // the brightness to max to make sure the LED is as bright as possible for
   // the color readings.
@@ -384,13 +409,13 @@ void Adafruit_CircuitPlayground::senseColor(uint8_t& red, uint8_t& green, uint8_
   // color and grab a light sensor reading.  Make sure to wait a bit
   // after changing pixel colors to let the light sensor change
   // resistance!
-  setPixelColor(1, 255, 0, 0);  // Red
+  setPixelColor(1, 255, 0, 0); // Red
   delay(LIGHT_SETTLE_MS);
   uint16_t raw_red = lightSensor();
-  setPixelColor(1, 0, 255, 0);  // Green
+  setPixelColor(1, 0, 255, 0); // Green
   delay(LIGHT_SETTLE_MS);
   uint16_t raw_green = lightSensor();
-  setPixelColor(1, 0, 0, 255);  // Blue
+  setPixelColor(1, 0, 0, 255); // Blue
   delay(LIGHT_SETTLE_MS);
   uint16_t raw_blue = lightSensor();
   // Turn off the pixel and restore brightness, we're done with readings.
@@ -402,15 +427,16 @@ void Adafruit_CircuitPlayground::senseColor(uint8_t& red, uint8_t& green, uint8_
   // by 4 will change the range from 0-1023 to 0-255.  Also
   // use the min function to clamp the value to 255 at most (just
   // to prevent overflow from 255.xx to 0).
-  red = min(255, raw_red/4);
-  green = min(255, raw_green/4);
-  blue = min(255, raw_blue/4);
+  red = min(255, raw_red / 4);
+  green = min(255, raw_green / 4);
+  blue = min(255, raw_blue / 4);
 }
 
 /**************************************************************************/
 /*!
     @brief check whether or not this device is a CircuitPlayground Express.
-    @returns True if the device is a CircuitPlayground Express, false if it is a 'classic'.
+    @returns True if the device is a CircuitPlayground Express, false if it is a
+   'classic'.
 */
 /**************************************************************************/
 bool Adafruit_CircuitPlayground::isExpress(void) {
