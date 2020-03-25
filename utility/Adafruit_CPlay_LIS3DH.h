@@ -95,12 +95,12 @@
  *           Refer to Table 29, "High pass filter mode configuration"
  *   HPCF2-1 High pass filter cut off frequency selection
  *   FDS     Filtered data selection. Default value: 0
- *					 (0: internal filter bypassed; 1: data from
- *internal filter sent to output register and FIFO) HPCLICK High pass filter
- *enabled for CLICK function. (0: filter bypassed; 1: filter enabled) HPIS2   X
- *axis enable. Default value: 1 (0: X axis disabled; 1: X axis enabled) HPIS1
- *High pass filter enabled for AOI function on interrupt 1, (0: filter bypassed;
- *1: filter enabled)
+ *					 (0: internal filter bypassed; 1: data
+ *from internal filter sent to output register and FIFO) HPCLICK High pass
+ *filter enabled for CLICK function. (0: filter bypassed; 1: filter enabled)
+ *HPIS2   X axis enable. Default value: 1 (0: X axis disabled; 1: X axis
+ *enabled) HPIS1 High pass filter enabled for AOI function on interrupt 1, (0:
+ *filter bypassed; 1: filter enabled)
  */
 #define LIS3DH_REG_CTRL2 0x21
 /*!
@@ -344,7 +344,8 @@ class Adafruit_CPlay_LIS3DH : public Adafruit_Sensor {
 public:
   Adafruit_CPlay_LIS3DH(TwoWire *Wi = &Wire);
   Adafruit_CPlay_LIS3DH(int8_t cspin, SPIClass *theSPI = &SPI);
-  Adafruit_CPlay_LIS3DH(int8_t cspin, int8_t mosipin, int8_t misopin, int8_t sckpin);
+  Adafruit_CPlay_LIS3DH(int8_t cspin, int8_t mosipin, int8_t misopin,
+                        int8_t sckpin);
 
   bool begin(uint8_t addr = LIS3DH_DEFAULT_ADDRESS, uint8_t nWAI = 0x33);
 

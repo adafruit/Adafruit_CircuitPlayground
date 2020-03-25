@@ -3,9 +3,9 @@
  * infrared signals. See COPYRIGHT.txt and LICENSE.txt for more information.
  */
 /*
- * Combines all of the necessary libraries for implementing IR transmit and receive
- *  on the Adafruit Circuit Playground Express. Similar to the IRLibAll.h in the
- *  regular IRLib2.xx.
+ * Combines all of the necessary libraries for implementing IR transmit and
+ * receive on the Adafruit Circuit Playground Express. Similar to the IRLibAll.h
+ * in the regular IRLib2.xx.
  */
 
 #ifndef IRLIB_CPE_H
@@ -24,7 +24,7 @@
 #include "IRLib_P10_DirecTV.h"
 #include "IRLib_P11_RCMM.h"
 #include "IRLib_P12_CYKM.h"
-//include additional protocols here
+// include additional protocols here
 #include "IRLibCombo.h"
 #include "IRLibRecvPCI.h"
-#endif //IRLIB_CPE_H
+#endif // IRLIB_CPE_H

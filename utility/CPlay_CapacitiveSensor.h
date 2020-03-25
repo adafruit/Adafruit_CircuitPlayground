@@ -25,39 +25,38 @@
 #define RwReg uint8_t
 #endif
 
-
 /**************************************************************************/
-/*! 
-    @brief  Class that stores state and functions for the capacitive sensor on CircuitPlayground boards
+/*!
+    @brief  Class that stores state and functions for the capacitive sensor on
+   CircuitPlayground boards
 */
 /**************************************************************************/
-class CPlay_CapacitiveSensor
-{
+class CPlay_CapacitiveSensor {
   // user-accessible "public" interface
-  public:
+public:
   // methods
-	CPlay_CapacitiveSensor(uint8_t sendPin = 0, uint8_t receivePin = 0);
-	long capacitiveSensorRaw(uint8_t samples);
-	long capacitiveSensor(uint8_t samples);
-	void set_CS_Timeout_Millis(unsigned long timeout_millis);
-	void reset_CS_AutoCal();
-	void set_CS_AutocaL_Millis(unsigned long autoCal_millis);
+  CPlay_CapacitiveSensor(uint8_t sendPin = 0, uint8_t receivePin = 0);
+  long capacitiveSensorRaw(uint8_t samples);
+  long capacitiveSensor(uint8_t samples);
+  void set_CS_Timeout_Millis(unsigned long timeout_millis);
+  void reset_CS_AutoCal();
+  void set_CS_AutocaL_Millis(unsigned long autoCal_millis);
   // library-accessible "private" interface
-  private:
+private:
   // variables
-	int error;
-	unsigned long  leastTotal;
-	unsigned int   loopTimingFactor;
-	unsigned long  CS_Timeout_Millis;
-	unsigned long  CS_AutocaL_Millis;
-	unsigned long  lastCal;
-	unsigned long  total;
-	uint8_t _sendPin, _receivePin;
-	volatile RwReg *send_outport, *recv_outport, *recv_inport, *recv_direction;
-	RwReg send_mask, recv_mask;
-  
+  int error;
+  unsigned long leastTotal;
+  unsigned int loopTimingFactor;
+  unsigned long CS_Timeout_Millis;
+  unsigned long CS_AutocaL_Millis;
+  unsigned long lastCal;
+  unsigned long total;
+  uint8_t _sendPin, _receivePin;
+  volatile RwReg *send_outport, *recv_outport, *recv_inport, *recv_direction;
+  RwReg send_mask, recv_mask;
+
   // methods
-	int SenseOneCycle(void);
+  int SenseOneCycle(void);
 };
 
 #endif
