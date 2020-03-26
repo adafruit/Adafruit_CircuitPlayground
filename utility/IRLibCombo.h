@@ -203,9 +203,8 @@ class IRsend
                           PV_IR_SEND_PROTOCOL_13 PV_IR_SEND_PROTOCOL_14
                               PV_IR_SEND_PROTOCOL_90 // Add additional 15, 16
                                                      // etc. above this
-                                                         PV_IR_SEND_PROTOCOL_91
-                                                             PV_IR_SEND_PROTOCOL_92
-                                                                 PV_IR_SEND_RAW // Must be last one.
+                                  PV_IR_SEND_PROTOCOL_91 PV_IR_SEND_PROTOCOL_92
+                                      PV_IR_SEND_RAW // Must be last one.
 {
 public:
   void send(uint8_t protocolNum, uint32_t data, uint16_t data2 = 0,
