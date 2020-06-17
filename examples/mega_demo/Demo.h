@@ -21,7 +21,7 @@ float lerp(float x, float xmin, float xmax, float ymin, float ymax) {
   if (x <= xmin) {
     return ymin;
   }
-  return ymin + (ymax-ymin)*((x-xmin)/(xmax-xmin));
+  return ymin + (ymax - ymin) * ((x - xmin) / (xmax - xmin));
 }
 
 #endif

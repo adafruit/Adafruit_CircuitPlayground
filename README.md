@@ -1,4 +1,4 @@
-# Adafruit CircuitPlayground Library [![Build Status](https://travis-ci.com/adafruit/Adafruit_CircuitPlayground.svg?branch=master)](https://travis-ci.com/adafruit/Adafruit_CircuitPlayground)
+# Adafruit CircuitPlayground Library [![Build Status](https://github.com/adafruit/Adafruit_CircuitPlayground/workflows/Arduino%20Library%20CI/badge.svg)](https://github.com/adafruit/Adafruit_CircuitPlayground/actions)[![Documentation](https://github.com/adafruit/ci-arduino/blob/master/assets/doxygen_badge.svg)](http://adafruit.github.io/Adafruit_CircuitPlayground/html/index.html)
 
 <img src="https://cdn-shop.adafruit.com/970x728/3333-01.jpg" height="300"/>
 

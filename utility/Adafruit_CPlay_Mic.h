@@ -7,28 +7,27 @@
 #define ADAFRUIT_CPLAY_MIC_H
 
 #ifdef __GNUC__
-  #define DEPRECATED(func) func __attribute__ ((deprecated))
+#define DEPRECATED(func) func __attribute__((deprecated))
 #elif defined(_MSC_VER)
-  #define DEPRECATED(func) __declspec(deprecated) func
+#define DEPRECATED(func) __declspec(deprecated) func
 #else
-  #pragma message("WARNING: You need to implement DEPRECATED for this compiler")
-  #define DEPRECATED(func) func
+#pragma message("WARNING: You need to implement DEPRECATED for this compiler")
+#define DEPRECATED(func) func
 #endif
 
 #include "Adafruit_ZeroPDM.h"
 
-
 /**************************************************************************/
-/*! 
-    @brief  Class that stores state and functions for the microphone on CircuitPlayground boards
+/*!
+    @brief  Class that stores state and functions for the microphone on
+   CircuitPlayground boards
 */
 /**************************************************************************/
 class Adafruit_CPlay_Mic {
- public:
-  Adafruit_CPlay_Mic(void) {}; // Empty constructor
-  int  peak(uint16_t ms)  __attribute__ ((deprecated));
-  void capture(int16_t *buf, uint16_t nSamples),
-       fft(uint16_t *spectrum);
+public:
+  Adafruit_CPlay_Mic(void){}; // Empty constructor
+  int peak(uint16_t ms) __attribute__((deprecated));
+  void capture(int16_t *buf, uint16_t nSamples), fft(uint16_t *spectrum);
 
   float soundPressureLevel(uint16_t ms);
 

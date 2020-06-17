@@ -63,8 +63,8 @@ Adafruit_CPlay_LIS3DH::Adafruit_CPlay_LIS3DH(int8_t cspin, SPIClass *theSPI) {
  *   @param  sckpin
  *           number of pin used for CLK (clock pin)
  */
-Adafruit_CPlay_LIS3DH::Adafruit_CPlay_LIS3DH(int8_t cspin, int8_t mosipin, int8_t misopin,
-                                 int8_t sckpin) {
+Adafruit_CPlay_LIS3DH::Adafruit_CPlay_LIS3DH(int8_t cspin, int8_t mosipin,
+                                             int8_t misopin, int8_t sckpin) {
   _cs = cspin;
   _mosi = mosipin;
   _miso = misopin;
@@ -163,8 +163,8 @@ uint8_t Adafruit_CPlay_LIS3DH::getDeviceID() {
  *  @return true if there is new data available, false otherwise
  */
 bool Adafruit_CPlay_LIS3DH::haveNewData() {
-	// checking ZYXDA in REG_STATUS2 tells us if data available
- 	return (readRegister8(LIS3DH_REG_STATUS2) & 0x8) >> 3;
+  // checking ZYXDA in REG_STATUS2 tells us if data available
+  return (readRegister8(LIS3DH_REG_STATUS2) & 0x8) >> 3;
 }
 
 /*!
@@ -279,8 +279,8 @@ int16_t Adafruit_CPlay_LIS3DH::readADC(uint8_t adc) {
  *   				 sets time window (default 255)
  */
 void Adafruit_CPlay_LIS3DH::setClick(uint8_t c, uint8_t clickthresh,
-                               uint8_t timelimit, uint8_t timelatency,
-                               uint8_t timewindow) {
+                                     uint8_t timelimit, uint8_t timelatency,
+                                     uint8_t timewindow) {
   if (!c) {
     // disable int
     uint8_t r = readRegister8(LIS3DH_REG_CTRL3);
