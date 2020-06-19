@@ -28,6 +28,7 @@
  */
 
 #include <Adafruit_Circuit_Playground.h>
+#include "WVariant.h"
 
 /**************************************************************************/
 /*!
