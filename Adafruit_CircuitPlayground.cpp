@@ -28,7 +28,8 @@
  */
 
 #include <Adafruit_Circuit_Playground.h>
-#include "WVariant.h"
+#include "WVariant.h" // EPioType defined here
+#include "wiring_private.h" // pinPeripheral() function
 
 /**************************************************************************/
 /*!
