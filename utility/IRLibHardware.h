@@ -104,7 +104,7 @@
  * less hardware platform dependent.
  */
 //#define IR_SEND_BIT_BANG  3  //Be sure to set this pin number if you
-//un-comment
+// un-comment
 
 /* This is a fudge factor that adjusts bit-bang timing. Feel free to experiment
  * for best results.*/

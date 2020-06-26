@@ -92,9 +92,9 @@ bool IRrecvBase::getResults(const uint16_t timePerTick) {
         recvGlobal.recvLength; // if auto resumed, was already copied
   }
   // If the receiver counts time intervals rather than actual microseconds we
-  // will multiply the data by timePerTick. It also adjusts the data by adding or
-  // subtracting the markExcess value. See the documentation on markExcess for
-  // details.
+  // will multiply the data by timePerTick. It also adjusts the data by adding
+  // or subtracting the markExcess value. See the documentation on markExcess
+  // for details.
   for (uint8_t i = 0; i < recvGlobal.decodeLength; i++) {
     recvGlobal.decodeBuffer[i] =
         Source[i] * timePerTick + ((i % 2) ? -markExcess : markExcess);

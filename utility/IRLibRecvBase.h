@@ -25,8 +25,9 @@
  * Each of these can be set using methods or variables in the base class
  * however these are the defaults if you do not specifically set them.
  */
-#define DEFAULT_BLINK_PIN LED_BUILTIN // NOTE: LED_BUILTIN is an Arduino
-                                      // constant
+#define DEFAULT_BLINK_PIN                                                      \
+  LED_BUILTIN // NOTE: LED_BUILTIN is an Arduino
+              // constant
 #define DEFAULT_BLINK_ENABLED false
 #define DEFAULT_MARK_EXCESS 50
 #define DEFAULT_FRAME_TIMEOUT                                                  \

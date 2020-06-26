@@ -67,25 +67,25 @@ typedef struct {
   volatile bool
       didAutoResume; // ISR tells getResults we already copied, just do math.
   // The buffers are filled with timing values by the ISRs. The recvLength is
-  // the number of entries when the frame is complete. See the note at the end of
-  // this file about buffers.
+  // the number of entries when the frame is complete. See the note at the end
+  // of this file about buffers.
   volatile uint16_t recvBuffer[RECV_BUF_LENGTH];
   //  volatile uint16_t* recvBuffer;
   volatile bufIndex_t recvLength;
   // These next two fields are how the receiver communicates with the decoder.
-  // Previously this was accomplished by passing to the receiver a pointer to the
-  // decoder in getResults. However with auto resume we now may need to
+  // Previously this was accomplished by passing to the receiver a pointer to
+  // the decoder in getResults. However with auto resume we now may need to
   // communicate before getResults is called. The decoderBuffer pointer is
-  // maintained by the decoder. It points to where the decoder wants the data put
-  // by the receiver. It will point to either recvGlobal.recvBuffer or an
-  // external buffer provided by the user via useExtnBuf. The decodeLength is set
-  // by the receiver telling the decoder the data length.
+  // maintained by the decoder. It points to where the decoder wants the data
+  // put by the receiver. It will point to either recvGlobal.recvBuffer or an
+  // external buffer provided by the user via useExtnBuf. The decodeLength is
+  // set by the receiver telling the decoder the data length.
   volatile uint16_t *decodeBuffer;
   volatile bufIndex_t decodeLength;
   // This field accumulates the elapsed time of a MARK or SPACE. IRrecv uses it
-  // only inside the ISR however IRrecvPCI accesses it outside the ISR. Therefore
-  // it is volatile and because it is multi-byte it will need atomic guards when
-  // accessed outside the ISR.
+  // only inside the ISR however IRrecvPCI accesses it outside the ISR.
+  // Therefore it is volatile and because it is multi-byte it will need atomic
+  // guards when accessed outside the ISR.
   volatile uint32_t timer; // state timer, counts 50uS ticks.(and other uses)
                            // Used by both IRrecv and IRrecvPCI.
   volatile currentState_t
