@@ -18,12 +18,12 @@
 #ifndef _ADAFRUIT_CIRCUITPLAYGROUND_H_
 #define _ADAFRUIT_CIRCUITPLAYGROUND_H_
 
+#include <Arduino.h>
 #include "utility/Adafruit_CPlay_LIS3DH.h"
 #include "utility/Adafruit_CPlay_Mic.h"
 #include "utility/Adafruit_CPlay_NeoPixel.h"
 #include "utility/Adafruit_CPlay_Speaker.h"
 #include "utility/CP_Firmata.h"
-#include <Arduino.h>
 
 #if defined(__AVR__) ||                                                        \
     defined(ARDUINO_NRF52840_CIRCUITPLAY) // Circuit Playground 'classic'
