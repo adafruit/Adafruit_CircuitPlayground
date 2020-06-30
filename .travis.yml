@@ -24,7 +24,7 @@ before_install:
    - source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)
 
 install:
-   - arduino --install-library "Adafruit LED Backpack Library","Adafruit GFX Library","Adafruit SleepyDog Library","Adafruit Zero FFT Library"
+   - arduino --install-library "Adafruit LED Backpack Library","Adafruit GFX Library","Adafruit SleepyDog Library","Adafruit Zero FFT Library","Adafruit BusIO"
    - rm -rf $HOME/arduino_ide/libraries/Adafruit_Circuit_Playground
 
 script:
