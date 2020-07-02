@@ -1,0 +1,41 @@
+name: Arduino Library CI
+
+on: [pull_request, push, repository_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+      with:
+         repository: adafruit/ci-arduino
+         path: ci
+
+    - name: pre-install
+      run: bash ci/actions_install.sh
+
+    - name: test bluefruit platforms
+      run: python3 ci/build_platform.py cpb
+
+    # manually install Servo
+    - name: extra libraries
+      run: |
+        export PATH=$PATH:$GITHUB_WORKSPACE/bin
+        arduino-cli lib install "Servo"    
+
+    - name: test platforms
+      run: python3 ci/build_platform.py cpx_ada cpc
+
+    - name: clang
+      run: python3 ci/run-clang-format.py -e "ci/*" -e "bin/*" Adafruit_* 
+
+    - name: doxygen
+      env:
+        GH_REPO_TOKEN: ${{ secrets.GH_REPO_TOKEN }}
+        PRETTYNAME : "Adafruit Circuit Playground Library"
+      run: bash ci/doxy_gen_and_deploy.sh
