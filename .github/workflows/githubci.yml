@@ -32,7 +32,7 @@ jobs:
       run: python3 ci/build_platform.py cpx_ada cpc
 
     - name: clang
-      run: python3 ci/run-clang-format.py -e "ci/*" -e "bin/*" -r . 
+      run: python3 ci/run-clang-format.py -e "ci/*" -e "bin/*" Adafruit_* 
 
     - name: doxygen
       env:
