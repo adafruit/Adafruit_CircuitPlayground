@@ -167,12 +167,19 @@ uint16_t Adafruit_CPlay_FreeTouch::measureRaw(void) {
   setCompCap(compcap);
   setIntCap(intcap);
 
+  uint32_t burstmodeRegBackup = QTOUCH_PTC->BURSTMODE.reg;
+
   QTOUCH_PTC->BURSTMODE.reg = 0xA4;
 
   sync_config();
 
-
-  return startPtcAcquire();
+  uint16_t ptcResult = startPtcAcquire();
+    
+  QTOUCH_PTC->BURSTMODE.reg = burstmodeRegBackup;
+    
+  sync_config();
+    
+  return ptcResult;
 }
 
 uint16_t Adafruit_CPlay_FreeTouch::startPtcAcquire(void) {
