@@ -84,6 +84,13 @@
  * based on the user set values above.
  */
 
+//Clear interrupt
+#ifdef IR_CLEAR_INTERRUPT
+  #undef IR_CLEAR_INTERRUPT
+#endif
+#define IR_CLEAR_INTERRUPT 	IR_TCx->COUNT16.INTFLAG.bit.MC0 = 1;
+
+
 // Saves us a lot of typing when synchronizing
 #define syncTC   while (IR_TCx->COUNT16.STATUS.bit.SYNCBUSY)
 #define syncGCLK while (GCLK->STATUS.bit.SYNCBUSY)
@@ -233,8 +240,6 @@
 #define IR_RECV_DISABLE_INTR  IR_TCx->COUNT16.INTENCLR.reg = TC_INTENCLR_OVF;  
 #define IR_RECV_CONFIG_TICKS() initializeSAMD21timerInterrupt()
 
-//Clear interrupt
-#define IR_CLEAR_INTERRUPT 	IR_TCx->COUNT16.INTFLAG.bit.MC0 = 1;
 
 //prototypes
 void initializeSAMD21PWM(uint16_t khz);
