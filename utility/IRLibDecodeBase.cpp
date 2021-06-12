@@ -56,7 +56,9 @@ void IRdecodeBase::dumpResults(bool verbose) {
       Serial.print(i/2-1,DEC);  Serial.print(F(":m"));
     } 
     else {
-       if(interval>0)LowSpace=min(LowSpace, interval);  HiSpace=max (HiSpace, interval);
+       if(interval>0) {
+         LowSpace=min(LowSpace, interval);  HiSpace=max (HiSpace, interval);
+       }
        Serial.print(F(" s"));
     }
     Serial.print(interval, DEC);
