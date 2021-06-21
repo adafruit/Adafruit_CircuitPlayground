@@ -29,6 +29,7 @@
 
 #ifndef IRLIB_HASHRAW_H
 	#define IR_SEND_RAW
+	#define IR_SEND_RAW_ALIGNED
 	#define IR_DECODE_HASH
 	#define PV_IR_DECODE_HASH
 	#define PV_IR_SEND_RAW
@@ -245,6 +246,20 @@ public:
 			IR_SEND_RAW	//Must be last one.
 		}
 	}
+	
+	/*
+	* Sends raw IR data.
+	* The first parameter to the method is a pointer to the first element of an array of uint16_t values. 
+	* These values are the raw timing values in microseconds.
+	* The second parameter is the length of the array presented as the first parameter.
+	* If the frequency to be used in transmission is not specified, it defaults to 38kHz.
+	*/
+	#ifdef IRLIB_HASHRAW_H
+		void sendRaw(uint16_t *buf, uint8_t len, uint8_t khz) {
+		if(khz==0)khz=38;
+			IR_SEND_RAW_ALIGNED
+		}
+	#endif //IRLIB_HASHRAW_H
 };
 #endif  //IRLIBSENDBASE_H
 
