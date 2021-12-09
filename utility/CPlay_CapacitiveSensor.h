@@ -22,7 +22,7 @@
 #if defined(ARDUINO_NRF52840_CIRCUITPLAY)
 #define RwReg uint32_t
 #elif defined(__AVR__)
-#define RwReg uint8_t
+typedef volatile uint8_t RwReg;
 #endif
 
 
