@@ -87,12 +87,12 @@ void Adafruit_CPlay_Speaker::say(const uint8_t *addr) {
 
 	int16_t  x0=0, x1=0, x2=0, x3=0, x4=0,
 	         x5=0, x6=0, x7=0, x8=0, x9=0,
-	         synthK1, synthK2, u0;
-	uint16_t synthEnergy, synthRand = 1;
-	int8_t   synthK3, synthK4, synthK5, synthK6,
-	         synthK7, synthK8, synthK9, synthK10;
-	uint8_t  periodCounter=0, nextPwm = 0x7F, synthPeriod;
-	uint8_t  iCount = TICKS;
+	         synthK1=0, synthK2=0, u0;
+	uint16_t synthEnergy=0, synthRand=1;
+	int8_t   synthK3=0, synthK4=0, synthK5=0, synthK6=0,
+	         synthK7=0, synthK8=0, synthK9=0, synthK10=0;
+	uint8_t  periodCounter=0, nextPwm=0x7F, synthPeriod=0;
+	uint8_t  iCount=TICKS;
 	uint32_t nowTime, prevTime=0;
 
 	if(!started) begin();
