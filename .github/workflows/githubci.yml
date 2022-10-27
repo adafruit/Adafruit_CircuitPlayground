@@ -28,6 +28,7 @@ jobs:
 
     # manually install Servo
     - name: extra libraries
+      if: matrix.arduino-platform != 'cpb'
       run: arduino-cli lib install "Servo"
 
     - name: test bluefruit platforms
