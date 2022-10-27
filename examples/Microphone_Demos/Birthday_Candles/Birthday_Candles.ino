@@ -233,13 +233,14 @@ void animatePixels(uint32_t current) {
     // NeoPixel writing like the other animations.  The pixels are instead
     // changed only once when the number of lit candles changes (see the
     // waitBreath function's loop).
+    default: break;
   }
 }
 
 // Helper to change the color of a NeoPixel on the Circuit Playground board.
 // Will automatically convert from HSV color space to RGB and apply gamma
 // correction.
-float setPixelHSV(int i, float h, float s, float v) {
+void setPixelHSV(int i, float h, float s, float v) {
   // Convert HSV to RGB
   float r, g, b = 0.0;
   HSVtoRGB(&r, &g, &b, h, s, v);
