@@ -46,13 +46,13 @@ CPlay_CapacitiveSensor::CPlay_CapacitiveSensor(uint8_t sendPin, uint8_t receiveP
 	if ((sendPin != 255) && (sendPin >= NUM_DIGITAL_PINS)) error = -3;
 	if (receivePin >= NUM_DIGITAL_PINS) error = -2;
 #endif
-       	if (sendPin != -1) {      // sendpin to OUTPUT if we have one
+  if (sendPin != 255) {            // sendpin to OUTPUT if we have one
 #ifdef ARDUINO_TEEONARDU_FLORA	  // terrible hack!
-	  DDRD |= _BV(5);
+    DDRD |= _BV(5);
 #else
-	  pinMode(sendPin, OUTPUT);
+    pinMode(sendPin, OUTPUT);
 #endif
-	}
+  }
 
 	pinMode(receivePin, INPUT);  // receivePin to INPUT
 
@@ -63,13 +63,13 @@ CPlay_CapacitiveSensor::CPlay_CapacitiveSensor(uint8_t sendPin, uint8_t receiveP
 	digitalWrite(sendPin, LOW);
 #endif
 
-       	if (sendPin != -1) {
-	  send_outport =  portOutputRegister(digitalPinToPort(sendPin));
-	  send_mask = digitalPinToBitMask(sendPin);
-	} else {
-	  send_outport = NULL;
-	  send_mask = 0;
-	}
+  if (sendPin != 255) {
+    send_outport =  portOutputRegister(digitalPinToPort(sendPin));
+    send_mask = digitalPinToBitMask(sendPin);
+  } else {
+    send_outport = NULL;
+    send_mask = 0;
+  }
 
 	recv_outport =  portOutputRegister(digitalPinToPort(receivePin));
 	recv_inport =  portInputRegister(digitalPinToPort(receivePin));
@@ -216,7 +216,7 @@ int CPlay_CapacitiveSensor::SenseOneCycle(void)
     }
     //Serial.print("SenseOneCycle(1): "); Serial.println(total);
     
-    if (total > CS_Timeout_Millis) {
+    if (total >= CS_Timeout_Millis) {
       return -2;         //  total variable over timeout
     }
   }
