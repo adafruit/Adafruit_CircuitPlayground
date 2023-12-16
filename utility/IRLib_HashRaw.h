@@ -19,6 +19,7 @@
 #ifndef IRLIB_HASHRAW_H
 #define IRLIB_HASHRAW_H
 #define IR_SEND_RAW		case 0: IRsendRaw::send((uint16_t*)data,data2,khz); break;
+#define IR_SEND_RAW_ALIGNED   IRsendRaw::send(buf,len,khz);
 #define IR_DECODE_HASH	if(IRdecodeHash::decode()) return true;
 #ifdef IRLIB_HAVE_COMBO
 	#define PV_IR_DECODE_HASH ,public virtual IRdecodeHash
